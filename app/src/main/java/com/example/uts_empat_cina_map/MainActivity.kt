@@ -1,20 +1,48 @@
 package com.example.uts_empat_cina_map
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var userName: TextView
+    private lateinit var logout: Button
+    private lateinit var gClient: GoogleSignInClient
+    private lateinit var gOptions: GoogleSignInOptions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        // Initialize Views
+        logout = findViewById(R.id.logout)
+        userName = findViewById(R.id.userName)
+
+        // Google Sign-In Options
+        gOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        gClient = GoogleSignIn.getClient(this, gOptions)
+
+        // Check last signed-in Google account
+        val gAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
+        if (gAccount != null) {
+            val gName = gAccount.displayName
+            userName.text = gName
+        }
+
+        // Logout Button Listener
+        logout.setOnClickListener {
+            gClient.signOut().addOnCompleteListener { task ->
+                finish()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+            }
         }
     }
 }
