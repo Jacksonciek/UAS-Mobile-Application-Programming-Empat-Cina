@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         // Logout Button Listener
         logout.setOnClickListener {
-            gClient.signOut().addOnCompleteListener { task ->
+            gClient.signOut().addOnCompleteListener { _ ->
                 finish()
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }

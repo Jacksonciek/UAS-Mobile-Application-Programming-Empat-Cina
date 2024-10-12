@@ -24,7 +24,7 @@
             android:textSize="17sp"
             android:background="@drawable/lavender_round"
             android:textColor="@color/white"
-            android:drawableLeft="@drawable/ic_baseline_lock_reset_24"
+            android:drawableLeft="@drawable/baseline_lock_24"
             android:drawablePadding="8dp"
             app:layout_constraintTop_toTopOf="parent"/>
 
