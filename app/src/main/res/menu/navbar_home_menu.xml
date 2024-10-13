@@ -3,30 +3,35 @@
     <item
         android:id="@+id/nav_home"
         android:title="Home"
+        android:color="@color/black"
         android:icon="@drawable/home"
         />
 
     <item
         android:id="@+id/nav_order"
         android:title="Order"
+        android:color="@color/black"
         android:icon="@drawable/lets_icons_order"
         />
 
     <item
         android:id="@+id/nav_plus"
         android:title=""
+        android:color="@color/black"
         android:icon="@drawable/plus"
         />
 
     <item
         android:id="@+id/nav_history"
         android:title="History"
+        android:color="@color/black"
         android:icon="@drawable/history"
         />
 
     <item
         android:id="@+id/nav_profile"
         android:title="Profile"
+        android:color="@color/black"
         android:icon="@drawable/profile"
         />
 
