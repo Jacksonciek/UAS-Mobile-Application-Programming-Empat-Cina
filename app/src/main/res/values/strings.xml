@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UTS-EMPAT-CINA-MAP</string>
+    <string name="login_with_biometrics">Login with Biometrics</string>
 </resources>
