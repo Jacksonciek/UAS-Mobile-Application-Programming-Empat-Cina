@@ -25,7 +25,6 @@
             android:exported="false" />
         <activity
             android:name=".StartActivity"
-            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -38,13 +37,13 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false" />-->
     </application>
 
 </manifest>
