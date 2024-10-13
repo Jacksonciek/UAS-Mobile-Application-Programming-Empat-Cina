@@ -1,81 +1,48 @@
 package com.example.uts_empat_cina_map
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
-import android.widget.Toast.*
-import androidx.activity.enableEdgeToEdge
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var userName: TextView
+    private lateinit var logout: Button
+    private lateinit var gClient: GoogleSignInClient
+    private lateinit var gOptions: GoogleSignInOptions
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Check biometric support
-        checkBiometricSupport()
+        // Initialize Views
+        logout = findViewById(R.id.logout)
+        userName = findViewById(R.id.userName)
 
-        // Set up the button to trigger biometric authentication
-        val loginButton: Button = findViewById(R.id.loginBiometric)
-        loginButton.setOnClickListener {
-            authenticateUser()
+        // Google Sign-In Options
+        gOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        gClient = GoogleSignIn.getClient(this, gOptions)
+
+        // Check last signed-in Google account
+        val gAccount: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
+        if (gAccount != null) {
+            val gName = gAccount.displayName
+            userName.text = gName
         }
-    }
 
-    private fun checkBiometricSupport() {
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate(Authenticators.BIOMETRIC_WEAK or Authenticators.DEVICE_CREDENTIAL)) {
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                Toast.makeText(this, "Biometric is available", Toast.LENGTH_SHORT).show()
-            }
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
-            }
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                Toast.makeText(this, "Biometric hardware is currently unavailable", Toast.LENGTH_SHORT).show()
-            }
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                Toast.makeText(this, "Unknown error", Toast.LENGTH_SHORT).show()
+        // Logout Button Listener
+        logout.setOnClickListener {
+            gClient.signOut().addOnCompleteListener { _ ->
+                finish()
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }
         }
-    }
-
-    private fun authenticateUser() {
-        val biometricPrompt = BiometricPrompt(this,
-            ContextCompat.getMainExecutor(this),
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    makeText(this@MainActivity, "Authentication succeeded!", LENGTH_SHORT).show()
-                }
-
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    makeText(this@MainActivity, "Authentication error: $errString", LENGTH_SHORT).show()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    makeText(this@MainActivity, "Authentication failed", LENGTH_SHORT).show()
-                }
-            })
-
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric Login")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
-            .build()
-
-        biometricPrompt.authenticate(promptInfo)
     }
 }
