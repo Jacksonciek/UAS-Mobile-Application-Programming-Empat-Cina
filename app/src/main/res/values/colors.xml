@@ -5,4 +5,11 @@
     <color name="lavender">#8692f7</color>
     <color name="lavender_dark">#5f6fda</color>
     <color name="purple">#6a1b9a</color>
+    <color name="purple_dark">#38006b</color>
+    <color name="purple_light">#9c4dcc</color>
+    <color name="purple_500">#9c27b0</color>
+    <color name="purple_700">#7b1fa2</color>
+    <color name="purple_200">#e1bee7</color>
+    <color name="purple_100">#f3e5f5</color>
+    <color name="purple_50">#fce4ec</color>
 </resources>

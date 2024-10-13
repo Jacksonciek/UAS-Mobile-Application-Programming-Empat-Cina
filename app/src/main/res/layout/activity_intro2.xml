@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/intro2"> <!-- Your background -->
+
+    <!-- Navigation Layout near the bottom -->
+    <LinearLayout
+        android:id="@+id/navigationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <!-- Left Button for Previous -->
+        <ImageButton
+            android:id="@+id/btn_previous"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Previous"
+            android:src="@drawable/baseline_arrow_back_ios_24" /> <!-- Placeholder for previous button drawable -->
+
+        <!-- Indicator Bar (Dots in the middle) -->
+        <LinearLayout
+            android:id="@+id/dotsLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+        <!-- First Dot -->
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/indicator_inactive" />
+
+        <!-- Second Dot (Active) -->
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/indicator_active" />
+
+        <!-- Third Dot -->
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/indicator_inactive" />
+    </LinearLayout>
+
+    <!-- Right Button for Next -->
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Next"
+        android:src="@drawable/baseline_arrow_forward_ios_24" /> <!-- Placeholder for next button drawable -->
+
+</LinearLayout>
+
+    </RelativeLayout>

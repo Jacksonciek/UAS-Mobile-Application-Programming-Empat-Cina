@@ -12,24 +12,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UTSEMPATCINAMAP"
         tools:targetApi="31">
-
         <activity
-            android:name=".LoginActivity"
+            android:name=".Intro2"
             android:exported="false" />
-
         <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
+            android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
