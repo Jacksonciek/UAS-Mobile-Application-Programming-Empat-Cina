@@ -23,25 +23,6 @@
           "other_platform_oauth_client": []
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:791578864602:android:95f71a7ba80c5cfe516ee3",
-        "android_client_info": {
-          "package_name": "com.example.uts_empat_cina_map"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD9sLYVFuz0vvBuUd64j4slyW5LkUpMWYg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
     }
   ],
   "configuration_version": "1"
