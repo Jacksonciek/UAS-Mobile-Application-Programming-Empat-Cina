@@ -44,5 +44,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
             }
         }
+
+        // Login via Biometric Listener
+        val navigateButton: Button = findViewById(R.id.loginBiometric)
+        navigateButton.setOnClickListener {
+            val intent = Intent(this, biometric::class.java)
+            startActivity(intent)
+        }
     }
 }
