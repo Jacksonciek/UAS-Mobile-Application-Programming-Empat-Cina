@@ -18,7 +18,7 @@ class biometric : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_biometric)
 
-        val biometricLoginButton: Button = findViewById(R.id.cobaBio)
+//        val biometricLoginButton: Button = findViewById(R.id.cobaBio)
 
         // Set up biometric prompt
         var biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
@@ -62,40 +62,40 @@ class biometric : AppCompatActivity() {
             .build()
 
         // Set button click listener
-        biometricLoginButton.setOnClickListener {
-            val biometricManager = BiometricManager.from(this)
-            when (biometricManager.canAuthenticate()) {
-                BiometricManager.BIOMETRIC_SUCCESS -> {
-                    biometricPrompt.authenticate(promptInfo)
-                }
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                    Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
-                }
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                    Toast.makeText(this, "Biometric hardware is currently unavailable", Toast.LENGTH_SHORT).show()
-                }
-                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                    Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        // Instant Biometric
-//        val biometricManager = BiometricManager.from(this)
-//        when (biometricManager.canAuthenticate()) {
-//            BiometricManager.BIOMETRIC_SUCCESS -> {
-//                biometricPrompt.authenticate(promptInfo)
-//            }
-//            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-//                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
-//            }
-//            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-//                Toast.makeText(this, "Biometric hardware is currently unavailable", Toast.LENGTH_SHORT).show()
-//            }
-//            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-//                Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
+//        biometricLoginButton.setOnClickListener {
+//            val biometricManager = BiometricManager.from(this)
+//            when (biometricManager.canAuthenticate()) {
+//                BiometricManager.BIOMETRIC_SUCCESS -> {
+//                    biometricPrompt.authenticate(promptInfo)
+//                }
+//                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+//                    Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
+//                }
+//                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+//                    Toast.makeText(this, "Biometric hardware is currently unavailable", Toast.LENGTH_SHORT).show()
+//                }
+//                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+//                    Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
+//                }
 //            }
 //        }
+
+        // Instant Biometric
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate()) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                biometricPrompt.authenticate(promptInfo)
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Toast.makeText(this, "Biometric hardware is currently unavailable", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                Toast.makeText(this, "No biometric credentials enrolled", Toast.LENGTH_SHORT).show()
+            }
+        }
 
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
 //            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

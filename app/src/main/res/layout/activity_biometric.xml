@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/cobaBio"
-        android:text="Coba Login"
-        />
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:id="@+id/cobaBio"-->
+<!--        android:text="Coba Login"-->
+<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
