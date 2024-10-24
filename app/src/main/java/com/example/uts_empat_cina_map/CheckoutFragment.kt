@@ -45,7 +45,7 @@ class CheckoutFragment : Fragment() {
 
         confirmButton.setOnClickListener {
             // Navigate to a new activity for Google Maps (for later implementation)
-            val intent = Intent(requireContext(), MapsActivity::class.java)
+            val intent = Intent(requireContext(), payment_successful::class.java)
             startActivity(intent)
         }
     }

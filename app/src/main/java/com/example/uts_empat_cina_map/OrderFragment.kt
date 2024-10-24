@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
@@ -28,6 +29,7 @@ class OrderFragment : Fragment() {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
+    private lateinit var buttonCart: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +39,21 @@ class OrderFragment : Fragment() {
 
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.viewPager)
+        buttonCart = view.findViewById(R.id.buttonCart)
 
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
 
         // Set up custom tabs after linking with ViewPager
         setupCustomTabs()
+
+        buttonCart.setOnClickListener {
+            // Navigate to CartFragment
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, CheckoutFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
         return view
     }
