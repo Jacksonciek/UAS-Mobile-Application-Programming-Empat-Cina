@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/home" /> <!-- Replace with your actual home icon -->
+
+    <item
+        android:id="@+id/nav_stats"
+        android:title="Stats"
+        android:icon="@drawable/stats" /> <!-- Replace with your actual stats icon -->
+
+    <item
+        android:id="@+id/nav_plus"
+        android:title=""
+        android:icon="@drawable/plus" /> <!-- Replace with your actual plus icon -->
+
+    <item
+        android:id="@+id/nav_item"
+        android:title="Item"
+        android:icon="@drawable/item" /> <!-- Replace with your actual item icon -->
+
+    <item
+        android:id="@+id/nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/profile" /> <!-- Replace with your actual profile icon -->
+</menu>

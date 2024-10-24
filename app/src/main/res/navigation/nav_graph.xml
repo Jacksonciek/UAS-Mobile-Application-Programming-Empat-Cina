@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/adminHomeFragment">
+
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminHomeFragment"
+        android:label="fragment_admin_home"
+        tools:layout="@layout/fragment_admin_home" >
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminItemFragment"
+            app:destination="@id/adminItemFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminAddItemFragment"
+            app:destination="@id/adminAddItemFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminStatsFragment"
+            app:destination="@id/adminStatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminItemFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminItemFragment"
+        android:label="fragment_admin_item"
+        tools:layout="@layout/fragment_admin_item" >
+        <action
+            android:id="@+id/action_adminItemFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminItemFragment_to_adminAddItemFragment"
+            app:destination="@id/adminAddItemFragment" />
+        <action
+            android:id="@+id/action_adminItemFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_adminItemFragment_to_adminStatsFragment"
+            app:destination="@id/adminStatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminStatsFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminStatsFragment"
+        android:label="fragment_admin_stats"
+        tools:layout="@layout/fragment_admin_stats" >
+        <action
+            android:id="@+id/action_adminStatsFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_adminStatsFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminStatsFragment_to_adminAddItemFragment"
+            app:destination="@id/adminAddItemFragment" />
+        <action
+            android:id="@+id/action_adminStatsFragment_to_adminItemFragment"
+            app:destination="@id/adminItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminProfileFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminProfileFragment"
+        android:label="fragment_admin_profile"
+        tools:layout="@layout/fragment_admin_profile" >
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminAddItemFragment"
+            app:destination="@id/adminAddItemFragment" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminItemFragment"
+            app:destination="@id/adminItemFragment" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminStatsFragment"
+            app:destination="@id/adminStatsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminAddItemFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminAddItemFragment"
+        android:label="fragment_admin_add_item"
+        tools:layout="@layout/fragment_admin_add_item" >
+        <action
+            android:id="@+id/action_adminAddItemFragment_to_adminItemFragment"
+            app:destination="@id/adminItemFragment" />
+        <action
+            android:id="@+id/action_adminAddItemFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminAddItemFragment_to_adminProfileFragment"
+            app:destination="@id/adminProfileFragment" />
+        <action
+            android:id="@+id/action_adminAddItemFragment_to_adminStatsFragment"
+            app:destination="@id/adminStatsFragment" />
+    </fragment>
+</navigation>

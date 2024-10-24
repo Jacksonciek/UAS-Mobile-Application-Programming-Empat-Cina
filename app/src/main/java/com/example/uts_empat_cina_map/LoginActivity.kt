@@ -15,12 +15,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.developer.gbuttons.GoogleSignInButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -59,8 +56,13 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, pass)
                         .addOnSuccessListener {
                             Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                            finish()
+                            // Check if the logged-in user is the admin
+                            if (email == "admin@gmail.com") {
+                                startActivity(Intent(this@LoginActivity, AdminActivity::class.java)) // Redirect to Admin Activity
+                            } else {
+                                startActivity(Intent(this@LoginActivity, MainActivity::class.java)) // Redirect to User Activity
+                            }
+                            finish() // Close the login activity
                         }
                         .addOnFailureListener {
                             Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
