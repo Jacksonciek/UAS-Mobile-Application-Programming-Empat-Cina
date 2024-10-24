@@ -54,7 +54,7 @@ class FoodItemDetailFragment : Fragment() {
         foodItem?.let {
             foodName.text = it.name
             foodDescription.text = it.description
-            foodPrice.text = "$${it.price}"
+            foodPrice.text = "$${it.price}/pcs"
             Glide.with(this).load(it.imageUrl).into(foodImage) // Use imageUrl for Glide
         }
 

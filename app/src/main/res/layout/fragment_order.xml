@@ -7,35 +7,82 @@
     android:orientation="vertical"
     android:paddingTop="?attr/actionBarSize"> <!-- Adds padding to avoid collision with the status bar -->
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Order Menu"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="#005700"/> <!-- Dark green text for "Order Menu" -->
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:padding="10dp"
+            android:background="@drawable/search_order"
+            android:drawableEnd="@drawable/search"
+            />
+
+        <Button
+            android:id="@+id/buttonCart"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/cart"
+            android:layout_marginLeft="10dp"
+        />
+
+        <Button
+            android:id="@+id/buttonMail"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/mail"
+            android:layout_marginLeft="10dp"
+            />
+
+    </LinearLayout>
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="16dp"-->
+<!--        android:text="Order Menu"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="#005700"/> -->
+    <!-- Dark green text for "Order Menu" -->
+
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/tabLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#005700"-->
+<!--        app:tabTextColor="@android:color/white"-->
+<!--        app:tabSelectedTextColor="@android:color/white"-->
+<!--        app:tabIndicatorColor="@android:color/transparent"-->
+<!--        app:tabIndicatorHeight="0dp"/> -->
+    <!-- Hide default indicator height -->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#005700"
         app:tabTextColor="@android:color/white"
-        app:tabSelectedTextColor="@android:color/white"
         app:tabIndicatorColor="@android:color/transparent"
-        app:tabIndicatorHeight="0dp"/> <!-- Hide default indicator height -->
+        app:tabIndicatorHeight="0dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
 
-    <View
-        android:id="@+id/tabIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/white" /> <!-- White line for the indicator -->
+<!--    <View-->
+<!--        android:id="@+id/tabIndicator"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@android:color/white" /> -->
+    <!-- White line for the indicator -->
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
 </LinearLayout>
