@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, pass)
                         .addOnSuccessListener {
                             Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@LoginActivity, biometric::class.java))
+                            startActivity(Intent(this@LoginActivity, homepage::class.java))
                             finish()
                         }
                         .addOnFailureListener {
