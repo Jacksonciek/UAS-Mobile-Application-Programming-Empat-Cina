@@ -1,27 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@drawable/home" /> <!-- Replace with your actual home icon -->
+        android:id="@+id/adminHomeFragment"
+        android:icon="@drawable/home"
+        android:title="Home" />
 
     <item
-        android:id="@+id/nav_stats"
-        android:title="Stats"
-        android:icon="@drawable/stats" /> <!-- Replace with your actual stats icon -->
-
+        android:id="@+id/adminStatsFragment"
+        android:icon="@drawable/stats"
+        android:title="Stats" />
     <item
-        android:id="@+id/nav_plus"
-        android:title=""
-        android:icon="@drawable/plus" /> <!-- Replace with your actual plus icon -->
-
+        android:id="@+id/adminAddItemFragment"
+        android:icon="@drawable/plus"
+        android:title="Add Item" />
     <item
-        android:id="@+id/nav_item"
-        android:title="Item"
-        android:icon="@drawable/item" /> <!-- Replace with your actual item icon -->
-
+        android:id="@+id/adminItemFragment"
+        android:icon="@drawable/item"
+        android:title="Items" />
     <item
-        android:id="@+id/nav_profile"
-        android:title="Profile"
-        android:icon="@drawable/profile" /> <!-- Replace with your actual profile icon -->
+        android:id="@+id/adminProfileFragment"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
 </menu>
