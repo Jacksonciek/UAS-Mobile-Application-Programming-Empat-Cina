@@ -22,6 +22,6 @@
         android:background="#FFFFFF"
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/black"
-        app:menu="@menu/navbar_home_menu" />
+        app:menu="@menu/navbar_admin_menu" />
 
 </LinearLayout>
