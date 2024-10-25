@@ -30,8 +30,8 @@
     <!-- Profile Text -->
     <TextView
         android:id="@+id/profileText"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_width="141dp"
+        android:layout_height="35dp"
         android:background="@drawable/currency_square"
         android:gravity="center"
         android:text="Profile"
@@ -40,16 +40,19 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/profileImage"
         app:layout_constraintEnd_toStartOf="@id/iconRight"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/iconLeft"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Profile Image -->
+
+    <!-- Profile Name -->
+
     <ImageView
         android:id="@+id/profileImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileText" />
 
-    <!-- Profile Name -->
     <TextView
         android:id="@+id/profileName"
         android:layout_width="wrap_content"
@@ -89,7 +91,7 @@
         android:id="@+id/myOrders"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="52dp"
         android:background="@drawable/currency_square"
         android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
         android:drawablePadding="8dp"
@@ -102,8 +104,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileEmail" />
-
-
 
     <TextView
         android:id="@+id/shippingAddresses"
@@ -121,6 +121,7 @@
         app:layout_constraintTop_toBottomOf="@id/myOrders"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Payment Method -->
     <TextView
         android:id="@+id/paymentMethod"
@@ -138,6 +139,7 @@
         app:layout_constraintTop_toBottomOf="@id/shippingAddresses"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- My Reviews -->
     <TextView
         android:id="@+id/myReviews"
@@ -155,6 +157,20 @@
         app:layout_constraintTop_toBottomOf="@id/paymentMethod"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Profile Phone Number -->
+    <TextView
+        android:id="@+id/profilePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="123-456-7890"
+        android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileEmail" />
+
 
     <!-- Settings -->
     <TextView

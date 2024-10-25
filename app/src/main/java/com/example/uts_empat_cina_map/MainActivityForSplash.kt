@@ -1,4 +1,4 @@
-package com.example.yourpackage
+package com.example.uts_empat_cina_map
 
 import android.content.Intent
 import android.os.Bundle
