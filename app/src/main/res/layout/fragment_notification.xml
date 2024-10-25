@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".notification">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_marginTop="20dp"
         android:padding="10dp">
 
         <!-- Back button -->
         <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/backbutton"
             android:layout_marginEnd="10dp"/>
 
@@ -26,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#102F15"
+            android:textColor="#245136"
             android:textAlignment="center"
             android:textSize="24sp"
             android:text="Notification"
@@ -35,14 +36,161 @@
 
     </LinearLayout>
 
-
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Content Area with ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <!-- Notification Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#245136"
+                    android:padding="10dp">
+
+                    <!-- Image CardView with Rounded Corners -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/imageCard"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/pizza"
+                            android:contentDescription="Image" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Text Layout positioned next to Image -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/imageCard"
+                        android:paddingStart="10dp"
+                        android:layout_marginEnd="50dp">
+
+                        <TextView
+                            android:id="@+id/headerText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your order #123456789 has been confirmed"
+                            android:textColor="#EBFADC"
+                            android:textStyle="bold"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/detailText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                            android:textColor="#EBFADC"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <!-- "New" Label in Bottom Right Corner -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New"
+                        android:textColor="#EBFADC"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:textSize="12sp"/>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
+            <!-- Notification Card 2-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#245136"
+                    android:padding="10dp">
+
+                    <!-- Image CardView with Rounded Corners -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/imageCard2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginEnd="10dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/pizza"
+                            android:contentDescription="Image" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Text Layout positioned next to Image -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toEndOf="@id/imageCard2"
+                        android:paddingStart="10dp"
+                        android:layout_marginEnd="50dp">
+
+                        <TextView
+                            android:id="@+id/headerText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your order #45678910 has been confirmed"
+                            android:textColor="#EBFADC"
+                            android:textStyle="bold"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/detailText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                            android:textColor="#EBFADC"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>
