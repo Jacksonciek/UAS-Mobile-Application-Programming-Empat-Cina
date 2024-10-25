@@ -12,4 +12,5 @@
     <color name="purple_200">#e1bee7</color>
     <color name="purple_100">#f3e5f5</color>
     <color name="purple_50">#fce4ec</color>
+    <color name="selector_bottom_nav">#135040</color>
 </resources>
