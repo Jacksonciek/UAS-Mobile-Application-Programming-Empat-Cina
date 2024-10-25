@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="#F6F6E9"
-    tools:context=".SettingsFragment">
+    tools:context=".SettingFragment">
 
     <!-- Settings Title -->
     <TextView
