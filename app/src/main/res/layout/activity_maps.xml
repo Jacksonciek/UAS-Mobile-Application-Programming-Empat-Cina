@@ -1,9 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity" />
+    android:background="#EBFADC"
+    tools:context=".MapsActivity">
+
+    <!-- Map Fragment -->
+    <ImageView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:src="@drawable/map2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Address Field -->
+    <EditText
+        android:id="@+id/addressField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Malibu Village filare no 20"
+        android:background="#F4F4F4"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp" />
+
+    <!-- Label Name -->
+    <TextView
+        android:id="@+id/labelName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Label Name"
+        android:textColor="#135040"
+        app:layout_constraintTop_toBottomOf="@id/addressField"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/labelNameInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="HOME"
+        android:padding="12dp"
+        android:background="#F4F4F4"
+        app:layout_constraintTop_toBottomOf="@id/labelName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_marginStart="16dp" />
+
+    <!-- Postal Code -->
+    <TextView
+        android:id="@+id/postalCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Postal Code"
+        android:textColor="#135040"
+        app:layout_constraintTop_toBottomOf="@id/addressField"
+        app:layout_constraintStart_toEndOf="@id/labelNameInput"
+        android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/postalCodeInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="15810"
+        android:padding="12dp"
+        android:background="#F4F4F4"
+        app:layout_constraintTop_toBottomOf="@id/postalCode"
+        app:layout_constraintStart_toEndOf="@id/labelNameInput"
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp" />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="#135040"
+        app:layout_constraintTop_toBottomOf="@id/postalCodeInput"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+    android:layout_marginStart="16dp" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:hint="Enter description"
+        android:padding="12dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        app:layout_constraintTop_toBottomOf="@id/descriptionLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:background="#F4F4F4" />
+
+    <!-- Done Button -->
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:textColor="#EBFADC"
+        android:background="#135040"
+        app:layout_constraintTop_toBottomOf="@id/descriptionInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+    android:layout_marginBottom="24dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

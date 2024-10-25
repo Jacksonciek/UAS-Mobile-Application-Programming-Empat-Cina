@@ -5,3 +5,13 @@ plugins {
     id("com.google.gms.google-services") version "4.4.2" apply false
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.google.relay:relay-gradle-plugin:0.3.12") // Replace with the latest version if needed
+    }
+}
