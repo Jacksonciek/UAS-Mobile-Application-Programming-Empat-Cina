@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import com.example.uts_empat_cina_map.Order.AllFoodFragment
 import com.example.uts_empat_cina_map.Order.DrinksFragment
@@ -26,6 +29,8 @@ class OrderFragment : Fragment() {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
+    private lateinit var buttonCart: Button
+    private lateinit var buttonNotification: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +40,30 @@ class OrderFragment : Fragment() {
 
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.viewPager)
+        buttonCart = view.findViewById(R.id.buttonCart)
+        buttonNotification = view.findViewById(R.id.buttonMail)
 
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
+
+        // Set up custom tabs after linking with ViewPager
+        setupCustomTabs()
+
+        buttonCart.setOnClickListener {
+            // Navigate to CartFragment
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, CheckoutFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        buttonNotification.setOnClickListener {
+            // Navigate to notification
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, notification())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
         return view
     }
@@ -48,6 +74,23 @@ class OrderFragment : Fragment() {
         adapter.addFragment(FavoritesFragment(), "Favorites")
         adapter.addFragment(DrinksFragment(), "Drinks")
         viewPager.adapter = adapter
+    }
+
+    private fun setupCustomTabs() {
+        // First tab (All)
+        val allTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
+        allTab.findViewById<TextView>(R.id.tab_title).text = "All"
+        tabLayout.getTabAt(0)?.customView = allTab
+
+        // Second tab (Favorites)
+        val favoritesTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
+        favoritesTab.findViewById<TextView>(R.id.tab_title).text = "Favorites"
+        tabLayout.getTabAt(1)?.customView = favoritesTab
+
+        // Third tab (Drinks)
+        val drinksTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
+        drinksTab.findViewById<TextView>(R.id.tab_title).text = "Drinks"
+        tabLayout.getTabAt(2)?.customView = drinksTab
     }
 }
 

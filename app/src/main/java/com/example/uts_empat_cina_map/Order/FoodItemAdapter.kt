@@ -18,6 +18,7 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Li
     inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val foodImage: ImageView = itemView.findViewById(R.id.foodImage)
         val foodName: TextView = itemView.findViewById(R.id.foodName)
+        val foodPrice: TextView = itemView.findViewById(R.id.foodPrice)
 
         init {
             itemView.setOnClickListener {
@@ -47,7 +48,9 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Li
         val foodItem = foodItemList[position]
         holder.foodName.text = foodItem.name
         holder.foodImage.setImageResource(foodItem.imageResource)
+        holder.foodPrice.text = "Rp. " + foodItem.price.toString() + "/pcs"
     }
+
 
     override fun getItemCount(): Int = foodItemList.size
 }
