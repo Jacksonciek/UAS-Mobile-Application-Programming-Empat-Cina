@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="#135040">
 
-    <Button
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/centeredLinearLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/cobaBio"
-        android:text="Coba Login"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            app:srcCompat="@drawable/logo_awal" />
+
+        <Button
+            android:id="@+id/cobaBio"
+            android:layout_width="78dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="12sp"
+            android:background="@drawable/baseline_fingerprint_24" />
+
+        <TextView
+            android:id="@+id/logininibiometric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#EBFADC"
+            android:textStyle="bold"
+            android:text="Tap Here to Login with Biometric" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
