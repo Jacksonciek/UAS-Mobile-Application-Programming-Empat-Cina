@@ -63,7 +63,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="@android:color/white"
+        app:tabTextColor="#130516"
         app:tabIndicatorColor="@android:color/transparent"
         app:tabIndicatorHeight="0dp"
         app:tabGravity="fill"

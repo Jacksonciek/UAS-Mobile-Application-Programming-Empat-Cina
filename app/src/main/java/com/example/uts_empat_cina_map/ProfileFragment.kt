@@ -34,6 +34,17 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        val buttonnotification: ImageView = view.findViewById(R.id.iconLeft)
+
+        buttonnotification.setOnClickListener {
+            val fragment = notification()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
         // Initialize Firebase instances
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()

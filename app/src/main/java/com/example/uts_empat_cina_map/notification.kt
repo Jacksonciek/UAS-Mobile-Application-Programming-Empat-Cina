@@ -43,7 +43,7 @@ class notification : Fragment() {
 
         // Set the onClickListener
         redirectOrder.setOnClickListener {
-            val fragment = OrderFragment()
+            val fragment = HomeFragment()
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment)
