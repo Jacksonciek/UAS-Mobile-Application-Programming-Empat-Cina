@@ -2,10 +2,14 @@ package com.example.uts_empat_cina_map
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.RenderEffect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import jp.wasabeef.blurry.Blurry
 import android.util.Patterns
+import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
@@ -62,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                             if (email == "admin@gmail.com") {
                                 startActivity(Intent(this@LoginActivity, AdminActivity::class.java)) // Redirect to Admin Activity
                             } else {
-                                startActivity(Intent(this@LoginActivity, MainActivity::class.java)) // Redirect to User Activity
+                                startActivity(Intent(this@LoginActivity, biometric::class.java)) // Redirect to User Activity
                             }
                             finish() // Close the login activity
                         }
@@ -88,6 +92,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         forgotPassword.setOnClickListener {
+            // Blur the background
+            Blurry.with(this)
+                .radius(15) // Adjusted blur radius for clearer effect
+                .sampling(2) // Downsample factor to reduce performance impact
+                .onto(findViewById(R.id.root_layout)) // Ensure this is the root layout only
+
             val builder = AlertDialog.Builder(this@LoginActivity)
             val dialogView = layoutInflater.inflate(R.layout.dialog_forgot, null)
             val emailBox = dialogView.findViewById<EditText>(R.id.emailBox)
@@ -106,16 +116,29 @@ class LoginActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 Toast.makeText(this@LoginActivity, "Check your email", Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
+                                // Clear the blur effect when the dialog is dismissed
+                                Blurry.delete(findViewById(R.id.root_layout))
                             } else {
                                 Toast.makeText(this@LoginActivity, "Unable to send, failed", Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
             }
+
             dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
                 dialog.dismiss()
+                // Clear the blur effect when dialog is dismissed
+                Blurry.delete(findViewById(R.id.root_layout))
             }
-            dialog.window?.setBackgroundDrawable(ColorDrawable(0))
+
+            // Set a transparent background for the dialog
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            dialog.setOnDismissListener {
+                // Clear the blur effect when dialog is dismissed
+                Blurry.delete(findViewById(R.id.root_layout))
+            }
+
             dialog.show()
         }
 
@@ -126,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
         val gAccount = GoogleSignIn.getLastSignedInAccount(this)
         if (gAccount != null) {
             finish()
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val intent = Intent(this@LoginActivity, biometric::class.java)
             startActivity(intent)
         }
 
@@ -140,7 +163,7 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         task.getResult(ApiException::class.java)
                         finish()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        val intent = Intent(this@LoginActivity, biometric::class.java)
                         startActivity(intent)
                     } catch (e: ApiException) {
                         Toast.makeText(this@LoginActivity, "Something went wrong", Toast.LENGTH_SHORT).show()
