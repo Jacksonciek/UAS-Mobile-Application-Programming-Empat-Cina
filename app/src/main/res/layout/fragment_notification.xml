@@ -70,7 +70,7 @@
                         android:layout_height="60dp"
                         android:layout_alignParentStart="true"
                         app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp"
+                        app:cardElevation="50dp"
                         android:layout_marginEnd="10dp">
 
                         <ImageView
