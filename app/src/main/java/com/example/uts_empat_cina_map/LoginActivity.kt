@@ -49,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
         signupRedirectText = findViewById(R.id.signUpRedirectText)
         forgotPassword = findViewById(R.id.forgot_password)
         googleBtn = findViewById(R.id.googleBtn)
-//        redirectAdmin = findViewById(R.id.adminRedirectText)
 
         auth = FirebaseAuth.getInstance()
 
@@ -86,10 +85,6 @@ class LoginActivity : AppCompatActivity() {
         signupRedirectText.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
         }
-
-//        redirectAdmin.setOnClickListener {
-//            startActivity(Intent(this@LoginActivity, admin::class.java))
-//        }
 
         forgotPassword.setOnClickListener {
             // Blur the background
