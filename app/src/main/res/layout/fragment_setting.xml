@@ -1,15 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingFragment">
+    android:padding="16dp"
+    tools:context=".SettingFragment"
+    android:background="#F6F6E9">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Settings Title -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#135040"
         android:gravity="center"
-        android:text="ini setting" />
+        android:padding="12dp"
+        android:text="Settings"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/iconRight"
+        app:layout_constraintStart_toEndOf="@+id/iconLeft"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/iconLeft"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Left Icon"
+        android:src="@drawable/baseline_arrow_back_ios_24"
+        android:background="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/iconRight"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Right Icon"
+        android:src="@drawable/exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- Personal Information Section -->
+    <TextView
+        android:id="@+id/personalInfoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Personal Information"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/settingsTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Name Field -->
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Glen Owen"
+        android:hint="Name"
+        android:drawableEnd="@drawable/edit"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/personalInfoLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Email Field -->
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Glenowenkeren@gmail.com"
+        android:hint="Email"
+        android:drawableEnd="@drawable/edit"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/nameField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Password Section -->
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/emailField"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Password Field -->
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="***********"
+        android:hint="Password"
+        android:drawableEnd="@drawable/edit"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/passwordLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Notifications Section -->
+    <TextView
+        android:id="@+id/notificationsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/passwordField"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- New Arrivals Switch -->
+    <LinearLayout
+        android:id="@+id/newArrivalsSwitch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/notificationsLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="New arrivals"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="1" />
+
+        <Switch
+            android:id="@+id/switchNewArrivals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Delivery Status Changes Switch -->
+    <LinearLayout
+        android:id="@+id/deliveryStatusSwitch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/newArrivalsSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Delivery status changes"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_weight="1" />
+
+        <Switch
+            android:id="@+id/switchDeliveryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- Help Center Section -->
+    <TextView
+        android:id="@+id/helpCenterLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Help Center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/deliveryStatusSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- FAQ Button -->
+    <Button
+        android:id="@+id/faqButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="FAQ"
+        android:background="@drawable/rounded_button"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toBottomOf="@id/helpCenterLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Contact Us Button -->
+    <Button
+        android:id="@+id/contactUsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Contact Us"
+        android:background="@drawable/rounded_button"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toBottomOf="@id/faqButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Privacy & Terms Button -->
+    <Button
+        android:id="@+id/privacyButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="PrivacyTerms"
+        android:background="@drawable/rounded_button"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toBottomOf="@id/contactUsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
