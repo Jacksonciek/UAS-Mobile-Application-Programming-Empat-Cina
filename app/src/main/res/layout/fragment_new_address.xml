@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EBFADC">
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:background="@drawable/backbutton"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="start"
+        android:padding="8dp" />
+
+    <!-- Map Fragment -->
+    <ImageView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/map2" />
+
+    <!-- Address Field -->
+    <EditText
+        android:id="@+id/addressField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Malibu Village filare no 20"
+        android:background="#F4F4F4"
+        android:padding="16dp"
+        android:layout_margin="16dp" />
+
+    <!-- Label Name -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/labelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Label Name"
+            android:textColor="#135040"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:id="@+id/labelNameInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="HOME"
+            android:padding="12dp"
+            android:background="#F4F4F4"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Postal Code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/postalCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Postal Code"
+            android:textColor="#135040"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:id="@+id/postalCodeInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="15810"
+            android:padding="12dp"
+            android:background="#F4F4F4"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/descriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="#135040"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Enter description"
+        android:padding="12dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:background="#F4F4F4"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Done Button -->
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:text="Done"
+        android:textColor="#EBFADC"
+        android:background="@drawable/currency_square"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp" />
+
+</LinearLayout>
