@@ -11,39 +11,39 @@ import com.example.uts_empat_cina_map.OrderData.FoodItem
 import com.example.uts_empat_cina_map.R
 import com.google.firebase.firestore.FirebaseFirestore
 
-class DrinksFragment : Fragment() {
+class AppetizersFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter: FoodItemAdapter
-    private val drinkItems = mutableListOf<FoodItem>()
+    private val appetizerItems = mutableListOf<FoodItem>()
     private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_drinks, container, false)
+        val view = inflater.inflate(R.layout.fragment_appetizers, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(context, 3)
-        foodAdapter = FoodItemAdapter(requireContext(), drinkItems)
+        foodAdapter = FoodItemAdapter(requireContext(), appetizerItems)
         recyclerView.adapter = foodAdapter
 
-        fetchDrinkItems() // Call the function to fetch drink items
+        fetchAppetizerItems() // Call the function to fetch appetizer items
         return view
     }
 
-    private fun fetchDrinkItems() {
+    private fun fetchAppetizerItems() {
         firestore.collection("items") // Ensure this matches your Firestore collection name
-            .whereEqualTo("category", "Drinks") // Query for Drinks items
+            .whereEqualTo("category", "Appetizers") // Query for Appetizers items
             .get()
             .addOnSuccessListener { documents ->
-                drinkItems.clear()
+                appetizerItems.clear()
                 for (document in documents) {
                     val foodItem = document.toObject(FoodItem::class.java)
-                    drinkItems.add(foodItem)
+                    appetizerItems.add(foodItem)
                 }
-                foodAdapter.updateData(drinkItems) // Update the adapter with new data
+                foodAdapter.updateData(appetizerItems) // Update the adapter with new data
             }
             .addOnFailureListener { exception ->
                 // Handle any errors
