@@ -44,14 +44,11 @@
             android:name=".Intro2"
             android:exported="false" />
         <activity
-            android:name=".MainActivityForSplash"
-            android:exported="true" />
-        <activity
         android:name=".StartActivity"
         android:exported="false" />
         <!-- Splash screen launcher activity -->
         <activity
-            android:name=".homepage"
+            android:name=".MainActivityForSplash"
             android:theme="@style/Base.Theme.UTSEMPATCINAMAP"
             android:exported="true"> <!-- Add android:exported attribute -->
             <intent-filter>
