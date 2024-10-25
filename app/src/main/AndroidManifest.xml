@@ -19,7 +19,7 @@
             android:name=".payment_successful"
             android:exported="false" />
         <activity
-            android:name=".homepage"
+            android:name=".AdminActivity"
             android:exported="false" />
 
         <meta-data
