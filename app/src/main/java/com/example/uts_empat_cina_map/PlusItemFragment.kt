@@ -8,9 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-class PlusItem : Fragment() {
+class PlusItemFragment : Fragment() { // Extend Fragment
 
-    // Optional: Define the arguments if needed
     private var currentNumber = 0
 
     override fun onCreateView(

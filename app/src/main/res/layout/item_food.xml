@@ -4,27 +4,39 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:background="#F1F9E8"
+    android:backgroundTint="#F1F9E8"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="#F1F9E8"
+        android:backgroundTint="#F1F9E8"
         android:gravity="center"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingTop="5dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/foodName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="#102F15"
-            android:textSize="16sp"/>
+            android:layout_marginBottom="4dp"
+            android:background="#F1F9E8"
+            android:gravity="center"
+            android:textColor="#2A5F40"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:background="#F1F9E8"
             app:cardCornerRadius="12dp">
 
             <ImageView
@@ -39,22 +51,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="#F1F9E8"
+            android:gravity="center"
             android:textColor="#102F15"
-            android:textSize="14sp" />
+            android:textSize="10sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/stockQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#102F15"
-            android:textSize="16sp" />
+            android:layout_marginTop="2dp"
+            android:background="#F1F9E8"
+            android:gravity="center"
+            android:textColor="#2A5F40"
+            android:textSize="9sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="12sp" />
+            android:layout_marginTop="3dp"
+            android:background="#F1F9E8"
+            android:gravity="center"
+            android:textColor="#2A5F40"
+            android:textSize="9sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -15,6 +15,7 @@
         android:layout_marginTop="40dp"
         android:gravity="center_vertical"
         android:paddingLeft="12dp"
+        android:textSize="20sp"
         android:text="Hello Ethan"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -51,14 +52,15 @@
 
     <TextView
         android:id="@+id/currency_text_view"
-        android:layout_width="371dp"
-        android:layout_height="125dp"
+        android:layout_width="375dp"
+        android:layout_height="135dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/currency_square"
         android:padding="15dp"
         android:text="Current Value"
-        android:textColor="@android:color/white"
+        android:textColor="#EBFADC"
         android:textStyle="bold"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -69,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Rp ******"
-        android:textColor="@color/white"
+        android:textColor="#EBFADC"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/currency_text_view"
@@ -79,11 +81,13 @@
 
     <Button
         android:id="@+id/balance_button"
-        android:layout_width="88dp"
-        android:layout_height="44dp"
-        android:background="#EBFADC"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:background="@drawable/balancetf"
         android:text="Balance"
-        android:textSize="8sp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/currency_text_view"
         app:layout_constraintEnd_toEndOf="@+id/currency_text_view"
         app:layout_constraintHorizontal_bias="0.059"
@@ -93,17 +97,108 @@
 
     <Button
         android:id="@+id/transfer_button"
-        android:layout_width="88dp"
-        android:layout_height="44dp"
-        android:background="#EBFADC"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/balancetf"
         android:text="Transfer"
-        android:textSize="8sp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:translationY="3sp"
         app:layout_constraintBottom_toBottomOf="@+id/currency_text_view"
         app:layout_constraintEnd_toEndOf="@+id/currency_text_view"
-        app:layout_constraintHorizontal_bias="0.43"
-        app:layout_constraintStart_toStartOf="@+id/currency_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCurrency"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="@+id/currency_text_view" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:text="Almost Expired"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currency_text_view" />
+
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="364dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="456dp"
+        android:src="@drawable/aeon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="20dp"
+        tools:layout_editor_absoluteX="110dp">
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="20dp"
+        tools:layout_editor_absoluteX="122dp">
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="20dp"
+        tools:layout_editor_absoluteX="134dp">
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="364dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ciputra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/seeAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="151dp"
+        android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+        android:text="See All"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/currency_text_view" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="347dp"
+        android:layout_height="167dp"
+        android:src="@drawable/threeadditem"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currency_text_view"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,10 +16,9 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:padding="10dp"
             android:background="@drawable/search_order"
             android:drawableEnd="@drawable/search"
-            />
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/buttonCart"
@@ -39,15 +38,15 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="Order Menu"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="#005700"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="16dp"-->
+<!--        android:text="Order Menu"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="#005700"/>-->
 
 <!--    <com.google.android.material.tabs.TabLayout-->
 <!--        android:id="@+id/tabLayout"-->
