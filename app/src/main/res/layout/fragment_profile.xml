@@ -1,11 +1,14 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:gravity="center"
+    android:orientation="vertical"
     android:background="#EBFADC">
+
 
     <!-- Icon Kiri (Email) -->
     <ImageView
@@ -177,4 +180,4 @@
         app:layout_constraintTop_toBottomOf="@id/myReviews"
         app:layout_constraintVertical_bias="0.0" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
