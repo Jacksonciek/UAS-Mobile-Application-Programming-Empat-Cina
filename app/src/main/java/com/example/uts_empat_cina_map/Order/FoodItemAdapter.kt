@@ -9,28 +9,33 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
+import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.OrderData.FoodItem
 import com.example.uts_empat_cina_map.R
 
-class FoodItemAdapter(private val context: Context, private val foodItemList: List<FoodItem>) :
-    RecyclerView.Adapter<FoodItemAdapter.FoodViewHolder>() {
+class FoodItemAdapter(
+    private val context: Context,
+    private var foodItemList: List<FoodItem>
+) : RecyclerView.Adapter<FoodItemAdapter.FoodViewHolder>() {
+
+    fun updateData(newFoodItems: List<FoodItem>) {
+        foodItemList = newFoodItems
+        notifyDataSetChanged()
+    }
 
     inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val foodImage: ImageView = itemView.findViewById(R.id.foodImage)
         val foodName: TextView = itemView.findViewById(R.id.foodName)
         val foodPrice: TextView = itemView.findViewById(R.id.foodPrice)
+        val stockQuantity: TextView = itemView.findViewById(R.id.stockQuantity) // New field for stock quantity
+        val location: TextView = itemView.findViewById(R.id.location) // New field for location
 
         init {
             itemView.setOnClickListener {
-                // Get the current food item
                 val foodItem = foodItemList[adapterPosition]
-
-                // Create a bundle to pass food item data
                 val bundle = Bundle().apply {
                     putParcelable("food_item", foodItem)
                 }
-
-                // Navigate to FoodItemDetailFragment
                 (context as FragmentActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, FoodItemDetailFragment().apply { arguments = bundle })
                     .addToBackStack(null)
@@ -47,10 +52,13 @@ class FoodItemAdapter(private val context: Context, private val foodItemList: Li
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val foodItem = foodItemList[position]
         holder.foodName.text = foodItem.name
-        holder.foodImage.setImageResource(foodItem.imageResource)
-        holder.foodPrice.text = "Rp. " + foodItem.price.toString() + "/pcs"
+        holder.foodPrice.text = "Rp. ${foodItem.price}/pcs"
+        holder.stockQuantity.text = "${foodItem.stock} Left" // Display stock quantity
+        holder.location.text = foodItem.location // Display location
+        Glide.with(context).load(foodItem.imageUrl).into(holder.foodImage)
     }
 
-
-    override fun getItemCount(): Int = foodItemList.size
+    override fun getItemCount(): Int {
+        return foodItemList.size
+    }
 }

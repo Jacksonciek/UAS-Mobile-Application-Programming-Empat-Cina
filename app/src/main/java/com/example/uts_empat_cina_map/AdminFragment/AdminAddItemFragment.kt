@@ -25,6 +25,8 @@ class AdminAddItemFragment : Fragment() {
     private lateinit var uploadImageButton: Button
     private lateinit var saveButton: Button
     private lateinit var imageUri: Uri
+    private lateinit var itemCategorySpinner: Spinner
+    private lateinit var uploadedImageView: ImageView
 
     private var stockCount: Int = 0
     private val storage = FirebaseStorage.getInstance().reference
@@ -43,8 +45,10 @@ class AdminAddItemFragment : Fragment() {
         decreaseStockButton = view.findViewById(R.id.decrease_stock_button)
         increaseStockButton = view.findViewById(R.id.increase_stock_button)
         itemDescription = view.findViewById(R.id.item_description)
+        uploadedImageView = view.findViewById(R.id.uploaded_image_view)
         uploadImageButton = view.findViewById(R.id.upload_image_button)
         saveButton = view.findViewById(R.id.save_button)
+        itemCategorySpinner = view.findViewById(R.id.item_category_spinner)
 
         setupStockButtons()
         setupImageUpload()
@@ -81,6 +85,8 @@ class AdminAddItemFragment : Fragment() {
         if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
             data?.data?.let {
                 imageUri = it
+                uploadedImageView.setImageURI(imageUri) // Show the selected image
+                uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
                 Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
             }
         }
@@ -90,28 +96,39 @@ class AdminAddItemFragment : Fragment() {
         saveButton.setOnClickListener {
             val name = itemName.text.toString().trim()
             val location = itemLocation.text.toString().trim()
-            val price = itemPrice.text.toString().trim()
+            val priceString = itemPrice.text.toString().trim()
             val description = itemDescription.text.toString().trim()
+            val category = itemCategorySpinner.selectedItem.toString()
 
-            if (name.isEmpty() || location.isEmpty() || price.isEmpty() || description.isEmpty() || stockCount == 0) {
+            // Check if any fields are empty or if "Choose Category" is selected
+            if (name.isEmpty() || location.isEmpty() || priceString.isEmpty() ||
+                description.isEmpty() || stockCount == 0 ||
+                category == getString(R.string.select_category_prompt)) {
                 Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Convert price from String to Double
+            val price = priceString.toDoubleOrNull()
+            if (price == null) {
+                Toast.makeText(context, "Please enter a valid price", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (this::imageUri.isInitialized) {
-                uploadImageToStorage(name, location, price, description)
+                uploadImageToStorage(name, location, price, description, category)
             } else {
                 Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun uploadImageToStorage(name: String, location: String, price: String, description: String) {
+    private fun uploadImageToStorage(name: String, location: String, price: Double, description: String, category: String) {
         val imageRef = storage.child("items/${UUID.randomUUID()}.jpg")
         imageRef.putFile(imageUri)
             .addOnSuccessListener {
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
-                    uploadItemToFirestore(name, location, price, description, uri.toString())
+                    uploadItemToFirestore(name, location, price, description, category, uri.toString())
                 }
             }
             .addOnFailureListener {
@@ -119,13 +136,14 @@ class AdminAddItemFragment : Fragment() {
             }
     }
 
-    private fun uploadItemToFirestore(name: String, location: String, price: String, description: String, imageUrl: String) {
+    private fun uploadItemToFirestore(name: String, location: String, price: Double, description: String, category: String, imageUrl: String) {
         val item = hashMapOf(
             "name" to name,
             "location" to location,
             "price" to price,
             "stock" to stockCount,
             "description" to description,
+            "category" to category,
             "imageUrl" to imageUrl
         )
 
@@ -146,5 +164,7 @@ class AdminAddItemFragment : Fragment() {
         itemDescription.text.clear()
         stockCount = 0
         stockQuantity.text = stockCount.toString()
+        itemCategorySpinner.setSelection(0) // Reset to the first item (assumed to be "Choose Category")
+        uploadedImageView.visibility = View.GONE // Hide the image view
     }
 }

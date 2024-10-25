@@ -1,36 +1,21 @@
-package com.example.uts_empat_cina_map
+package com.example.uts_empat_cina_map.Order
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.viewpager.widget.ViewPager
-import com.example.uts_empat_cina_map.Order.AllFoodFragment
-import com.example.uts_empat_cina_map.Order.DrinksFragment
-import com.example.uts_empat_cina_map.Order.FavoritesFragment
-import com.example.uts_empat_cina_map.Order.ViewPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.example.uts_empat_cina_map.R
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class OrderFragment : Fragment() {
 
+    private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager: ViewPager
-    private lateinit var buttonCart: Button
-    private lateinit var buttonNotification: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,57 +25,42 @@ class OrderFragment : Fragment() {
 
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.viewPager)
-        buttonCart = view.findViewById(R.id.buttonCart)
-        buttonNotification = view.findViewById(R.id.buttonMail)
 
-        setupViewPager(viewPager)
-        tabLayout.setupWithViewPager(viewPager)
+        // Set up ViewPager with the sections adapter.
+        viewPager.adapter = SectionsPagerAdapter(requireActivity())
 
-        // Set up custom tabs after linking with ViewPager
-        setupCustomTabs()
+        // Attach TabLayout with ViewPager2
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "All"
+                1 -> "Main Course"
+                2 -> "Drinks"
+                3 -> "Desserts"
+                4 -> "Snacks"
+                5 -> "Appetizers"
+                else -> null
+            }
+        }.attach()
 
-        buttonCart.setOnClickListener {
-            // Navigate to CartFragment
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, CheckoutFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
-
-        buttonNotification.setOnClickListener {
-            // Navigate to notification
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, notification())
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
+        // Set the default tab to All (position 0)
+        viewPager.currentItem = 0
 
         return view
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addFragment(AllFoodFragment(), "All")
-        adapter.addFragment(FavoritesFragment(), "Favorites")
-        adapter.addFragment(DrinksFragment(), "Drinks")
-        viewPager.adapter = adapter
-    }
+    private inner class SectionsPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 6 // Total number of tabs
 
-    private fun setupCustomTabs() {
-        // First tab (All)
-        val allTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
-        allTab.findViewById<TextView>(R.id.tab_title).text = "All"
-        tabLayout.getTabAt(0)?.customView = allTab
-
-        // Second tab (Favorites)
-        val favoritesTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
-        favoritesTab.findViewById<TextView>(R.id.tab_title).text = "Favorites"
-        tabLayout.getTabAt(1)?.customView = favoritesTab
-
-        // Third tab (Drinks)
-        val drinksTab = LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
-        drinksTab.findViewById<TextView>(R.id.tab_title).text = "Drinks"
-        tabLayout.getTabAt(2)?.customView = drinksTab
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> AllFoodFragment() // Fragment for All Food Items
+                1 -> MainCourseFragment()
+                2 -> DrinksFragment()
+                3 -> DessertsFragment()
+                4 -> SnacksFragment()
+                5 -> AppetizersFragment()
+                else -> AllFoodFragment()
+            }
+        }
     }
 }
-
