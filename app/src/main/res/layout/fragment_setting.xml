@@ -7,10 +7,9 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="#F6F6E9"
-    tools:context=".SettingFragment">
+    tools:context=".SettingsFragment">
 
     <!-- Settings Title -->
-
     <TextView
         android:id="@+id/settingsTitle"
         android:layout_width="wrap_content"
@@ -46,8 +45,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Avatar ImageView -->
-
-    <!-- Personal Information Section -->
     <ImageView
         android:id="@+id/avatarImageView"
         android:layout_width="100dp"
@@ -56,7 +53,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/baseline_rounded_corner_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settingsTitle" />
 
@@ -103,7 +99,7 @@
         android:id="@+id/emailField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="foodEco@gmail.com"
+        android:text="example@gmail.com"
         android:padding="12dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/phoneField"
@@ -163,7 +159,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Select Avatar Button -->
+    <!-- Upload Avatar Button -->
     <Button
         android:id="@+id/uploadAvatarButton"
         android:layout_width="0dp"

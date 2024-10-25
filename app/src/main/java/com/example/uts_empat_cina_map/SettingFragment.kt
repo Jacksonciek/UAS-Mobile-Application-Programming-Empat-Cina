@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class SettingFragment : Fragment() {
 
     private lateinit var nameField: EditText
     private lateinit var emailField: TextView
+    private lateinit var phoneField: EditText // Added phone field
     private lateinit var passwordField: EditText
     private lateinit var avatarImageView: ImageView
     private lateinit var uploadAvatarButton: Button
@@ -40,6 +42,7 @@ class SettingFragment : Fragment() {
 
         nameField = view.findViewById(R.id.nameField)
         emailField = view.findViewById(R.id.emailField)
+        phoneField = view.findViewById(R.id.phoneField) // Initialize phone field
         passwordField = view.findViewById(R.id.passwordField)
         avatarImageView = view.findViewById(R.id.avatarImageView)
         uploadAvatarButton = view.findViewById(R.id.uploadAvatarButton)
@@ -67,6 +70,7 @@ class SettingFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         nameField.setText(document.getString("name"))
+                        phoneField.setText(document.getString("phone")) // Load phone number
                         val avatarUrl = document.getString("avatarUrl")
                         if (avatarUrl != null) {
                             // Load avatar image using your preferred image loading library
@@ -79,57 +83,69 @@ class SettingFragment : Fragment() {
         }
     }
 
-
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
             val name = nameField.text.toString().trim()
+            val phone = phoneField.text.toString().trim() // Get phone number
             val password = passwordField.text.toString()
 
-            if (name.isEmpty()) {
-                Toast.makeText(context, "Please enter your name", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            // Update name if it's provided
+            if (name.isNotEmpty()) {
+                saveUserData(name, phone) // Pass phone number to saveUserData
             }
 
+            // Update password if it's provided
             if (password.isNotEmpty()) {
-                auth.currentUser?.updatePassword(password)?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        saveUserData(name)
-                    } else {
-                        Toast.makeText(context, "Failed to update password", Toast.LENGTH_SHORT).show()
-                    }
+                updatePassword(password)
+            }
+
+            // If avatarUri is set, upload avatar
+            avatarUri?.let { uri ->
+                val userId = auth.currentUser?.uid
+                if (userId != null) {
+                    uploadAvatarToStorage(userId, uri)
                 }
+            }
+        }
+    }
+
+    private fun updatePassword(password: String) {
+        auth.currentUser?.updatePassword(password)?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "Password updated successfully", Toast.LENGTH_SHORT).show()
             } else {
-                saveUserData(name)
+                Toast.makeText(context, "Failed to update password", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun saveUserData(name: String) {
+    private fun saveUserData(name: String, phone: String) { // Added phone parameter
         val userId = auth.currentUser?.uid ?: return
-        val userUpdates = mutableMapOf(
-            "name" to name
-        )
-        if (avatarUri != null) {
-            uploadAvatarToStorage(userId) { avatarUrl ->
-                userUpdates["avatarUrl"] = avatarUrl
-                updateFirestore(userId, userUpdates)
+        val userUpdates = mapOf("name" to name, "phone" to phone) // Include phone in updates
+
+        firestore.collection("users").document(userId).update(userUpdates)
+            .addOnSuccessListener {
+                Toast.makeText(context, "User info updated successfully", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            updateFirestore(userId, userUpdates)
-        }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to update user info", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun uploadAvatarToStorage(userId: String, onSuccess: (String) -> Unit) {
+    private fun uploadAvatarToStorage(userId: String, uri: Uri) {
+        Log.d("SettingFragment", "Uploading avatar for user ID: $userId with URI: $uri")
         val avatarRef = storage.reference.child("avatars/$userId.jpg")
-        avatarUri?.let {
-            avatarRef.putFile(it).addOnSuccessListener {
-                avatarRef.downloadUrl.addOnSuccessListener { uri ->
-                    onSuccess(uri.toString())
+        avatarRef.putFile(uri)
+            .addOnSuccessListener {
+                avatarRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    val avatarUrl = downloadUri.toString()
+                    updateFirestore(userId, mapOf("avatarUrl" to avatarUrl))
                 }
-            }.addOnFailureListener {
+            }
+            .addOnFailureListener { exception ->
+                Log.e("SettingFragment", "Failed to upload avatar: ${exception.message}")
                 Toast.makeText(context, "Failed to upload avatar", Toast.LENGTH_SHORT).show()
             }
-        }
     }
 
     private fun updateFirestore(userId: String, userUpdates: Map<String, Any>) {

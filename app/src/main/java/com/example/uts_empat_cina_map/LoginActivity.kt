@@ -3,11 +3,9 @@ package com.example.uts_empat_cina_map
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.RenderEffect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
-import jp.wasabeef.blurry.Blurry
 import android.util.Patterns
 import android.view.View
 import android.widget.*
@@ -23,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import jp.wasabeef.blurry.Blurry
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,10 +29,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginPassword: EditText
     private lateinit var signupRedirectText: TextView
     private lateinit var loginButton: Button
-    private lateinit var redirectAdmin: TextView
-    private lateinit var auth: FirebaseAuth
     private lateinit var forgotPassword: TextView
     private lateinit var googleBtn: GoogleSignInButton
+    private lateinit var auth: FirebaseAuth
     private lateinit var gOptions: GoogleSignInOptions
     private lateinit var gClient: GoogleSignInClient
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
@@ -50,105 +48,115 @@ class LoginActivity : AppCompatActivity() {
         forgotPassword = findViewById(R.id.forgot_password)
         googleBtn = findViewById(R.id.googleBtn)
 
+        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        loginButton.setOnClickListener {
-            val email = loginEmail.text.toString()
-            val pass = loginPassword.text.toString()
+        loginButton.setOnClickListener { loginUser() }
+        signupRedirectText.setOnClickListener { navigateToSignUp() }
+        forgotPassword.setOnClickListener { showForgotPasswordDialog() }
 
-            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                if (!pass.isEmpty()) {
-                    auth.signInWithEmailAndPassword(email, pass)
-                        .addOnSuccessListener {
-                            Toast.makeText(this@LoginActivity, "Login Successful", Toast.LENGTH_SHORT).show()
-                            // Check if the logged-in user is the admin
-                            if (email == "admin@gmail.com") {
-                                startActivity(Intent(this@LoginActivity, AdminActivity::class.java)) // Redirect to Admin Activity
-                            } else {
-                                startActivity(Intent(this@LoginActivity, biometric::class.java)) // Redirect to User Activity
-                            }
-                            finish() // Close the login activity
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this@LoginActivity, "Login Failed", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    loginPassword.error = "Empty fields are not allowed"
-                }
-            } else if (email.isEmpty()) {
-                loginEmail.error = "Empty fields are not allowed"
+        // Initialize Google Sign-In
+        initGoogleSignIn()
+
+        // Check if user is already signed in
+        checkAlreadySignedIn()
+    }
+
+    private fun loginUser() {
+        val email = loginEmail.text.toString().trim()
+        val pass = loginPassword.text.toString().trim()
+
+        if (email.isEmpty()) {
+            loginEmail.error = "Email cannot be empty"
+            return
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            loginEmail.error = "Please enter a valid email"
+            return
+        }
+        if (pass.isEmpty()) {
+            loginPassword.error = "Password cannot be empty"
+            return
+        }
+
+        // Sign in with email and password
+        auth.signInWithEmailAndPassword(email, pass)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                navigateToNextActivity(email)
+                finish() // Close the login activity
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Login Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun navigateToNextActivity(email: String) {
+        // Redirect based on user role
+        if (email == "admin@gmail.com") {
+            startActivity(Intent(this, AdminActivity::class.java))
+        } else {
+            startActivity(Intent(this, biometric::class.java))
+        }
+    }
+
+    private fun navigateToSignUp() {
+        startActivity(Intent(this, SignUpActivity::class.java))
+    }
+
+    private fun showForgotPasswordDialog() {
+        // Blur the background
+        Blurry.with(this)
+            .radius(15)
+            .sampling(2)
+            .onto(findViewById(R.id.root_layout))
+
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot, null)
+        val emailBox = dialogView.findViewById<EditText>(R.id.emailBox)
+
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        dialogView.findViewById<Button>(R.id.btnReset).setOnClickListener {
+            val userEmail = emailBox.text.toString().trim()
+            if (TextUtils.isEmpty(userEmail) || !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+                Toast.makeText(this, "Enter your registered email id", Toast.LENGTH_SHORT).show()
             } else {
-                loginEmail.error = "Please enter correct email"
+                sendPasswordResetEmail(userEmail, dialog)
             }
         }
 
-        signupRedirectText.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+            Blurry.delete(findViewById(R.id.root_layout))
         }
 
-        forgotPassword.setOnClickListener {
-            // Blur the background
-            Blurry.with(this)
-                .radius(15) // Adjusted blur radius for clearer effect
-                .sampling(2) // Downsample factor to reduce performance impact
-                .onto(findViewById(R.id.root_layout)) // Ensure this is the root layout only
+        // Set a transparent background for the dialog
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            val builder = AlertDialog.Builder(this@LoginActivity)
-            val dialogView = layoutInflater.inflate(R.layout.dialog_forgot, null)
-            val emailBox = dialogView.findViewById<EditText>(R.id.emailBox)
+        dialog.setOnDismissListener { Blurry.delete(findViewById(R.id.root_layout)) }
 
-            builder.setView(dialogView)
-            val dialog = builder.create()
+        dialog.show()
+    }
 
-            dialogView.findViewById<Button>(R.id.btnReset).setOnClickListener {
-                val userEmail = emailBox.text.toString()
-
-                if (TextUtils.isEmpty(userEmail) || !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
-                    Toast.makeText(this@LoginActivity, "Enter your registered email id", Toast.LENGTH_SHORT).show()
+    private fun sendPasswordResetEmail(userEmail: String, dialog: AlertDialog) {
+        auth.sendPasswordResetEmail(userEmail)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Check your email", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                    Blurry.delete(findViewById(R.id.root_layout))
                 } else {
-                    auth.sendPasswordResetEmail(userEmail)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                Toast.makeText(this@LoginActivity, "Check your email", Toast.LENGTH_SHORT).show()
-                                dialog.dismiss()
-                                // Clear the blur effect when the dialog is dismissed
-                                Blurry.delete(findViewById(R.id.root_layout))
-                            } else {
-                                Toast.makeText(this@LoginActivity, "Unable to send, failed", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                    Toast.makeText(this, "Unable to send reset email: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
 
-            dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-                dialog.dismiss()
-                // Clear the blur effect when dialog is dismissed
-                Blurry.delete(findViewById(R.id.root_layout))
-            }
-
-            // Set a transparent background for the dialog
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-            dialog.setOnDismissListener {
-                // Clear the blur effect when dialog is dismissed
-                Blurry.delete(findViewById(R.id.root_layout))
-            }
-
-            dialog.show()
-        }
-
-        // Google SignIn Options
+    private fun initGoogleSignIn() {
         gOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         gClient = GoogleSignIn.getClient(this, gOptions)
 
-        val gAccount = GoogleSignIn.getLastSignedInAccount(this)
-        if (gAccount != null) {
-            finish()
-            val intent = Intent(this@LoginActivity, biometric::class.java)
-            startActivity(intent)
-        }
-
-        // Google SignIn Result Launcher
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             ActivityResultCallback<ActivityResult> { result ->
@@ -157,11 +165,11 @@ class LoginActivity : AppCompatActivity() {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(data)
                     try {
                         task.getResult(ApiException::class.java)
+                        // Proceed to the next activity
                         finish()
-                        val intent = Intent(this@LoginActivity, biometric::class.java)
-                        startActivity(intent)
+                        startActivity(Intent(this, biometric::class.java))
                     } catch (e: ApiException) {
-                        Toast.makeText(this@LoginActivity, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Google Sign-In failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -170,6 +178,14 @@ class LoginActivity : AppCompatActivity() {
         googleBtn.setOnClickListener {
             val signInIntent = gClient.signInIntent
             activityResultLauncher.launch(signInIntent)
+        }
+    }
+
+    private fun checkAlreadySignedIn() {
+        val gAccount = GoogleSignIn.getLastSignedInAccount(this)
+        if (gAccount != null) {
+            finish()
+            startActivity(Intent(this, biometric::class.java))
         }
     }
 }

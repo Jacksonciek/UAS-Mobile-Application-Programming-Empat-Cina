@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
+import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.Order.OrderFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -40,28 +41,20 @@ class ProfileFragment : Fragment() {
         // Initialize views
         profileName = view.findViewById(R.id.profileName)
         profileEmail = view.findViewById(R.id.profileEmail)
-        profilePhone = view.findViewById(R.id.profilePhone) // Make sure you have this TextView in your XML
+        profilePhone = view.findViewById(R.id.profilePhone)
         profileImage = view.findViewById(R.id.profileImage)
 
         // Load user info
         loadUserInfo()
 
-        // Set SpannableString for My Orders
+        // Set SpannableString for various menus
         setSpannableString(view.findViewById(R.id.myOrders), "My Orders", "Already have 10 orders")
-
-        // Set SpannableString for Shipping Addresses
         setSpannableString(view.findViewById(R.id.shippingAddresses), "Shipping Addresses", "02 Addresses")
-
-        // Set SpannableString for Payment Method
         setSpannableString(view.findViewById(R.id.paymentMethod), "Payment Method", "You have 2 cards")
-
-        // Set SpannableString for My Reviews
         setSpannableString(view.findViewById(R.id.myReviews), "My Reviews", "Reviews for 5 items")
-
-        // Set SpannableString for Settings
         setSpannableString(view.findViewById(R.id.settings), "Settings", "Notification, Password, FAQ, Contact")
 
-        // Setup onClickListeners
+        // Setup onClickListeners for menu items
         setupOnClickListeners(view)
 
         return view
@@ -70,32 +63,58 @@ class ProfileFragment : Fragment() {
     private fun loadUserInfo() {
         val user = auth.currentUser
         user?.let {
-            // Get user data from Firestore
+            // Get user data from Firestore using UID
             firestore.collection("users").document(it.uid).get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         // Load user details
-                        profileName.text = document.getString("name") ?: "No name available"
-                        profileEmail.text = document.getString("email") ?: "No email available"
-                        profilePhone.text = document.getString("phone") ?: "No phone available"
+                        val name = document.getString("name") ?: "No name available"
+                        val email = it.email ?: "No email available" // Get email directly from the current user
+                        val phone = document.getString("phone") ?: "No phone available"
+
+                        // Log the fetched values for debugging
+                        Log.d("ProfileFragment", "Fetched user data: Name: $name, Email: $email, Phone: $phone")
+
+                        // Update the UI
+                        profileName.text = name
+                        profileEmail.text = email
+                        profilePhone.text = phone
 
                         // Load user avatar using Glide
                         val avatarUrl = document.getString("avatarUrl")
                         if (!avatarUrl.isNullOrEmpty()) {
-                            Glide.with(this) // Use 'this' to refer to the Fragment context
+                            Glide.with(this)
                                 .load(avatarUrl)
-                                .placeholder(R.drawable.baseline_person_24) // Default avatar while loading
-                                .error(R.drawable.baseline_person_24) // Error placeholder
+                                .placeholder(R.drawable.baseline_person_24)
+                                .error(R.drawable.baseline_person_24)
                                 .into(profileImage)
                         } else {
-                            profileImage.setImageResource(R.drawable.baseline_person_24) // Default avatar
+                            profileImage.setImageResource(R.drawable.baseline_person_24)
                         }
+                    } else {
+                        Log.d("ProfileFragment", "No such document")
+                        showDefaultUserData()
                     }
                 }
-                .addOnFailureListener {
-                    // Handle the error
+                .addOnFailureListener { exception ->
+                    Log.e("ProfileFragment", "Error getting user document", exception)
+                    showErrorLoadingData()
                 }
-        }
+        } ?: Log.w("ProfileFragment", "No current user")
+    }
+
+    private fun showDefaultUserData() {
+        profileName.text = "No name available"
+        profileEmail.text = "No email available"
+        profilePhone.text = "No phone available"
+        profileImage.setImageResource(R.drawable.baseline_person_24)
+    }
+
+    private fun showErrorLoadingData() {
+        profileName.text = "Error loading data"
+        profileEmail.text = "Error loading data"
+        profilePhone.text = "Error loading data"
+        profileImage.setImageResource(R.drawable.baseline_person_24)
     }
 
     private fun setSpannableString(textView: TextView, title: String, subtitle: String) {
