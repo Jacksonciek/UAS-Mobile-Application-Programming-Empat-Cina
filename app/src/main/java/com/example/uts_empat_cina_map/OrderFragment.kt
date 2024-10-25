@@ -30,6 +30,7 @@ class OrderFragment : Fragment() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
     private lateinit var buttonCart: Button
+    private lateinit var buttonNotification: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,7 @@ class OrderFragment : Fragment() {
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.viewPager)
         buttonCart = view.findViewById(R.id.buttonCart)
+        buttonNotification = view.findViewById(R.id.buttonMail)
 
         setupViewPager(viewPager)
         tabLayout.setupWithViewPager(viewPager)
@@ -51,6 +53,14 @@ class OrderFragment : Fragment() {
             // Navigate to CartFragment
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, CheckoutFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        buttonNotification.setOnClickListener {
+            // Navigate to notification
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, notification())
             transaction.addToBackStack(null)
             transaction.commit()
         }
