@@ -1,9 +1,24 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="302dp"
-    android:height="41dp"
-    android:viewportWidth="302"
-    android:viewportHeight="41">
-  <path
-      android:pathData="M20.5,0L281.5,0A16.5,16.5 0,0 1,298 16.5L298,16.5A16.5,16.5 0,0 1,281.5 33L20.5,33A16.5,16.5 0,0 1,4 16.5L4,16.5A16.5,16.5 0,0 1,20.5 0z"
-      android:fillColor="#F1F9E8"/>
-</vector>
+<!-- res/drawable/search_order_with_shadow.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Shadow layer -->
+  <item android:left="8dp" android:right="8dp" android:top="5dp" android:bottom="6dp">
+    <shape android:shape="rectangle">
+      <solid android:color="#11000000" /> <!-- Shadow color (semi-transparent black) -->
+      <corners android:radius="25dp" />   <!-- Match corner radius of vector drawable -->
+    </shape>
+  </item>
+
+  <!-- Original shape layer -->
+  <item>
+    <vector
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="302dp"
+        android:height="41dp"
+        android:viewportWidth="302"
+        android:viewportHeight="41">
+      <path
+          android:pathData="M20.5,0L281.5,0A16.5,16.5 0,0 1,298 16.5L298,16.5A16.5,16.5 0,0 1,281.5 33L20.5,33A16.5,16.5 0,0 1,4 16.5L4,16.5A16.5,16.5 0,0 1,20.5 0z"
+          android:fillColor="#F1F9E8" />
+    </vector>
+  </item>
+</layer-list>

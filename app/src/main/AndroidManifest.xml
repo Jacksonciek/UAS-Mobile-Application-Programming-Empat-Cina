@@ -43,6 +43,8 @@
         <activity
             android:name=".Intro2"
             android:exported="false" />
+        <activity android:name=".SeeAllActivity"
+            android:exported="false" />
         <activity
         android:name=".StartActivity"
         android:exported="false" />

@@ -1,9 +1,18 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="377dp"
-    android:height="133dp"
-    android:viewportWidth="377"
-    android:viewportHeight="133">
-  <path
-      android:pathData="M25,0L352,0A25,25 0,0 1,377 25L377,108A25,25 0,0 1,352 133L25,133A25,25 0,0 1,0 108L0,25A25,25 0,0 1,25 0z"
-      android:fillColor="#135040"/>
-</vector>
+<!-- res/drawable/rounded_textview_right_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+  <solid android:color="#135040" /> <!-- Background color -->
+  <corners
+      android:radius="30dp" /> <!-- Only right corners are rounded -->
+</shape>
+
+
+    <!--<vector xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:width="377dp"-->
+<!--    android:height="133dp"-->
+<!--    android:viewportWidth="377"-->
+<!--    android:viewportHeight="133">-->
+<!--  <path-->
+<!--      android:pathData="M25,0L352,0A25,25 0,0 1,377 25L377,108A25,25 0,0 1,352 133L25,133A25,25 0,0 1,0 108L0,25A25,25 0,0 1,25 0z"-->
+<!--      android:fillColor="#135040"/>-->
+<!--</vector>-->

@@ -1,0 +1,7 @@
+<!-- res/drawable/rounded_textview_right_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#135040" /> <!-- Background color -->
+    <corners
+        android:radius="7dp" /> <!-- Only right corners are rounded -->
+</shape>
