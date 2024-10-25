@@ -39,16 +39,15 @@
 
     </LinearLayout>
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:padding="16dp"-->
-<!--        android:text="Order Menu"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:gravity="center"-->
-<!--        android:textColor="#005700"/> -->
-    <!-- Dark green text for "Order Menu" -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Order Menu"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#005700"/>
 
 <!--    <com.google.android.material.tabs.TabLayout-->
 <!--        android:id="@+id/tabLayout"-->
@@ -59,7 +58,7 @@
 <!--        app:tabSelectedTextColor="@android:color/white"-->
 <!--        app:tabIndicatorColor="@android:color/transparent"-->
 <!--        app:tabIndicatorHeight="0dp"/> -->
-    <!-- Hide default indicator height -->
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -71,17 +70,15 @@
         app:tabGravity="fill"
         app:tabMode="fixed" />
 
-<!--    <View-->
-<!--        android:id="@+id/tabIndicator"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="2dp"-->
-<!--        android:background="@android:color/white" /> -->
-    <!-- White line for the indicator -->
+    <View
+        android:id="@+id/tabIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/white" />
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
+        android:layout_weight="1" />
 </LinearLayout>
