@@ -2,6 +2,8 @@ package com.example.uts_empat_cina_map
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,12 +82,43 @@ class AdminAddItemFragment : Fragment() {
         }
     }
 
+    private fun decodeSampledBitmapFromUri(uri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(uri), null, options)
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(uri), null, options)
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
             data?.data?.let {
                 imageUri = it
-                uploadedImageView.setImageURI(imageUri) // Show the selected image
+                // Resize the image before displaying
+                val bitmap = decodeSampledBitmapFromUri(imageUri, 300, 300) // Resize to 300x300
+                uploadedImageView.setImageBitmap(bitmap) // Show the resized image
                 uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
                 Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
             }
