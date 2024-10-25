@@ -11,39 +11,42 @@ import com.example.uts_empat_cina_map.OrderData.FoodItem
 import com.example.uts_empat_cina_map.R
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FavoritesFragment : Fragment() {
+class DessertsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var foodAdapter: FoodItemAdapter
-    private val favoriteItems = mutableListOf<FoodItem>()
+    private val dessertItems = mutableListOf<FoodItem>()
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_favorites, container, false)
+        val view = inflater.inflate(R.layout.fragment_desserts, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = GridLayoutManager(context, 3)
-        foodAdapter = FoodItemAdapter(requireContext(), favoriteItems)
+        foodAdapter = FoodItemAdapter(requireContext(), dessertItems)
         recyclerView.adapter = foodAdapter
 
-        fetchFavoriteItems()
+        fetchDessertItems() // Call the function to fetch dessert items
         return view
     }
 
-    private fun fetchFavoriteItems() {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("food_items")
-            .whereEqualTo("isFavorite", true)
+    private fun fetchDessertItems() {
+        firestore.collection("items") // Ensure this matches your Firestore collection name
+            .whereEqualTo("category", "Desserts") // Query for Desserts items
             .get()
             .addOnSuccessListener { documents ->
-                favoriteItems.clear()
-                favoriteItems.addAll(documents.toObjects(FoodItem::class.java))
-                foodAdapter.notifyDataSetChanged()
+                dessertItems.clear()
+                for (document in documents) {
+                    val foodItem = document.toObject(FoodItem::class.java)
+                    dessertItems.add(foodItem)
+                }
+                foodAdapter.updateData(dessertItems) // Update the adapter with new data
             }
-            .addOnFailureListener { e ->
-                // Handle the error
+            .addOnFailureListener { exception ->
+                // Handle any errors
             }
     }
 }

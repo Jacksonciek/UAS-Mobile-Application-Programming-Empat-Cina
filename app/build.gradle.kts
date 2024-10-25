@@ -59,6 +59,9 @@ dependencies {
     implementation("com.github.TutorialsAndroid:GButton:v1.0.19")
     implementation("com.google.android.gms:play-services-auth:20.4.0")
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation("androidx.fragment:fragment-ktx:1.8.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
 
