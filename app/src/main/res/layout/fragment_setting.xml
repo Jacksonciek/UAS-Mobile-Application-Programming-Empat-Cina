@@ -6,14 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".SettingFragment"
-    android:background="#F6F6E9">
+    android:background="#F6F6E9"
+    tools:context=".SettingFragment">
 
     <!-- Settings Title -->
+
     <TextView
         android:id="@+id/settingsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="116dp"
         android:background="#135040"
         android:gravity="center"
         android:padding="12dp"
@@ -22,18 +25,17 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/iconRight"
-        app:layout_constraintStart_toEndOf="@+id/iconLeft"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iconLeft"
+        android:id="@+id/backButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="Left Icon"
         android:src="@drawable/baseline_arrow_back_ios_24"
-        android:background="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/iconRight"
         android:layout_width="32dp"
@@ -43,8 +45,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Avatar ImageView -->
 
     <!-- Personal Information Section -->
+    <ImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_rounded_corner_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsTitle" />
+
     <TextView
         android:id="@+id/personalInfoLabel"
         android:layout_width="wrap_content"
@@ -52,180 +67,126 @@
         android:text="Personal Information"
         android:textStyle="bold"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/settingsTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/avatarImageView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Name Field -->
     <EditText
         android:id="@+id/nameField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Glen Owen"
         android:hint="Name"
         android:drawableEnd="@drawable/edit"
         android:padding="12dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/personalInfoLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Phone Field -->
+    <EditText
+        android:id="@+id/phoneField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:maxLength="12"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/nameField"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Email Field -->
-    <EditText
+    <TextView
         android:id="@+id/emailField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Glenowenkeren@gmail.com"
-        android:hint="Email"
-        android:drawableEnd="@drawable/edit"
+        android:text="foodEco@gmail.com"
         android:padding="12dp"
-        app:layout_constraintTop_toBottomOf="@id/nameField"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/phoneField"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Password Section -->
     <TextView
         android:id="@+id/passwordLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="Change Password"
         android:textStyle="bold"
         android:textSize="16sp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/emailField"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Password Field -->
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="***********"
         android:hint="Password"
+        android:inputType="textPassword"
         android:drawableEnd="@drawable/edit"
         android:padding="12dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/passwordLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Notifications Section -->
-    <TextView
-        android:id="@+id/notificationsLabel"
-        android:layout_width="wrap_content"
+    <!-- Confirm Password Field -->
+    <EditText
+        android:id="@+id/confirmPasswordField"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Notifications"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:drawableEnd="@drawable/edit"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/passwordField"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- New Arrivals Switch -->
-    <LinearLayout
-        android:id="@+id/newArrivalsSwitch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/notificationsLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="New arrivals"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1" />
-
-        <Switch
-            android:id="@+id/switchNewArrivals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <!-- Delivery Status Changes Switch -->
-    <LinearLayout
-        android:id="@+id/deliveryStatusSwitch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/newArrivalsSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Delivery status changes"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1" />
-
-        <Switch
-            android:id="@+id/switchDeliveryStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <!-- Help Center Section -->
-    <TextView
-        android:id="@+id/helpCenterLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Help Center"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/deliveryStatusSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <!-- FAQ Button -->
+    <!-- Save Button -->
     <Button
-        android:id="@+id/faqButton"
+        android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="FAQ"
+        android:text="Save Changes"
         android:background="@drawable/rounded_button"
         android:textColor="@android:color/white"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        app:layout_constraintTop_toBottomOf="@id/helpCenterLabel"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordField"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Contact Us Button -->
+    <!-- Select Avatar Button -->
     <Button
-        android:id="@+id/contactUsButton"
+        android:id="@+id/uploadAvatarButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Contact Us"
+        android:text="Select Avatar"
         android:background="@drawable/rounded_button"
         android:textColor="@android:color/white"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        app:layout_constraintTop_toBottomOf="@id/faqButton"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/saveButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Privacy & Terms Button -->
+    <!-- Logout Button -->
     <Button
-        android:id="@+id/privacyButton"
+        android:id="@+id/logoutButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="PrivacyTerms"
+        android:text="Logout"
         android:background="@drawable/rounded_button"
         android:textColor="@android:color/white"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        app:layout_constraintTop_toBottomOf="@id/contactUsButton"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/uploadAvatarButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

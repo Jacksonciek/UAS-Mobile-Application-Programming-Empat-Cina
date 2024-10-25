@@ -47,6 +47,8 @@ android {
 
 dependencies {
     // Remove Android Support Libraries and replace with AndroidX libraries
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("androidx.recyclerview:recyclerview:1.3.0") // Use the latest version
     implementation("androidx.viewpager2:viewpager2:1.1.0") // Use ViewPager2 instead
     implementation("com.github.bumptech.glide:glide:4.15.1")
