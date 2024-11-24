@@ -9,8 +9,4 @@ Adapun anggota kelompok dengan kelompok bernama Empat Cina adalah sebagai beriku
 4.	Glen Owen (00000070244)
 
 GitHub : 
-https://github.com/Louis-Gabriel-Hernandes/UTS-EMPAT-CINA-MAP-API30
-GDrive : 
-https://drive.google.com/drive/folders/1hfi-F9x-lmmxH3yqKSZeKVzlH6fXmqwy?usp=sharing
-Link Video Penjelasan :
-https://drive.google.com/file/d/1qsb96KC9qWOMufrzaRNCpt7Bst4lHq5Z/view?usp=sharing
+https://github.com/Jacksonciek/UAS-Mobile-Application-Programming-Empat-Cina
