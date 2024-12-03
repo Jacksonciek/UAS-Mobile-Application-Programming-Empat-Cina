@@ -23,7 +23,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".MainActivityForSplash"
+            android:name=".LoginActivity"
             android:exported="false" />
 
         <meta-data
@@ -50,7 +50,7 @@
         android:exported="false" />
         <!-- Splash screen launcher activity -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivityForSplash"
             android:theme="@style/Base.Theme.UTSEMPATCINAMAP"
             android:exported="true"> <!-- Add android:exported attribute -->
             <intent-filter>
