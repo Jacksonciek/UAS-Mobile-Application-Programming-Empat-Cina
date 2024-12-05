@@ -18,9 +18,10 @@ class FoodItemAdapter(
     private var foodItemList: List<FoodItem>
 ) : RecyclerView.Adapter<FoodItemAdapter.FoodViewHolder>() {
 
+    // Update data method
     fun updateData(newFoodItems: List<FoodItem>) {
         foodItemList = newFoodItems
-        notifyDataSetChanged()
+        notifyDataSetChanged() // Refresh the adapter with new data
     }
 
     inner class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,7 +56,7 @@ class FoodItemAdapter(
         holder.foodPrice.text = "Rp. ${foodItem.price}/pcs"
         holder.stockQuantity.text = "${foodItem.stock} Left" // Display stock quantity
         holder.location.text = foodItem.location // Display location
-        Glide.with(context).load(foodItem.imageUrl).into(holder.foodImage)
+        Glide.with(context).load(foodItem.imageUrl).into(holder.foodImage) // Load image using Glide
     }
 
     override fun getItemCount(): Int {
