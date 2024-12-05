@@ -23,7 +23,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".homepage"
             android:exported="false" />
 
         <meta-data
@@ -46,8 +46,8 @@
         <activity android:name=".SeeAllActivity"
             android:exported="false" />
         <activity
-        android:name=".StartActivity"
-        android:exported="false" />
+            android:name=".StartActivity"
+            android:exported="false" />
         <!-- Splash screen launcher activity -->
         <activity
             android:name=".MainActivityForSplash"
@@ -58,27 +58,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".MainActivity"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
 
         <activity
-            android:name=".homepage"
+            android:name=".LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="false" />-->
+        <!--        <activity-->
+        <!--            android:name=".MainActivity"-->
+        <!--            android:exported="false" />-->
     </application>
 
 </manifest>
