@@ -6,12 +6,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.uts_empat_cina_map.CheckoutFragment
 import com.example.uts_empat_cina_map.R
+import com.example.uts_empat_cina_map.notification
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -55,7 +58,27 @@ class OrderFragment : Fragment() {
                 else -> null
             }
         }.attach()
+        val cartButton: Button = view.findViewById(R.id.cart_button)
 
+        val notificationButton: Button = view.findViewById(R.id.mail_button)
+
+        cartButton.setOnClickListener {
+            val fragment = CheckoutFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
+        notificationButton.setOnClickListener {
+            val fragment = notification()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         // Add a listener to the EditText to filter data on text change
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

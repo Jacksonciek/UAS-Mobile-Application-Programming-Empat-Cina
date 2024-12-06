@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "UTS-EMPAT-CINA-MAP"
+rootProject.name = "UAS-MAP-EmpatCina"
 include(":app")
  

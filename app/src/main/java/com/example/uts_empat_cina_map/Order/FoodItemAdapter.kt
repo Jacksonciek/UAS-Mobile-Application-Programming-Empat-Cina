@@ -54,7 +54,7 @@ class FoodItemAdapter(
         val foodItem = foodItemList[position]
         holder.foodName.text = foodItem.name
         holder.foodPrice.text = "Rp. ${foodItem.price}/pcs"
-        holder.stockQuantity.text = "${foodItem.stock} Left" // Display stock quantity
+        holder.stockQuantity.text = "Stock : ${foodItem.stock} left" // Display stock quantity
         holder.location.text = foodItem.location // Display location
         Glide.with(context).load(foodItem.imageUrl).into(holder.foodImage) // Load image using Glide
     }

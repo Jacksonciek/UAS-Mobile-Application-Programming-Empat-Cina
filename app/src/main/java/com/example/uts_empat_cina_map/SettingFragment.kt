@@ -14,17 +14,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
+// Updated SettingFragment.kt
 class SettingFragment : Fragment() {
 
     private lateinit var nameField: EditText
     private lateinit var emailField: TextView
-    private lateinit var phoneField: EditText // Added phone field
+    private lateinit var phoneField: EditText
     private lateinit var passwordField: EditText
     private lateinit var avatarImageView: ImageView
     private lateinit var uploadAvatarButton: Button
     private lateinit var logoutButton: Button
     private lateinit var saveButton: Button
     private lateinit var backButton: ImageView
+    private lateinit var iconRightLogOut: ImageView // Added iconRightLogOut
     private val auth = FirebaseAuth.getInstance()
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -42,20 +44,22 @@ class SettingFragment : Fragment() {
 
         nameField = view.findViewById(R.id.nameField)
         emailField = view.findViewById(R.id.emailField)
-        phoneField = view.findViewById(R.id.phoneField) // Initialize phone field
+        phoneField = view.findViewById(R.id.phoneField)
         passwordField = view.findViewById(R.id.passwordField)
         avatarImageView = view.findViewById(R.id.avatarImageView)
         uploadAvatarButton = view.findViewById(R.id.uploadAvatarButton)
         logoutButton = view.findViewById(R.id.logoutButton)
         saveButton = view.findViewById(R.id.saveButton)
-        backButton = view.findViewById(R.id.backButton) // Added back button
+        backButton = view.findViewById(R.id.backButton)
+        iconRightLogOut = view.findViewById(R.id.iconRightLogOut) // Initialize iconRightLogOut
 
         loadUserInfo()
         setupSaveButton()
 
         uploadAvatarButton.setOnClickListener { chooseImage() }
         logoutButton.setOnClickListener { logoutUser() }
-        backButton.setOnClickListener { navigateToProfileFragment() } // Handle back button
+        backButton.setOnClickListener { navigateToProfileFragment() }
+        iconRightLogOut.setOnClickListener { logoutUser() } // Set OnClickListener for iconRightLogOut
 
         return view
     }
