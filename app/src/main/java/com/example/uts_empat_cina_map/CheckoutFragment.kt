@@ -14,6 +14,8 @@ import com.example.uts_empat_cina_map.OrderData.CartManager
 
 class CheckoutFragment : Fragment() {
 
+    //fetch payment method firebase
+
     private lateinit var paymentMethodSpinner: Spinner
     private lateinit var confirmButton: Button
     private lateinit var totalPriceTextView: TextView
