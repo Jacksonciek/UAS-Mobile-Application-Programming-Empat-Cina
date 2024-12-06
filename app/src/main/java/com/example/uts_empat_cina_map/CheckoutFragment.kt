@@ -95,7 +95,7 @@ class CheckoutFragment : Fragment() {
         }
 
         // Update the UI
-        totalPriceTextView.text = "${String.format("%.2f", totalPrice)}"
-        totalQuantityTextView.text = "$$totalQuantity"
+        totalPriceTextView.text = "$${String.format("%.2f", totalPrice)}"
+        totalQuantityTextView.text = "Total Quantity : $totalQuantity"
     }
 }
