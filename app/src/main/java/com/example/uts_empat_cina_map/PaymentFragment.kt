@@ -10,6 +10,9 @@ import android.widget.Button
 
 class PaymentFragment : Fragment() {
 
+    //add bolean to check payment in firebase later
+    //add payment method in firebase later
+    //link to shoping cart?
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
