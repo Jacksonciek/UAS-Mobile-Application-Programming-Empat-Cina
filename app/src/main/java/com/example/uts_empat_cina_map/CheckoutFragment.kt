@@ -37,6 +37,7 @@ class CheckoutFragment : Fragment() {
         totalPriceTextView = view.findViewById(R.id.totalPriceTextView)
         totalQuantityTextView = view.findViewById(R.id.totalQuantityTextView)
         itemListLayout = view.findViewById(R.id.itemListLayout)
+        val backButton: Button = view.findViewById(R.id.backButton) // Reference to the backButton
 
         // Set up spinner with dummy payment options
         val paymentMethods = arrayOf("Credit Card", "PayPal", "Cash on Delivery")
@@ -52,7 +53,17 @@ class CheckoutFragment : Fragment() {
             val intent = Intent(requireContext(), payment_successful::class.java)
             startActivity(intent)
         }
+
+        backButton.setOnClickListener {
+            // Navigate to HomeFragment
+            val fragmentManager = parentFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment()) // Replace with your container ID
+                .addToBackStack(null) // Optional, to add to the back stack
+                .commit()
+        }
     }
+
 
     private fun updateCheckoutDetails() {
         val cartItems = CartManager.getCartItems()
