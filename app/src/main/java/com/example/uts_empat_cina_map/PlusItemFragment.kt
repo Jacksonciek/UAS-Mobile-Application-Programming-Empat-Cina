@@ -23,7 +23,7 @@ class PlusItemFragment : Fragment() {
 
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
-    private var imageUri: Uri? = null // To store selected image URI
+    private var imageUri: Uri? = null
     private var stockCount: Int = 0
 
     // Declare views
@@ -35,6 +35,7 @@ class PlusItemFragment : Fragment() {
     private lateinit var insertItem: EditText
     private lateinit var expiredDateInput: EditText
     private lateinit var fulldesc: EditText
+    private lateinit var locationInput: EditText // New Location Input Field
 
     private var selectedDate: String = ""
 
@@ -59,6 +60,7 @@ class PlusItemFragment : Fragment() {
         insertItem = view.findViewById(R.id.insertItem)
         expiredDateInput = view.findViewById(R.id.expiredDateInput)
         fulldesc = view.findViewById(R.id.fulldesc)
+        locationInput = view.findViewById(R.id.locationInput) // Initialize Location Input
 
         // Increment stock
         btnIncrement.setOnClickListener {
@@ -125,9 +127,11 @@ class PlusItemFragment : Fragment() {
         val itemName = insertItem.text.toString().trim()
         val expireDate = selectedDate
         val description = fulldesc.text.toString().trim()
+        val location = locationInput.text.toString().trim() // Get location input
 
         // Validation
-        if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(description) || TextUtils.isEmpty(expireDate)) {
+        if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(description) ||
+            TextUtils.isEmpty(expireDate) || TextUtils.isEmpty(location)) {
             Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
@@ -139,12 +143,9 @@ class PlusItemFragment : Fragment() {
             return
         }
 
-        // Create a unique file path for each user
         val filePath = if (FirebaseAuth.getInstance().currentUser?.email == "admin@gmail.com") {
-            // Admin uploads to the general items collection
             "items/${UUID.randomUUID()}"
         } else {
-            // Regular users upload to their own "user_items" folder
             "user_items/$userId/${UUID.randomUUID()}"
         }
 
@@ -153,13 +154,13 @@ class PlusItemFragment : Fragment() {
             val storageRef = storage.reference.child(filePath)
             storageRef.putFile(imageUri!!).addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveToFirestore(itemName, expireDate, description, uri.toString())
+                    saveToFirestore(itemName, expireDate, description, uri.toString(), location)
                 }
             }.addOnFailureListener {
                 Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
             }
         } else {
-            saveToFirestore(itemName, expireDate, description, null)
+            saveToFirestore(itemName, expireDate, description, null, location)
         }
     }
 
@@ -167,7 +168,8 @@ class PlusItemFragment : Fragment() {
         itemName: String,
         expireDate: String,
         description: String,
-        imageUrl: String?
+        imageUrl: String?,
+        location: String
     ) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId == null) {
@@ -175,20 +177,18 @@ class PlusItemFragment : Fragment() {
             return
         }
 
-        val username = FirebaseAuth.getInstance().currentUser?.displayName ?: "Unknown"
-
         val itemData = hashMapOf(
             "name" to itemName,
             "expireDate" to expireDate,
             "description" to description,
             "stock" to stockCount,
             "imageUrl" to imageUrl,
+            "location" to location, // Add location to Firestore data
             "userId" to userId
         )
 
-        // Save the item in the user's personal collection
         firestore.collection("user_items")
-            .document(userId) // Using userId as the document ID
+            .document(userId)
             .collection("items")
             .add(itemData)
             .addOnSuccessListener {
@@ -200,11 +200,11 @@ class PlusItemFragment : Fragment() {
             }
     }
 
-
     private fun clearInputs() {
         insertItem.text.clear()
         expiredDateInput.text.clear()
         fulldesc.text.clear()
+        locationInput.text.clear() // Clear location input
         tvNumber.text = "0"
         stockCount = 0
         imageUri = null
