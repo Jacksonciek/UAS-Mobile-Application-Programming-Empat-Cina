@@ -88,7 +88,7 @@ class AdminProfileFragment : Fragment() {
         val user = auth.currentUser
         user?.let {
             // Get user data from Firestore using UID
-            firestore.collection("users").document(it.uid).get()
+            firestore.collection("admin").document(it.uid).get()
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         // Load user details

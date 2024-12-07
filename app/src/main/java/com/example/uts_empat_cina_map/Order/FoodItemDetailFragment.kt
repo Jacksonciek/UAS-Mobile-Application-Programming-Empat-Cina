@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.CheckoutFragment
+import com.example.uts_empat_cina_map.HomeFragment
 import com.example.uts_empat_cina_map.OrderData.CartManager
 import com.example.uts_empat_cina_map.OrderData.FoodItem
 import com.example.uts_empat_cina_map.R
@@ -45,7 +46,9 @@ class FoodItemDetailFragment : Fragment() {
         foodPrice = view.findViewById(R.id.foodPrice)
         quantityInput = view.findViewById(R.id.quantityInput)
         addToCartButton = view.findViewById(R.id.addToCartButton)
-        checkoutButton = view.findViewById(R.id.checkoutButton)
+        val decrementButton: Button = view.findViewById(R.id.decrementButton)
+        val incrementButton: Button = view.findViewById(R.id.incrementButton)
+        val backButton: Button = view.findViewById(R.id.backButton)
 
         // Retrieve the food item from the arguments
         foodItem = arguments?.getParcelable("food_item")
@@ -67,13 +70,25 @@ class FoodItemDetailFragment : Fragment() {
                 Toast.makeText(context, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
             }
         }
+        // Increment button click listener
+        incrementButton.setOnClickListener {
+            val currentQuantity = quantityInput.text.toString().toIntOrNull() ?: 1
+            quantityInput.setText((currentQuantity + 1).toString())
+        }
 
-        // Set click listener for checking out
-        checkoutButton.setOnClickListener {
-            // Navigate to Checkout Fragment
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, CheckoutFragment()) // Make sure to replace with your actual CheckoutFragment
-                .addToBackStack(null) // This allows you to go back to the previous fragment
+        // Decrement button click listener
+        decrementButton.setOnClickListener {
+            val currentQuantity = quantityInput.text.toString().toIntOrNull() ?: 1
+            if (currentQuantity > 1) {
+                quantityInput.setText((currentQuantity - 1).toString())
+            }
+        }
+        backButton.setOnClickListener {
+            // Navigate to HomeFragment
+            val fragmentManager = parentFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, OrderFragment()) // Replace with your container ID
+                .addToBackStack(null) // Optional, to add to the back stack
                 .commit()
         }
     }

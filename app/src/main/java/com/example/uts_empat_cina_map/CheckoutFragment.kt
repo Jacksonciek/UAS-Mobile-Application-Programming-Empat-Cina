@@ -51,9 +51,11 @@ class CheckoutFragment : Fragment() {
         updateCheckoutDetails()
 
         confirmButton.setOnClickListener {
-            // Navigate to a new activity for Google Maps (for later implementation)
-            val intent = Intent(requireContext(), payment_successful::class.java)
-            startActivity(intent)
+            val fragmentManager = parentFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ConfirmPaymentFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         backButton.setOnClickListener {
