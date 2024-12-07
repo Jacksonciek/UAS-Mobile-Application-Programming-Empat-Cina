@@ -1,7 +1,180 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/admind_profile"> <!-- Replace with your preferred color or drawable -->
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:background="#EBFADC">
 
-</FrameLayout>
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Left Icon (Email) -->
+        <ImageView
+            android:id="@+id/iconLeft"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Left Icon"
+            android:src="@drawable/mail" />
+
+        <!-- Profile Text in the Center -->
+        <TextView
+            android:id="@+id/profileText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Profile"
+            android:textColor="#2A2A2A"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Right Icon (Exit) -->
+        <ImageView
+            android:id="@+id/iconRight"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Right Icon"
+            android:src="@drawable/exit" />
+    </LinearLayout>
+
+    <!-- Profile Section -->
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_person_24" />
+
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:text="Glen Owen"
+        android:textColor="#2A2A2A"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/profileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center"
+        android:text="GlenOwenKeren@gmail.com"
+        android:textColor="#707070"
+        android:textSize="14sp" />
+
+    <!-- Profile Phone Number -->
+    <TextView
+        android:id="@+id/profilePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center"
+        android:text="123-456-7890"
+        android:textColor="#707070"
+        android:textSize="14sp" />
+
+    <!-- Menu Options (Flexible Widths) -->
+
+    <!-- Remaining Menu Options with Flexible Widths -->
+
+    <Button
+        android:id="@+id/myOrders"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/currency_square"
+        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:textColor="#EBFADC"
+        android:textSize="14sp"
+        android:text="My Item\nAlready Have 2 Order"
+        android:lineSpacingExtra="4dp"
+        android:ellipsize="none"
+        android:singleLine="false"
+        android:scrollHorizontally="false"
+        android:textAllCaps="false"/>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp">
+
+    </View>
+
+
+
+    <Button
+        android:id="@+id/shippingAddresses"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/currency_square"
+        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:text="Shipping Addresses\n03 Addresses"
+        android:textColor="#EBFADC"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp">
+
+    </View>
+
+    <Button
+        android:id="@+id/myReviews"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/currency_square"
+        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:text="My Reviews\nReviews For 5 Items"
+        android:textColor="#EBFADC"
+        android:textSize="16sp"
+        android:textAllCaps="false"/>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp">
+
+    </View>
+
+    <Button
+        android:id="@+id/settings"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/currency_square"
+        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:text="Settings\nNotification, Password, FAQ, Contact"
+        android:textColor="#EBFADC"
+        android:textSize="16sp"
+        android:textAllCaps="false"/>
+
+
+</LinearLayout>
