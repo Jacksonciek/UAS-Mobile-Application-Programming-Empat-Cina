@@ -1,5 +1,6 @@
 package com.example.uts_empat_cina_map
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,11 +12,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.util.Log
+import android.widget.Button
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.Order.OrderFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+// Updated ProfileFragment.kt
 class ProfileFragment : Fragment() {
 
     // Firebase instances
@@ -25,7 +29,9 @@ class ProfileFragment : Fragment() {
     private lateinit var profileName: TextView
     private lateinit var profileEmail: TextView
     private lateinit var profilePhone: TextView
+    private lateinit var logoutButton: Button
     private lateinit var profileImage: ImageView
+    private lateinit var iconRightLogOut: ImageView // Added iconRightLogOut
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,9 +60,13 @@ class ProfileFragment : Fragment() {
         profileEmail = view.findViewById(R.id.profileEmail)
         profilePhone = view.findViewById(R.id.profilePhone)
         profileImage = view.findViewById(R.id.profileImage)
+        iconRightLogOut = view.findViewById(R.id.iconRightLogOut) // Initialize iconRightLogOut
 
         // Load user info
         loadUserInfo()
+
+        // Set OnClickListener for iconRightLogOut
+        iconRightLogOut.setOnClickListener { logoutUser() }
 
         // Set SpannableString for various menus
         setSpannableString(view.findViewById(R.id.myOrders), "My Orders", "Already have 10 orders")
@@ -196,4 +206,11 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+
+    private fun logoutUser() {
+        auth.signOut()
+        Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(requireContext(), LoginActivity::class.java)) // Navigate to LoginActivity
+        activity?.finish() // End current activity
+        }
 }
