@@ -84,10 +84,12 @@
             android:drawableLeft="@drawable/money"
             android:drawablePadding="8dp"
             android:elevation="10dp"
-            android:hint="Insert Address"
+            android:hint="Insert Price"
             android:padding="8dp"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:inputType="numberDecimal"
+            />
 
         <!-- Spinner for Item Category -->
         <TextView
