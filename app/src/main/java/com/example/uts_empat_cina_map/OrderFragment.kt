@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -48,16 +49,17 @@ class OrderFragment : Fragment() {
 
         // Attach TabLayout with ViewPager2
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "All"
-                1 -> "Main Course"
-                2 -> "Drinks"
-                3 -> "Desserts"
-                4 -> "Snacks"
-                5 -> "Appetizers"
-                else -> null
-            }
+            // Set teks untuk tab berdasarkan posisi
+            val tabTitles = listOf("All", "Main Course", "Drinks", "Desserts", "Snacks", "Appetizers")
+            val customTabView = LayoutInflater.from(context).inflate(R.layout.tab_item, null)
+            val tabTextView = customTabView.findViewById<TextView>(R.id.tabTextView)
+            tabTextView.text = tabTitles[position]
+
+            // Terapkan custom view ke tab
+            tab.customView = customTabView
         }.attach()
+
+
         val cartButton: Button = view.findViewById(R.id.cart_button)
 
         val notificationButton: Button = view.findViewById(R.id.mail_button)

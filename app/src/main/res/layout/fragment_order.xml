@@ -65,18 +65,19 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="#ffffff"
-        app:tabIndicatorColor="#130516"
-        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabPaddingStart="8dp"
+        app:tabPaddingEnd="8dp"
+        app:tabTextColor="#135040"
+        app:tabIndicatorColor="#135040"
+        app:tabIndicatorHeight="0dp" />
+
 
     <View
         android:id="@+id/tabIndicator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/rounded_button"
-        android:padding="8dp" />
+        android:layout_height="2dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
