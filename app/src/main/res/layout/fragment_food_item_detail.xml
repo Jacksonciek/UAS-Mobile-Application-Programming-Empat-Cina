@@ -5,36 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/cartbg"
     android:gravity="center"
     android:padding="16dp">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="428dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10sp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <!-- Back button -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="12dp"
+            android:layout_height="19dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/backbuttonreversed"
+            android:paddingLeft="20sp"
+            android:translationX="30sp" />
+
+        <!-- Cart title -->
+        <TextView
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40sp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="Add Item"
+            android:textAlignment="center"
+            android:textColor="#EBFADC"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:translationX="-10sp" />
+
+    </LinearLayout>
     <!-- CardView wrapping the food image, name, description, and price -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
         android:layout_marginBottom="16dp"
-        app:cardCornerRadius="8dp">
+        app:cardElevation="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#EBFADC"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#EBFADC"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/foodImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop" />
+                android:layout_height="300dp"
+                android:background="#EBFADC"
+                app:cardCornerRadius="12dp">
+
+                <ImageView
+                    android:id="@+id/foodImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/foodName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/foodDescription"
@@ -46,16 +93,48 @@
                 android:id="@+id/foodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/quantityInput"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Quantity"
-                android:inputType="number"
-                android:layout_marginTop="8dp" />
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <!-- Decrement button -->
+                <Button
+                    android:id="@+id/decrementButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-"
+                    android:background="@drawable/button_background_untuk_cart"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <!-- Quantity input -->
+                <EditText
+                    android:id="@+id/quantityInput"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textSize="16sp"
+                    android:layout_marginHorizontal="8dp" />
+
+                <!-- Increment button -->
+                <Button
+                    android:id="@+id/incrementButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+"
+                    android:background="@drawable/button_background_untuk_cart"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -64,19 +143,8 @@
         android:id="@+id/addToCartButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/category_order"
         android:text="Add to Cart"
-        android:textColor="@color/white"
-        android:background="@drawable/category_order"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/checkoutButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Checkout"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/category_order"
-        />
+        android:textColor="@color/white" />
 
 </LinearLayout>

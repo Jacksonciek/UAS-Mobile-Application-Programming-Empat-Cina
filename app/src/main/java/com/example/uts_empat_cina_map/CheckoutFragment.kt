@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Spinner
+import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.OrderData.CartManager
 
 // Updated CheckoutFragment.kt
@@ -37,7 +39,7 @@ class CheckoutFragment : Fragment() {
         totalPriceTextView = view.findViewById(R.id.totalPriceTextView)
         totalQuantityTextView = view.findViewById(R.id.totalQuantityTextView)
         itemListLayout = view.findViewById(R.id.itemListLayout)
-        val backButton: Button = view.findViewById(R.id.backButton) // Reference to the backButton
+        val backButton: Button = view.findViewById(R.id.backButton)
 
         // Set up spinner with dummy payment options
         val paymentMethods = arrayOf("Credit Card", "PayPal", "Cash on Delivery")
@@ -49,9 +51,11 @@ class CheckoutFragment : Fragment() {
         updateCheckoutDetails()
 
         confirmButton.setOnClickListener {
-            // Navigate to a new activity for Google Maps (for later implementation)
-            val intent = Intent(requireContext(), payment_successful::class.java)
-            startActivity(intent)
+            val fragmentManager = parentFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ConfirmPaymentFragment())
+                .addToBackStack(null)
+                .commit()
         }
 
         backButton.setOnClickListener {
@@ -63,7 +67,6 @@ class CheckoutFragment : Fragment() {
                 .commit()
         }
     }
-
 
     private fun updateCheckoutDetails() {
         val cartItems = CartManager.getCartItems()
@@ -78,35 +81,53 @@ class CheckoutFragment : Fragment() {
             totalPrice += cartItem.foodItem.price * cartItem.quantity
             totalQuantity += cartItem.quantity
 
-            val itemLayout = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-            }
+            // Inflate item_order.xml for each item
+            val itemLayout = layoutInflater.inflate(R.layout.item_order, itemListLayout, false)
 
-            val itemNameTextView = TextView(requireContext()).apply {
-                text = cartItem.foodItem.name
-                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-                textSize = 18f
-                setTextColor(resources.getColor(R.color.black, null))
-            }
+            // Bind data to the views in item_order.xml
+            val foodImageView = itemLayout.findViewById<ImageView>(R.id.foodImageView)
+            val foodNameTextView = itemLayout.findViewById<TextView>(R.id.foodNameTextView)
+            val foodPriceTextView = itemLayout.findViewById<TextView>(R.id.foodPriceTextView)
+            val foodQuantityTextView = itemLayout.findViewById<TextView>(R.id.foodQuantityTextView)
+            val deleteButton = itemLayout.findViewById<Button>(R.id.deleteButton)
+            val increaseQuantityButton = itemLayout.findViewById<Button>(R.id.increaseQuantityButton)
 
-            val itemQuantityTextView = TextView(requireContext()).apply {
-                text = cartItem.quantity.toString()
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                textSize = 18f
-                setTextColor(resources.getColor(R.color.black, null))
-            }
+            // Set the data to the views
+            foodNameTextView.text = cartItem.foodItem.name
+            foodPriceTextView.text = "Price: $${cartItem.foodItem.price}"
+            foodQuantityTextView.text = "Quantity: ${cartItem.quantity}"
 
-            itemLayout.addView(itemNameTextView)
-            itemLayout.addView(itemQuantityTextView)
+            // You can set an image using a library like Glide or Picasso
+            Glide.with(this).load(cartItem.foodItem.imageUrl).into(foodImageView)
+
+            // Add item layout to the list
             itemListLayout.addView(itemLayout)
+
+            // Set the delete button logic
+            deleteButton.setOnClickListener {
+                if (cartItem.quantity > 1) {
+                    // Decrement quantity if greater than 1
+                    cartItem.quantity -= 1
+                } else {
+                    // Remove item if quantity is 1 or less
+                    CartManager.removeCartItem(cartItem)
+                }
+                // Update UI after removing or decrementing the item
+                updateCheckoutDetails()
+            }
+
+            // Set the increase quantity button logic
+            increaseQuantityButton.setOnClickListener {
+                // Increase the quantity by 1
+                cartItem.quantity += 1
+                // Update UI after increasing the quantity
+                updateCheckoutDetails()
+            }
         }
 
-        // Update the UI
+        // Update the UI with total price and quantity
         totalPriceTextView.text = "$${String.format("%.2f", totalPrice)}"
         totalQuantityTextView.text = "Total Quantity : $totalQuantity"
     }
+
 }

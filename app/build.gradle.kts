@@ -68,6 +68,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation("com.google.firebase:firebase-analytics")
     implementation("jp.wasabeef:blurry:4.0.0")
+
+
     implementation("com.google.firebase:firebase-firestore")
 
     // AndroidX Libraries
