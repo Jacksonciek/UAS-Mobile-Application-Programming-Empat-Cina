@@ -119,9 +119,16 @@ class PlusItemFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             imageUri = data?.data
-            Toast.makeText(requireContext(), "Image selected", Toast.LENGTH_SHORT).show()
+            if (imageUri != null) {
+                Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
+                // Optional: Provide feedback to the user in the UI
+                buttonImage.text = "Image Selected"
+            } else {
+                Toast.makeText(requireContext(), "Failed to select image", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
     private fun saveItemData() {
         val itemName = insertItem.text.toString().trim()
@@ -129,10 +136,15 @@ class PlusItemFragment : Fragment() {
         val description = fulldesc.text.toString().trim()
         val location = locationInput.text.toString().trim() // Get location input
 
-        // Validation
+        // Validation for required fields
         if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(description) ||
             TextUtils.isEmpty(expireDate) || TextUtils.isEmpty(location)) {
             Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (imageUri == null) {
+            Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -150,17 +162,13 @@ class PlusItemFragment : Fragment() {
         }
 
         // Upload image if selected
-        if (imageUri != null) {
-            val storageRef = storage.reference.child(filePath)
-            storageRef.putFile(imageUri!!).addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveToFirestore(itemName, expireDate, description, uri.toString(), location)
-                }
-            }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
+        val storageRef = storage.reference.child(filePath)
+        storageRef.putFile(imageUri!!).addOnSuccessListener {
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                saveToFirestore(itemName, expireDate, description, uri.toString(), location)
             }
-        } else {
-            saveToFirestore(itemName, expireDate, description, null, location)
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
         }
     }
 

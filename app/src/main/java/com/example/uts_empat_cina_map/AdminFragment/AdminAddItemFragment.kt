@@ -34,6 +34,14 @@ class AdminAddItemFragment : Fragment() {
     private val storage = FirebaseStorage.getInstance().reference
     private val firestore = FirebaseFirestore.getInstance()
 
+    private fun setupSpinner() {
+        // Example categories
+        val categories = listOf("Choose Category", "Appetizer", "Main Course", "Dessert", "Beverage")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        itemCategorySpinner.adapter = adapter
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +60,7 @@ class AdminAddItemFragment : Fragment() {
         saveButton = view.findViewById(R.id.save_button)
         itemCategorySpinner = view.findViewById(R.id.item_category_spinner)
 
+        setupSpinner() // Initialize spinner
         setupStockButtons()
         setupImageUpload()
         setupSaveButton()
@@ -121,6 +130,9 @@ class AdminAddItemFragment : Fragment() {
                 uploadedImageView.setImageBitmap(bitmap) // Show the resized image
                 uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
                 Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
+
+                // Hide the button
+                uploadImageButton.visibility = View.GONE
             }
         }
     }

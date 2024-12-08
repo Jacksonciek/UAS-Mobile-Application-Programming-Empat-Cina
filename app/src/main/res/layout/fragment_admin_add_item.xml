@@ -1,88 +1,271 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <ImageView
-        android:id="@+id/uploaded_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/uploaded_image"
-        android:visibility="gone"
-        android:scaleType="centerCrop"/>
-
-    <EditText
-        android:id="@+id/item_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Item Name" />
-
-    <EditText
-        android:id="@+id/item_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Location" />
-
-    <EditText
-        android:id="@+id/item_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Price (Rp)" />
-
-    <Spinner
-        android:id="@+id/item_category_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:entries="@array/item_categories"
-        android:prompt="@string/select_category_prompt"
-        android:spinnerMode="dropdown"/>
+    android:background="@drawable/plusbg"
+    tools:context=".PlusItemFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/decrease_stock_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
+        android:layout_width="294dp"
+        android:layout_height="599dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="14sp"
+        android:orientation="vertical"> <!-- Center the entire layout -->
 
         <TextView
-            android:id="@+id/stock_quantity"
-            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:padding="16dp" />
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="16dp"
+            android:text="ADD ITEM"
+            />
 
-        <Button
-            android:id="@+id/increase_stock_button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+" />
+            android:text="Insert Name"
+            android:textColor="#EBFADC"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/item_name"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_short_text_24"
+            android:drawablePadding="8dp"
+            android:elevation="10dp"
+            android:hint="Insert Item Name"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Insert Address"
+            android:textColor="#EBFADC"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/item_location"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/location_add_item"
+            android:drawablePadding="8dp"
+            android:elevation="10dp"
+            android:hint="Insert Address"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Insert Price"
+            android:textColor="#EBFADC"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/item_price"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/money"
+            android:drawablePadding="8dp"
+            android:elevation="10dp"
+            android:hint="Insert Address"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <!-- Spinner for Item Category -->
+        <TextView
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:text="Choose Category"
+            android:textColor="#EBFADC"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/item_category_spinner"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/custom_edittext"
+            android:padding="8dp"
+            android:spinnerMode="dropdown" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="124dp"
+                android:layout_height="204dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/insertImage"
+                    android:layout_width="134dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Insert Image"
+                    android:textColor="#EBFADC"
+                    android:textStyle="bold" />
+
+                <!-- Smaller ImageView to Display Uploaded Image -->
+                <ImageView
+                    android:id="@+id/uploaded_image_view"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/custom_editdesc"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/upload_image_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_editdesc"
+                    android:drawableTop="@drawable/addimg"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:orientation="vertical">
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/addLocation"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="5dp"-->
+                <!--                    android:text="Add Location"-->
+                <!--                    android:textColor="#EBFADC"-->
+                <!--                    android:textStyle="bold" />-->
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/buttonLocation"-->
+                <!--                    android:layout_width="100dp"-->
+                <!--                    android:layout_height="100dp"-->
+                <!--                    android:background="@drawable/custom_editdesc"-->
+                <!--                    android:drawableTop="@drawable/addloc"-->
+                <!--                    android:padding="10dp" />-->
+
+                <TextView
+                    android:id="@+id/addStocks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Stocks"
+                    android:textColor="#EBFADC"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:orientation="horizontal"
+                    android:translationY="-10dp">
+
+                    <!-- Decrement Button -->
+                    <Button
+                        android:id="@+id/decrease_stock_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/untukstocksuser"
+                        android:contentDescription="Decrement button"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textColor="#135040"
+                        android:textSize="13sp" />
+
+                    <!-- Number Display -->
+                    <TextView
+                        android:id="@+id/stock_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:gravity="center"
+                        android:text="01"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <!-- Increment Button -->
+                    <Button
+                        android:id="@+id/increase_stock_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/untukstocksuser"
+                        android:contentDescription="Increment button"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textAlignment="center"
+                        android:textColor="#135040"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#EBFADC"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/item_description"
+                android:layout_width="251dp"
+                android:layout_height="82dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_editdesc"
+                android:drawablePadding="8dp"
+                android:elevation="10dp"
+                android:hint="Insert Description"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="251dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/savechanges"
+                android:text="Save Changes"
+                android:textColor="#135040" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/item_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:minHeight="100dp" />
-
-    <Button
-        android:id="@+id/upload_image_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload Image" />
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Changes (Upload to Firebase)" />
-</LinearLayout>
+</FrameLayout>
