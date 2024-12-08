@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textColor="#EBFADC"
             android:textStyle="bold"
-            android:text="Tap Here to Login with Biometric" />
+            android:text="Tap Here to Login with Biometric or PIN" />
     </LinearLayout>
 
 

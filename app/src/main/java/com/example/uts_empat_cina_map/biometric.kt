@@ -55,10 +55,16 @@ class biometric : AppCompatActivity() {
         )
 
         // Create the prompt info
-        var promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric Login")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+//        var promptInfo = BiometricPrompt.PromptInfo.Builder()
+//            .setTitle("Biometric Login")
+//            .setSubtitle("Log in using your biometric credential")
+//            .setNegativeButtonText("Use account password")
+//            .build()
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Authentication Required")
+            .setSubtitle("Use your biometric or device PIN to log in")
+            .setDeviceCredentialAllowed(true)
             .build()
 
         //Set button click listener

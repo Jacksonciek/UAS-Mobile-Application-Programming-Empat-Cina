@@ -34,6 +34,24 @@
             signupFullName = findViewById(R.id.signup_fullname) // Initialize full name EditText
             signupButton = findViewById(R.id.signup_button)
             loginRedirectText = findViewById(R.id.loginRedirectText)
+// Inside onCreate()
+            val showPasswordButton: Button = findViewById(R.id.show_password_button)
+            var isPasswordVisible = false
+
+            showPasswordButton.setOnClickListener {
+                if (isPasswordVisible) {
+                    // Hide password
+                    signupPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    showPasswordButton.text = "Show"
+                } else {
+                    // Show password
+                    signupPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    showPasswordButton.text = "Hide"
+                }
+                // Move cursor to the end
+                signupPassword.setSelection(signupPassword.text.length)
+                isPasswordVisible = !isPasswordVisible
+            }
 
             signupButton.setOnClickListener {
                 val user = signupEmail.text.toString().trim()
