@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FoodItem(
+    var id: String = "",
     var name: String = "", // Default values to ensure no-argument constructor works
     var location: String = "",
     var price: Double = 0.0,

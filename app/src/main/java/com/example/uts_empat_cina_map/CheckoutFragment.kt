@@ -1,21 +1,16 @@
 package com.example.uts_empat_cina_map
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Spinner
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.uts_empat_cina_map.OrderData.CartManager
+import com.example.uts_empat_cina_map.OrderData.FoodItem
+import com.google.firebase.firestore.FirebaseFirestore
 
-// Updated CheckoutFragment.kt
 class CheckoutFragment : Fragment() {
 
     private lateinit var paymentMethodSpinner: Spinner
@@ -23,6 +18,8 @@ class CheckoutFragment : Fragment() {
     private lateinit var totalPriceTextView: TextView
     private lateinit var totalQuantityTextView: TextView
     private lateinit var itemListLayout: LinearLayout
+
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,16 +115,47 @@ class CheckoutFragment : Fragment() {
 
             // Set the increase quantity button logic
             increaseQuantityButton.setOnClickListener {
-                // Increase the quantity by 1
-                cartItem.quantity += 1
-                // Update UI after increasing the quantity
-                updateCheckoutDetails()
+                // Fetch the available stock for the food item
+                fetchStock(cartItem.foodItem.id) { availableStock ->
+                    if (cartItem.quantity < availableStock) {
+                        // Increase the quantity by 1 if stock is available
+                        cartItem.quantity += 1
+                        updateCheckoutDetails()
+                    } else {
+                        Toast.makeText(context, "Cannot exceed available stock", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
         // Update the UI with total price and quantity
         totalPriceTextView.text = "$${String.format("%.2f", totalPrice)}"
         totalQuantityTextView.text = "Total Quantity : $totalQuantity"
+    }
+
+    private fun fetchStock(itemId: String, callback: (Int) -> Unit) {
+        // Validate the itemId before attempting to fetch data from Firestore
+        if (itemId.isEmpty()) {
+            Toast.makeText(context, "Invalid item ID", Toast.LENGTH_SHORT).show()
+            callback(0)
+            return
+        }
+
+        firestore.collection("items").document(itemId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val stock = document.getLong("stock")?.toInt() ?: 0
+                    callback(stock)
+                } else {
+                    Toast.makeText(context, "Item not found", Toast.LENGTH_SHORT).show()
+                    callback(0)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to fetch stock", Toast.LENGTH_SHORT).show()
+                callback(0)
+            }
     }
 
 }

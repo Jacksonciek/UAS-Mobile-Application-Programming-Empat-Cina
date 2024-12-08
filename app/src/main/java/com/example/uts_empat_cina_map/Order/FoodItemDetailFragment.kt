@@ -1,21 +1,18 @@
 package com.example.uts_empat_cina_map.Order
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bumptech.glide.Glide
-import com.example.uts_empat_cina_map.CheckoutFragment
-import com.example.uts_empat_cina_map.HomeFragment
 import com.example.uts_empat_cina_map.OrderData.CartManager
 import com.example.uts_empat_cina_map.OrderData.FoodItem
 import com.example.uts_empat_cina_map.R
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FoodItemDetailFragment : Fragment() {
 
@@ -28,6 +25,8 @@ class FoodItemDetailFragment : Fragment() {
     private lateinit var checkoutButton: Button
 
     private var foodItem: FoodItem? = null
+    private var availableStock: Int = 0 // Holds the stock from Firestore (or passed item)
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,22 +57,30 @@ class FoodItemDetailFragment : Fragment() {
             foodName.text = it.name
             foodDescription.text = it.description
             foodPrice.text = "$${it.price}/pcs"
-            Glide.with(this).load(it.imageUrl).into(foodImage) // Use imageUrl for Glide
+            Glide.with(this).load(it.imageUrl).into(foodImage)
+
+            // Use the stock from the passed FoodItem directly
+            availableStock = it.stock
+            validateQuantity()
         }
 
-        // Set click listener for adding item to cart
-        addToCartButton.setOnClickListener {
-            val quantity = quantityInput.text.toString().toIntOrNull() ?: 1
-            // Add the item to the cart with the specified quantity
-            foodItem?.let { item ->
-                CartManager.addItemToCart(item, quantity)
-                Toast.makeText(context, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+        // Validate quantity on text change
+        quantityInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                validateQuantity()
             }
-        }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
         // Increment button click listener
         incrementButton.setOnClickListener {
             val currentQuantity = quantityInput.text.toString().toIntOrNull() ?: 1
-            quantityInput.setText((currentQuantity + 1).toString())
+            if (currentQuantity < availableStock) {
+                quantityInput.setText((currentQuantity + 1).toString())
+            } else {
+                Toast.makeText(context, "Maximum stock reached", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Decrement button click listener
@@ -83,13 +90,40 @@ class FoodItemDetailFragment : Fragment() {
                 quantityInput.setText((currentQuantity - 1).toString())
             }
         }
+
+        // Add item to cart
+        addToCartButton.setOnClickListener {
+            val quantity = quantityInput.text.toString().toIntOrNull() ?: 1
+            if (quantity <= availableStock) {
+                foodItem?.let { item ->
+                    CartManager.addItemToCart(item, quantity)
+                    Toast.makeText(context, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "Quantity exceeds stock", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         backButton.setOnClickListener {
-            // Navigate to HomeFragment
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, OrderFragment()) // Replace with your container ID
-                .addToBackStack(null) // Optional, to add to the back stack
-                .commit()
+            parentFragmentManager.popBackStack() // Navigate back to the previous fragment
+        }
+    }
+
+    private fun validateQuantity() {
+        val quantity = quantityInput.text.toString().toIntOrNull() ?: 0
+        when {
+            quantity > availableStock -> {
+                quantityInput.error = "Exceeds available stock: $availableStock"
+                addToCartButton.isEnabled = false
+            }
+            quantity <= 0 -> {
+                quantityInput.error = "Quantity must be at least 1"
+                addToCartButton.isEnabled = false
+            }
+            else -> {
+                quantityInput.error = null
+                addToCartButton.isEnabled = true
+            }
         }
     }
 }
