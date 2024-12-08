@@ -212,5 +212,5 @@ class ProfileFragment : Fragment() {
         Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), LoginActivity::class.java)) // Navigate to LoginActivity
         activity?.finish() // End current activity
-        }
+    }
 }

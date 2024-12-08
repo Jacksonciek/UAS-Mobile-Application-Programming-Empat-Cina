@@ -14,14 +14,16 @@
         >
 
         <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:background="@drawable/search_order"
-            android:drawableEnd="@drawable/search"
-            android:padding="10dp" />
+            android:drawableStart="@drawable/search"
+            android:padding="10dp"
+            android:paddingLeft="20dp" />
 
         <Button
-            android:id="@+id/buttonCart"
+            android:id="@+id/cart_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/cart"
@@ -29,7 +31,7 @@
         />
 
         <Button
-            android:id="@+id/buttonMail"
+            android:id="@+id/mail_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:background="@drawable/mail"
@@ -63,21 +65,24 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="#130516"
-        app:tabIndicatorColor="@android:color/transparent"
-        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabPaddingStart="8dp"
+        app:tabPaddingEnd="8dp"
+        app:tabTextColor="#135040"
+        app:tabIndicatorColor="#135040"
+        app:tabIndicatorHeight="0dp" />
+
 
     <View
         android:id="@+id/tabIndicator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/white" />
+        android:layout_height="2dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="666dp"
+
         android:layout_weight="1" />
 </LinearLayout>

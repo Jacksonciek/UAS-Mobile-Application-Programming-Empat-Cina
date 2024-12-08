@@ -1,10 +1,14 @@
 package com.example.uts_empat_cina_map.Order
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -19,6 +23,16 @@ class OrderFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
+    private lateinit var searchEditText: EditText
+
+    private val fragmentList = listOf(
+        AllFoodFragment(),
+        MainCourseFragment(),
+        DrinksFragment(),
+        DessertsFragment(),
+        SnacksFragment(),
+        AppetizersFragment()
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +40,31 @@ class OrderFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_order, container, false)
 
-        val buttonCart: Button = view.findViewById(R.id.buttonCart)
-        val buttonMail: Button = view.findViewById(R.id.buttonMail)
+        searchEditText = view.findViewById(R.id.searchEditText) // Assuming your EditText ID is searchEditText
+        viewPager = view.findViewById(R.id.viewPager)
+        tabLayout = view.findViewById(R.id.tabLayout)
 
-        buttonCart.setOnClickListener {
+        // Set up ViewPager with sections adapter.
+        viewPager.adapter = SectionsPagerAdapter(requireActivity(), fragmentList)
+
+        // Attach TabLayout with ViewPager2
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            // Set teks untuk tab berdasarkan posisi
+            val tabTitles = listOf("All", "Main Course", "Drinks", "Desserts", "Snacks", "Appetizers")
+            val customTabView = LayoutInflater.from(context).inflate(R.layout.tab_item, null)
+            val tabTextView = customTabView.findViewById<TextView>(R.id.tabTextView)
+            tabTextView.text = tabTitles[position]
+
+            // Terapkan custom view ke tab
+            tab.customView = customTabView
+        }.attach()
+
+
+        val cartButton: Button = view.findViewById(R.id.cart_button)
+
+        val notificationButton: Button = view.findViewById(R.id.mail_button)
+
+        cartButton.setOnClickListener {
             val fragment = CheckoutFragment()
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -38,7 +73,7 @@ class OrderFragment : Fragment() {
             fragmentTransaction.commit()
         }
 
-        buttonMail.setOnClickListener {
+        notificationButton.setOnClickListener {
             val fragment = notification()
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
@@ -46,45 +81,32 @@ class OrderFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
-
-        tabLayout = view.findViewById(R.id.tabLayout)
-        viewPager = view.findViewById(R.id.viewPager)
-
-        // Set up ViewPager with the sections adapter.
-        viewPager.adapter = SectionsPagerAdapter(requireActivity())
-
-        // Attach TabLayout with ViewPager2
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "All"
-                1 -> "Main Course"
-                2 -> "Drinks"
-                3 -> "Desserts"
-                4 -> "Snacks"
-                5 -> "Appetizers"
-                else -> null
+        // Add a listener to the EditText to filter data on text change
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val query = s.toString().trim()
+                updateFragmentsSearch(query)  // Trigger search in all fragments
             }
-        }.attach()
 
-        // Set the default tab to All (position 0)
-        viewPager.currentItem = 0
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         return view
     }
 
-    private inner class SectionsPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = 6 // Total number of tabs
-
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> AllFoodFragment() // Fragment for All Food Items
-                1 -> MainCourseFragment()
-                2 -> DrinksFragment()
-                3 -> DessertsFragment()
-                4 -> SnacksFragment()
-                5 -> AppetizersFragment()
-                else -> AllFoodFragment()
+    private fun updateFragmentsSearch(query: String) {
+        fragmentList.forEach { fragment ->
+            if (fragment is SearchableFragment) {
+                fragment.filterData(query)  // Call filterData for each fragment
             }
         }
+    }
+
+    private inner class SectionsPagerAdapter(fa: FragmentActivity, private val fragments: List<Fragment>) :
+        FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = fragments.size
+        override fun createFragment(position: Int): Fragment = fragments[position]
     }
 }

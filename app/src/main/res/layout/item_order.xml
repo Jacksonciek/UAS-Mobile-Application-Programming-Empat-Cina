@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/rounded_forcart"
+    android:padding="8dp">
+
+    <!-- Gambar Makanan -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/foodImageViewCard"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#F1F9E8"
+        app:cardCornerRadius="16dp">
+
+        <ImageView
+            android:id="@+id/foodImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:scaleType="centerCrop"
+            app:cardCornerRadius="16dp"
+            app:elevation="16dp" />
+    </androidx.cardview.widget.CardView>
+    <!-- Nama Makanan -->
+
+    <!-- Harga Makanan -->
+
+    <TextView
+        android:id="@+id/foodNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/foodImageViewCard"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@id/foodImageViewCard"
+        android:text="Food Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/foodQuantityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodPriceTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@id/foodImageViewCard"
+        android:text="Quantity: 1" />
+
+    <TextView
+        android:id="@+id/foodPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodNameTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@id/foodImageViewCard"
+        android:text="Price: $0.00" />
+
+    <!-- Jumlah Pesanan -->
+
+    <!-- Tombol Delete -->
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignTop="@id/foodImageViewCard"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="5sp"
+        android:background="@drawable/tongsampah" />
+
+    <Button
+        android:id="@+id/increaseQuantityButton"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/foodQuantityTextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/foodImageViewCard"
+        android:background="@drawable/rounded_button"
+        android:text="Add"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

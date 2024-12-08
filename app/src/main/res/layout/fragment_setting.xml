@@ -22,7 +22,7 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/iconRight"
+        app:layout_constraintEnd_toStartOf="@+id/iconRightLogOut"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iconRight"
+        android:id="@+id/iconRightLogOut"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="Right Icon"

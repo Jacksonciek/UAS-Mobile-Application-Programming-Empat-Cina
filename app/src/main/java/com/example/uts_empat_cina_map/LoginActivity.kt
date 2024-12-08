@@ -50,6 +50,24 @@ class LoginActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+// Inside onCreate()
+        val showPasswordButton: Button = findViewById(R.id.show_password_button)
+        var isPasswordVisible = false
+
+        showPasswordButton.setOnClickListener {
+            if (isPasswordVisible) {
+                // Hide password
+                loginPassword.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+                showPasswordButton.text = "Show"
+            } else {
+                // Show password
+                loginPassword.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                showPasswordButton.text = "Hide"
+            }
+            // Move cursor to the end
+            loginPassword.setSelection(loginPassword.text.length)
+            isPasswordVisible = !isPasswordVisible
+        }
 
         loginButton.setOnClickListener { loginUser() }
         signupRedirectText.setOnClickListener { navigateToSignUp() }
