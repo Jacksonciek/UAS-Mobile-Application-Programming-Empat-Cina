@@ -189,16 +189,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/currency_text_view" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="347dp"
-        android:layout_height="167dp"
-        android:src="@drawable/threeadditem"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+
+        <!-- RecyclerView for displaying items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="364dp"
+        android:layout_height="143dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currency_text_view"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        app:layout_constraintVertical_bias="0.075" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

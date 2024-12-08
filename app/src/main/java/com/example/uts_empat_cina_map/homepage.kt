@@ -1,16 +1,10 @@
 package com.example.uts_empat_cina_map
 
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
-import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.uts_empat_cina_map.Order.OrderFragment
-import com.example.uts_empat_cina_map.PlusItemFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.api.ResourceDescriptor.History
 
 class homepage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -50,6 +50,24 @@
             android:hint="Enter item name"
             android:padding="8dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textColor="#EBFADC"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/locationInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edittext"
+            android:hint="Enter location"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:inputType="text" />
+
+
         <!-- Image Selection -->
         <Button
             android:id="@+id/buttonImage"
