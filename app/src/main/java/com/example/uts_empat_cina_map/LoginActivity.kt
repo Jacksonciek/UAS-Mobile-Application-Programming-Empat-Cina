@@ -114,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
         if (email == "admin@gmail.com") {
             startActivity(Intent(this, AdminActivity::class.java))
         } else {
-            startActivity(Intent(this, homepage::class.java))
+            startActivity(Intent(this, biometric::class.java))
         }
     }
 
