@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.uts_empat_cina_map.AdminFragment.AdminSettingFragment
 import com.example.uts_empat_cina_map.Order.OrderFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -42,7 +43,7 @@ class AdminProfileFragment : Fragment() {
             val fragment = notification()
             val fragmentManager = requireActivity().supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
@@ -66,11 +67,7 @@ class AdminProfileFragment : Fragment() {
 
         // Set SpannableString for various menus
         setSpannableString(view.findViewById(R.id.myOrders), "My Orders", "Already have 10 orders")
-        setSpannableString(
-            view.findViewById(R.id.shippingAddresses),
-            "Shipping Addresses",
-            "02 Addresses"
-        )
+
         setSpannableString(view.findViewById(R.id.myReviews), "My Reviews", "Reviews for 5 items")
         setSpannableString(
             view.findViewById(R.id.settings),
@@ -99,7 +96,7 @@ class AdminProfileFragment : Fragment() {
 
                         // Log the fetched values for debugging
                         Log.d(
-                            "ProfileFragment",
+                            "AdminProfileFragment",
                             "Fetched user data: Name: $name, Email: $email, Phone: $phone"
                         )
 
@@ -120,15 +117,15 @@ class AdminProfileFragment : Fragment() {
                             profileImage.setImageResource(R.drawable.baseline_person_24)
                         }
                     } else {
-                        Log.d("ProfileFragment", "No such document")
+                        Log.d("AdminProfileFragment", "No such document")
                         showDefaultUserData()
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.e("ProfileFragment", "Error getting user document", exception)
+                    Log.e("AdminProfileFragment", "Error getting user document", exception)
                     showErrorLoadingData()
                 }
-        } ?: Log.w("ProfileFragment", "No current user")
+        } ?: Log.w("AdminProfileFragment", "No current user")
     }
 
     private fun showDefaultUserData() {
@@ -168,19 +165,9 @@ class AdminProfileFragment : Fragment() {
     private fun setupOnClickListeners(view: View) {
         val navigateButton: TextView = view.findViewById(R.id.myOrders)
         navigateButton.setOnClickListener {
-            val orderFragment = OrderFragment()
+            val orderFragment = AdminItemFragment()
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, orderFragment)
-                addToBackStack(null)
-                commit()
-            }
-        }
-
-        val shippingButton: TextView = view.findViewById(R.id.shippingAddresses)
-        shippingButton.setOnClickListener {
-            val shippingFragment = ShippingFragment()
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, shippingFragment)
+                replace(R.id.nav_host_fragment, orderFragment)
                 addToBackStack(null)
                 commit()
             }
@@ -190,7 +177,7 @@ class AdminProfileFragment : Fragment() {
         reviewButton.setOnClickListener {
             val reviewFragment = ReviewFragment()
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, reviewFragment)
+                replace(R.id.nav_host_fragment, reviewFragment)
                 addToBackStack(null)
                 commit()
             }
@@ -198,9 +185,9 @@ class AdminProfileFragment : Fragment() {
 
         val settingButton: TextView = view.findViewById(R.id.settings)
         settingButton.setOnClickListener {
-            val settingFragment = SettingFragment()
+            val settingFragment = AdminSettingFragment()
             fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, settingFragment)
+                replace(R.id.nav_host_fragment, settingFragment)
                 addToBackStack(null)
                 commit()
             }
