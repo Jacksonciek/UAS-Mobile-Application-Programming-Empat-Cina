@@ -3,6 +3,8 @@ package com.example.uts_empat_cina_map
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -36,6 +39,7 @@ class PlusItemFragment : Fragment() {
     private lateinit var expiredDateInput: EditText
     private lateinit var fulldesc: EditText
     private lateinit var locationInput: EditText // New Location Input Field
+    private lateinit var uploadedImageView: ImageView
 
     private var selectedDate: String = ""
 
@@ -61,6 +65,7 @@ class PlusItemFragment : Fragment() {
         expiredDateInput = view.findViewById(R.id.expiredDateInput)
         fulldesc = view.findViewById(R.id.fulldesc)
         locationInput = view.findViewById(R.id.locationInput) // Initialize Location Input
+        uploadedImageView = view.findViewById(R.id.uploaded_image_view)
 
         // Increment stock
         btnIncrement.setOnClickListener {
@@ -119,8 +124,55 @@ class PlusItemFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             imageUri = data?.data
-            Toast.makeText(requireContext(), "Image selected", Toast.LENGTH_SHORT).show()
+
+            // Ensure imageUri is not null before using it
+            imageUri?.let { uri ->
+                // Resize the image before displaying
+                val bitmap = decodeSampledBitmapFromUri(uri, 200, 200) // Resize to 200x200
+                uploadedImageView.setImageBitmap(bitmap) // Show the resized image
+                uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
+                Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
+
+                // Hide the button
+                buttonImage.visibility = View.GONE
+
+                // Optional: Provide feedback to the user in the UI
+                buttonImage.text = "Image Selected"
+            } ?: run {
+                // Handle case where imageUri is null
+                Toast.makeText(requireContext(), "Failed to select image", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+
+    private fun decodeSampledBitmapFromUri(uri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+        BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(uri), null, options)
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeStream(requireContext().contentResolver.openInputStream(uri), null, options)
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val (height: Int, width: Int) = options.run { outHeight to outWidth }
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
     }
 
     private fun saveItemData() {
@@ -129,10 +181,15 @@ class PlusItemFragment : Fragment() {
         val description = fulldesc.text.toString().trim()
         val location = locationInput.text.toString().trim() // Get location input
 
-        // Validation
+        // Validation for required fields
         if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(description) ||
             TextUtils.isEmpty(expireDate) || TextUtils.isEmpty(location)) {
             Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (imageUri == null) {
+            Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -150,17 +207,13 @@ class PlusItemFragment : Fragment() {
         }
 
         // Upload image if selected
-        if (imageUri != null) {
-            val storageRef = storage.reference.child(filePath)
-            storageRef.putFile(imageUri!!).addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveToFirestore(itemName, expireDate, description, uri.toString(), location)
-                }
-            }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
+        val storageRef = storage.reference.child(filePath)
+        storageRef.putFile(imageUri!!).addOnSuccessListener {
+            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                saveToFirestore(itemName, expireDate, description, uri.toString(), location)
             }
-        } else {
-            saveToFirestore(itemName, expireDate, description, null, location)
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Image upload failed", Toast.LENGTH_SHORT).show()
         }
     }
 
