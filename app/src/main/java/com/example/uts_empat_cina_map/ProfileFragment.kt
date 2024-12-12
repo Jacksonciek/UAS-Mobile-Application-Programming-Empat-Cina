@@ -69,11 +69,11 @@ class ProfileFragment : Fragment() {
         iconRightLogOut.setOnClickListener { logoutUser() }
 
         // Set SpannableString for various menus
-        setSpannableString(view.findViewById(R.id.myOrders), "My Orders", "Already have 10 orders")
-        setSpannableString(view.findViewById(R.id.shippingAddresses), "Shipping Addresses", "02 Addresses")
-        setSpannableString(view.findViewById(R.id.paymentMethod), "Payment Method", "You have 2 cards")
-        setSpannableString(view.findViewById(R.id.myReviews), "My Reviews", "Reviews for 5 items")
-        setSpannableString(view.findViewById(R.id.settings), "Settings", "Notification, Password, FAQ, Contact")
+        setSpannableString(view.findViewById(R.id.myOrders), "Orders", "What food do you want to order?")
+        setSpannableString(view.findViewById(R.id.shippingAddresses), "Shipping Addresses", "Your Address")
+        setSpannableString(view.findViewById(R.id.paymentMethod), "Payment Method", "Your Online Payments")
+        setSpannableString(view.findViewById(R.id.myReviews), "Credits", "The author of this application")
+        setSpannableString(view.findViewById(R.id.settings), "Settings", "Change Profile, Username, Password")
 
         // Setup onClickListeners for menu items
         setupOnClickListeners(view)

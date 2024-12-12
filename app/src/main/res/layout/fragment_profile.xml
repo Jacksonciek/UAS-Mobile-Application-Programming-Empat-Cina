@@ -175,7 +175,7 @@
                 android:drawablePadding="8dp"
                 android:gravity="center_vertical"
                 android:padding="12dp"
-                android:text="My Reviews"
+                android:text="Credits"
                 android:textColor="#EBFADC"
                 android:textSize="16sp"
                 android:textStyle="bold" />
