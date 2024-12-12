@@ -98,6 +98,7 @@
                 android:layout_marginTop="5dp"
                 android:padding="8dp"
                 android:text="Forgot Password?"
+                android:layout_gravity="end"
                 android:textColor="#135040"
                 android:textSize="12sp"
                 android:textStyle="bold"
