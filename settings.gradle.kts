@@ -20,6 +20,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "UAS-MAP-EmpatCina"
+rootProject.name = "EcoFood"
 include(":app")
  
