@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#EBFADC"
     tools:context=".payment_successful">
 
     <TextView
@@ -15,7 +16,8 @@
         android:text="Payment Success"
         android:layout_marginBottom="20dp"
         android:textSize="30dp"
-        android:textColor="#102F15"
+        android:textStyle="bold"
+        android:textColor="#2A5F40"
         />
 
     <ImageView
@@ -35,6 +37,6 @@
         android:paddingBottom="20sp"
         android:text="Back to Home"
         android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:textColor="#EBFADC" />
 
 </LinearLayout>
