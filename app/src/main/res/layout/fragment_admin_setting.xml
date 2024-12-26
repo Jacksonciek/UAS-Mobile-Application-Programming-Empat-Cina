@@ -110,6 +110,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
+                    android:textColor="#EBFADC"
                     android:padding="12dp"
                     android:textColorHint="#80EBFADC"
                     android:hint="Name" />
@@ -122,6 +123,7 @@
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
                     android:padding="12dp"
+                    android:textColor="#EBFADC"
                     android:textColorHint="#80EBFADC"
                     android:hint="Phone Number"
                     android:inputType="phone"
@@ -135,6 +137,7 @@
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
                     android:padding="12dp"
+                    android:textColor="#EBFADC"
                     android:textColorHint="#80EBFADC"
                     android:hint="example@gmail.com" />
 
@@ -156,6 +159,7 @@
                     android:drawableEnd="@drawable/edit"
                     android:padding="12dp"
                     android:textColorHint="#80EBFADC"
+                    android:textColor="#EBFADC"
                     android:hint="Password"
                     android:inputType="textPassword" />
 
@@ -169,6 +173,7 @@
                     android:hint="Confirm Password"
                     android:inputType="textPassword"
                     android:padding="12dp"
+                    android:textColor="#EBFADC"
                     android:textColorHint="#80EBFADC" />
 
                 <Button
