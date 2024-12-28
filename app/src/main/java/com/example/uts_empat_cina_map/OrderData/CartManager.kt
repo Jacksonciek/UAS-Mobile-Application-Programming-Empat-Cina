@@ -1,13 +1,9 @@
 package com.example.uts_empat_cina_map.OrderData
 
 object CartManager {
-    private val cartItems = mutableListOf<CartItem>() // CartItem should contain food details and quantity
+    private val cartItems = mutableListOf<CartItem>()
 
-    fun addItemToCart(foodItem: FoodItem, quantity: Int) {
-        cartItems.add(CartItem(foodItem, quantity))
-    }
-
-    fun getCartItems(): MutableList<CartItem> { // Return MutableList instead of List
+    fun getCartItems(): List<CartItem> {
         return cartItems
     }
 
@@ -16,21 +12,19 @@ object CartManager {
     }
 
     fun removeCartItem(cartItem: CartItem) {
-        // Remove the item from the cart
         cartItems.remove(cartItem)
     }
 
-    fun addOrUpdateCartItem(cartItem: CartItem) {
+    fun addOrUpdateCartItem(foodItem: FoodItem, quantity: Int) {
         // Check if the item already exists in the cart
-        val existingItem = cartItems.find { it.foodItem.name == cartItem.foodItem.name }
+        val existingItem = cartItems.find { it.foodItem.id == foodItem.id }
 
         if (existingItem != null) {
-            // If item exists, increment its quantity
-            existingItem.quantity += cartItem.quantity
+            // If the item exists, increment the quantity
+            existingItem.quantity += quantity
         } else {
-            // If item doesn't exist, add a new item
-            cartItems.add(cartItem)
+            // If the item doesn't exist, add it to the cart
+            cartItems.add(CartItem(foodItem, quantity))
         }
     }
-
 }

@@ -114,7 +114,8 @@
             android:id="@+id/gatauiniknpsusahxcenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:translationY="300sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,7 +161,19 @@
     </LinearLayout>
 
     <!-- Updated LinearLayout in fragment_checkout.xml -->
+    <FrameLayout
+        android:id="@+id/progressBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/rounded_loading">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
 </RelativeLayout>
 
 

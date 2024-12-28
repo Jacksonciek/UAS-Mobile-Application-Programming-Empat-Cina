@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -19,11 +21,15 @@ import com.example.uts_empat_cina_map.model.OrderItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+// ConfirmPaymentFragment.kt
 class ConfirmPaymentFragment : Fragment() {
     private lateinit var paymentMethodSpinner: Spinner
     private lateinit var confirmButton: Button
     private lateinit var totalPriceTextView: TextView
     private lateinit var totalQuantityTextView: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBarContainer: FrameLayout
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +45,7 @@ class ConfirmPaymentFragment : Fragment() {
         confirmButton = view.findViewById(R.id.confirmButton)
         totalPriceTextView = view.findViewById(R.id.totalPriceTextView)
         totalQuantityTextView = view.findViewById(R.id.totalQuantityTextView)
+        progressBar = view.findViewById(R.id.progressBar)
         val backButton: Button = view.findViewById(R.id.backButton)
         val auth = FirebaseAuth.getInstance()
 
@@ -50,11 +57,14 @@ class ConfirmPaymentFragment : Fragment() {
 
         // Calculate total price and quantity from cart items
         updateCheckoutDetails()
+        progressBarContainer = view.findViewById(R.id.progressBarContainer)
 
         confirmButton.setOnClickListener {
+            progressBarContainer.visibility = View.VISIBLE
+            confirmButton.isEnabled = false
+
             // Get the current authenticated user
             val user = auth.currentUser
-
             val userId = user?.uid
 
             // Calculate total price and quantity
@@ -79,14 +89,9 @@ class ConfirmPaymentFragment : Fragment() {
                     timestamp = System.currentTimeMillis() // Current timestamp
                 )
 
-
                 // Save the order to Firebase Firestore
                 saveOrderToFirebase(order)
             }
-
-            // Navigate to a new activity for Google Maps (for later implementation)
-            val intent = Intent(requireContext(), payment_successful::class.java)
-            startActivity(intent)
         }
 
         backButton.setOnClickListener {
@@ -102,7 +107,16 @@ class ConfirmPaymentFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         db.collection("orders")
             .add(order)
+            .addOnSuccessListener {
+                progressBar.visibility = View.GONE
+                confirmButton.isEnabled = true
+                // Navigate to a new activity for Google Maps (for later implementation)
+                val intent = Intent(requireContext(), payment_successful::class.java)
+                startActivity(intent)
+            }
             .addOnFailureListener { e ->
+                progressBar.visibility = View.GONE
+                confirmButton.isEnabled = true
                 // Handle failure
                 e.printStackTrace()
             }
@@ -118,7 +132,6 @@ class ConfirmPaymentFragment : Fragment() {
         for (cartItem in cartItems) {
             totalPrice += cartItem.foodItem.price * cartItem.quantity
             totalQuantity += cartItem.quantity
-
         }
 
         // Update the UI with total price and quantity

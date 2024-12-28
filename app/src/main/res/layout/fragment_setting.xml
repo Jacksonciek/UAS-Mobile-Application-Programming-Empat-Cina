@@ -107,6 +107,7 @@
                     android:id="@+id/nameField"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
+                    android:textColor="#EBFADC"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
@@ -119,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:layout_marginTop="8dp"
+                    android:textColor="#EBFADC"
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
                     android:padding="12dp"
@@ -131,6 +133,7 @@
                     android:id="@+id/emailField"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
+                    android:textColor="#EBFADC"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
@@ -145,6 +148,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Change Password"
                     android:textSize="16sp"
+
                     android:textStyle="bold" />
 
                 <EditText
@@ -155,6 +159,7 @@
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
                     android:padding="12dp"
+                    android:textColor="#EBFADC"
                     android:textColorHint="#80EBFADC"
                     android:hint="Password"
                     android:inputType="textPassword" />
@@ -163,6 +168,7 @@
                     android:id="@+id/confirmPasswordField"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
+                    android:textColor="#EBFADC"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/currency_square"
                     android:drawableEnd="@drawable/edit"
