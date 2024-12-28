@@ -18,6 +18,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -68,6 +69,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation("com.google.firebase:firebase-analytics")
     implementation("jp.wasabeef:blurry:4.0.0")
+    implementation("androidx.multidex:multidex:2.0.1")
+    implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 
 
     implementation("com.google.firebase:firebase-firestore")

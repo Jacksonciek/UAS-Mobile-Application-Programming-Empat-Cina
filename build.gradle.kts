@@ -13,5 +13,8 @@ buildscript {
     }
     dependencies {
         classpath("com.google.relay:relay-gradle-plugin:0.3.12") // Replace with the latest version if needed
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.0")
     }
+
 }
+
