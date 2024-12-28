@@ -22,7 +22,6 @@ class FoodItemDetailFragment : Fragment() {
     private lateinit var foodPrice: TextView
     private lateinit var quantityInput: EditText
     private lateinit var addToCartButton: Button
-    private lateinit var checkoutButton: Button
 
     private var foodItem: FoodItem? = null
     private var availableStock: Int = 0 // Holds the stock from Firestore (or passed item)
@@ -91,13 +90,13 @@ class FoodItemDetailFragment : Fragment() {
             }
         }
 
-        // Add item to cart
+        // Add or update item in cart
         addToCartButton.setOnClickListener {
             val quantity = quantityInput.text.toString().toIntOrNull() ?: 1
             if (quantity <= availableStock) {
                 foodItem?.let { item ->
-                    CartManager.addItemToCart(item, quantity)
-                    Toast.makeText(context, "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+                    CartManager.addOrUpdateCartItem(item, quantity) // Updated here
+                    Toast.makeText(context, "${item.name} added to cart (Qty: $quantity)", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(context, "Quantity exceeds stock", Toast.LENGTH_SHORT).show()

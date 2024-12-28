@@ -44,23 +44,22 @@ class CheckoutFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         paymentMethodSpinner.adapter = adapter
 
-        // Calculate total price and quantity from cart items
+        // Update cart UI
         updateCheckoutDetails()
 
+        // Handle Confirm Button click
         confirmButton.setOnClickListener {
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ConfirmPaymentFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
+        // Handle Back Button click
         backButton.setOnClickListener {
-            // Navigate to HomeFragment
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, HomeFragment()) // Replace with your container ID
-                .addToBackStack(null) // Optional, to add to the back stack
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment())
+                .addToBackStack(null)
                 .commit()
         }
     }
@@ -68,20 +67,22 @@ class CheckoutFragment : Fragment() {
     private fun updateCheckoutDetails() {
         val cartItems = CartManager.getCartItems()
 
-        // Calculate total price and quantity
+        // Reset totals
         var totalPrice = 0.0
         var totalQuantity = 0
 
+        // Clear existing views
         itemListLayout.removeAllViews()
 
+        // Iterate through the cart items
         for (cartItem in cartItems) {
             totalPrice += cartItem.foodItem.price * cartItem.quantity
             totalQuantity += cartItem.quantity
 
-            // Inflate item_order.xml for each item
+            // Inflate the item layout
             val itemLayout = layoutInflater.inflate(R.layout.item_order, itemListLayout, false)
 
-            // Bind data to the views in item_order.xml
+            // Bind data to views
             val foodImageView = itemLayout.findViewById<ImageView>(R.id.foodImageView)
             val foodNameTextView = itemLayout.findViewById<TextView>(R.id.foodNameTextView)
             val foodPriceTextView = itemLayout.findViewById<TextView>(R.id.foodPriceTextView)
@@ -89,36 +90,25 @@ class CheckoutFragment : Fragment() {
             val deleteButton = itemLayout.findViewById<Button>(R.id.deleteButton)
             val increaseQuantityButton = itemLayout.findViewById<Button>(R.id.increaseQuantityButton)
 
-            // Set the data to the views
+            // Set item data
             foodNameTextView.text = cartItem.foodItem.name
             foodPriceTextView.text = "Price: $${cartItem.foodItem.price}"
             foodQuantityTextView.text = "Quantity: ${cartItem.quantity}"
-
-            // You can set an image using a library like Glide or Picasso
             Glide.with(this).load(cartItem.foodItem.imageUrl).into(foodImageView)
 
-            // Add item layout to the list
+            // Add item to the layout
             itemListLayout.addView(itemLayout)
 
-            // Set the delete button logic
+            // Handle delete button click
             deleteButton.setOnClickListener {
-                if (cartItem.quantity > 1) {
-                    // Decrement quantity if greater than 1
-                    cartItem.quantity -= 1
-                } else {
-                    // Remove item if quantity is 1 or less
-                    CartManager.removeCartItem(cartItem)
-                }
-                // Update UI after removing or decrementing the item
+                CartManager.removeCartItem(cartItem)
                 updateCheckoutDetails()
             }
 
-            // Set the increase quantity button logic
+            // Handle increase quantity button click
             increaseQuantityButton.setOnClickListener {
-                // Fetch the available stock for the food item
                 fetchStock(cartItem.foodItem.id) { availableStock ->
                     if (cartItem.quantity < availableStock) {
-                        // Increase the quantity by 1 if stock is available
                         cartItem.quantity += 1
                         updateCheckoutDetails()
                     } else {
@@ -128,13 +118,12 @@ class CheckoutFragment : Fragment() {
             }
         }
 
-        // Update the UI with total price and quantity
+        // Update total price and quantity in the UI
         totalPriceTextView.text = "$${String.format("%.2f", totalPrice)}"
-        totalQuantityTextView.text = "Total Quantity : $totalQuantity"
+        totalQuantityTextView.text = "Total Quantity: $totalQuantity"
     }
 
     private fun fetchStock(itemId: String, callback: (Int) -> Unit) {
-        // Validate the itemId before attempting to fetch data from Firestore
         if (itemId.isEmpty()) {
             Toast.makeText(context, "Invalid item ID", Toast.LENGTH_SHORT).show()
             callback(0)
@@ -157,5 +146,4 @@ class CheckoutFragment : Fragment() {
                 callback(0)
             }
     }
-
 }
