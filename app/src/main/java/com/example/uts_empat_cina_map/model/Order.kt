@@ -4,15 +4,16 @@ import com.google.firebase.firestore.DocumentId
 
 data class Order(
     @DocumentId val id: String? = null,  // Firestore document ID (optional)
-    val userId : String,
-    val totalPrice: Double,             // Total price of the order
-    val totalQuantity: Int,             // Total quantity of items
-    val items: List<OrderItem>,         // List of items in the order
-    val paymentMethod: String,          // Payment method chosen by the user
-    val timestamp: Long                 // Timestamp when the order was placed
+    val userId: String,
+    val totalPrice: Double,              // Total price of the order
+    val totalQuantity: Int,              // Total quantity of items
+    val items: List<OrderItem>,          // List of items in the order
+    val paymentMethod: String,           // Payment method chosen by the user
+    val timestamp: Long,                 // Timestamp when the order was placed
+    var orderStatus: String = "On Process"
 ) {
     // Empty constructor for Firebase to automatically convert documents to Order objects
-    constructor() : this("", "", 0.0, 0, emptyList(), "", 0)
+    constructor() : this("", "", 0.0, 0, emptyList(), "", 0, "on process")
 }
 
 data class OrderItem(
@@ -23,4 +24,3 @@ data class OrderItem(
     // Firebase needs a no-argument constructor, which is automatically provided with default values
     constructor() : this("", 0.0, 0)
 }
-

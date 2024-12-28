@@ -89,7 +89,7 @@ class ProfileFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     if (document.exists()) {
                         // Load user details
-                        val name = document.getString("name") ?: "No name available"
+                            val name = document.getString("name") ?: "No name available"
                         val email = it.email ?: "No email available" // Get email directly from the current user
                         val phone = document.getString("phone") ?: "No phone available"
 

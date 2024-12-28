@@ -24,6 +24,7 @@
         private lateinit var adapter: HomeAdapter
         private val firestore = FirebaseFirestore.getInstance()
         private val itemsList = mutableListOf<HomeItem>()
+        private lateinit var greetings: TextView
 
 
 
@@ -37,6 +38,7 @@
             val cartButton: Button = view.findViewById(R.id.cart_button)
             val notificationButton: Button = view.findViewById(R.id.mail_button)
             val seeAll: TextView = view.findViewById(R.id.seeAll)
+            greetings = view.findViewById(R.id.textView)
 
             // Set up RecyclerView
             recyclerView = view.findViewById(R.id.recyclerView)
@@ -45,6 +47,8 @@
             // Initialize adapter with empty list
             adapter = HomeAdapter()
             recyclerView.adapter = adapter
+
+
 
             // Fetch data from Firestore
             fetchDataFromFirestore()
@@ -77,6 +81,12 @@
         private fun fetchDataFromFirestore() {
             val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
             println("Fetching data for userId: $userId")  // Log user ID to check if it is being retrieved correctly
+
+            firestore.collection("users").document(userId).get()
+                .addOnSuccessListener { document ->
+                    val name = document.getString("name") ?: "No name available"
+                    greetings.text = "Hello, $name"  // Set greeting with user's name
+                }
 
             firestore.collection("user_items")
                 .document(userId)
