@@ -60,28 +60,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity: 3"
-                android:paddingBottom="2sp"
                 android:textColor="#808080"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/totalAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2sp"
-                android:text="Total Amount: Rp. 100,000"
-                android:textColor="#808080"
-                android:textSize="14sp" />
-
-            <!-- New TextView for Item Names and Quantities -->
             <TextView
                 android:id="@+id/itemsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item Names and Quantities"
                 android:textColor="#808080"
+                android:textSize="14sp" />
+
+            <!-- New TextView for Item Names and Quantities -->
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Amount: Rp. 100,000"
+
+                android:textColor="#808080"
                 android:textSize="14sp"
-                android:layout_marginTop="5dp" />
+                android:translationY="-8sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

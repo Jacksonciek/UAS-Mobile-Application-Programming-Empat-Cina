@@ -76,7 +76,7 @@ class AdminStatsFragment : Fragment() {
                     val totalPrice = document.getDouble("totalPrice") ?: 0.0
                     totalProfit += totalPrice
                 }
-                totalProfitTextView.text = "Total Profit: Rp.$totalProfit"
+                totalProfitTextView.text = "Total Profit: Rp. $totalProfit"
             }
             .addOnFailureListener { exception ->
                 Log.e("AdminStatsFragment", "Error fetching profit", exception)
@@ -160,10 +160,4 @@ class AdminStatsFragment : Fragment() {
             Toast.makeText(context, "Error accepting order: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
-
-
 }
-

@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 val name = document.getString("name") ?: "No name available"
-                greetings.text = "Hello ! $name"  // Set greeting with user's name
+                greetings.text = "Hello, $name"  // Set greeting with user's name
             }
 
         // Fetch items data for user
