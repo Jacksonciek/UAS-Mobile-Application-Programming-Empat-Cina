@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.uts_empat_cina_map.AdminProfileFragment
 import com.example.uts_empat_cina_map.LoginActivity
 import com.example.uts_empat_cina_map.R
 import com.google.firebase.auth.FirebaseAuth
@@ -53,6 +54,9 @@ class AdminSettingFragment : Fragment() {
             isPasswordVisible = !isPasswordVisible
             passwordField.setSelection(passwordField.text.length) // Keep cursor at the end
         }
+        backButton = view.findViewById(R.id.backButton)
+
+        backButton.setOnClickListener { navigateToAdminProfileFragment() }
 
         return view
     }
@@ -61,6 +65,14 @@ class AdminSettingFragment : Fragment() {
         Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
         startActivity(Intent(requireContext(), LoginActivity::class.java)) // Navigate to LoginActivity
         activity?.finish() // End current activity
+    }
+    private fun navigateToAdminProfileFragment() {
+        val fragment = AdminProfileFragment()
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }
 

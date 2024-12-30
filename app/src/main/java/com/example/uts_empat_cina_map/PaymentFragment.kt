@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +41,7 @@ class PaymentFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_payment, container, false)
 
         val redirectAddNewPayment: Button = view.findViewById(R.id.buttonAddNewPayment)
+        val backButton: ImageView = view.findViewById(R.id.backButton)
 
         redirectAddNewPayment.setOnClickListener {
             val fragment = new_payment()
@@ -49,7 +51,14 @@ class PaymentFragment : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
-
+        backButton.setOnClickListener {
+            val fragment = ProfileFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
         return view
     }
 

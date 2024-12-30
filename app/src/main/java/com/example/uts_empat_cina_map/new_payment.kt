@@ -1,3 +1,4 @@
+// Update new_payment.kt
 package com.example.uts_empat_cina_map
 
 import android.os.Bundle
@@ -17,6 +18,7 @@ class new_payment : Fragment() {
     private lateinit var cardHolderEditText: EditText
     private lateinit var descriptionEditText: EditText
     private lateinit var doneButton: Button
+    private lateinit var backButton: ImageView
 
     private val firestore = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -38,10 +40,12 @@ class new_payment : Fragment() {
         cardHolderEditText = view.findViewById(R.id.cardHolderEditText)
         descriptionEditText = view.findViewById(R.id.descriptionEditText)
         doneButton = view.findViewById(R.id.doneButton)
+        backButton = view.findViewById(R.id.backButtonUjung)
 
         doneButton.setOnClickListener {
             savePaymentMethod()
         }
+        backButton.setOnClickListener { navigateToPaymentFragment() }
     }
 
     private fun savePaymentMethod() {
@@ -80,5 +84,14 @@ class new_payment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(context, "Failed to save payment method", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun navigateToPaymentFragment() {
+        val fragment = PaymentFragment()
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 }

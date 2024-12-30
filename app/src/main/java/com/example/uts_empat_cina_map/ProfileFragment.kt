@@ -70,7 +70,7 @@ class ProfileFragment : Fragment() {
 
         // Set SpannableString for various menus
         setSpannableString(view.findViewById(R.id.myOrders), "Orders", "What food do you want to order?")
-        setSpannableString(view.findViewById(R.id.shippingAddresses), "Shipping Addresses", "Your Address")
+//        setSpannableString(view.findViewById(R.id.shippingAddresses), "Shipping Addresses", "Your Address")
         setSpannableString(view.findViewById(R.id.paymentMethod), "Payment Method", "Your Online Payments")
         setSpannableString(view.findViewById(R.id.myReviews), "Credits", "The author of this application")
         setSpannableString(view.findViewById(R.id.settings), "Settings", "Change Profile, Username, Password")
@@ -166,15 +166,15 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        val shippingButton: TextView = view.findViewById(R.id.shippingAddresses)
-        shippingButton.setOnClickListener {
-            val shippingFragment = ShippingFragment()
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, shippingFragment)
-                addToBackStack(null)
-                commit()
-            }
-        }
+//        val shippingButton: TextView = view.findViewById(R.id.shippingAddresses)
+//        shippingButton.setOnClickListener {
+//            val shippingFragment = ShippingFragment()
+//            fragmentManager?.beginTransaction()?.apply {
+//                replace(R.id.fragment_container, shippingFragment)
+//                addToBackStack(null)
+//                commit()
+//            }
+//        }
 
         val paymentButton: TextView = view.findViewById(R.id.paymentMethod)
         paymentButton.setOnClickListener {

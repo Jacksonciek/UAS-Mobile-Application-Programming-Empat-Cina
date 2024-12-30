@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Update item_admin.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Item Name"
+        android:textColor="#EBFADC"
+        android:textStyle="bold"
         android:textSize="16sp"
         android:padding="10dp" />
 
@@ -20,12 +22,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:textColor="#EBFADC"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:hint="Stock"
-        android:layout_marginEnd="10dp" />
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="#EBFADC" />
 
     <Button
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
+        android:background="@drawable/rounded_rectangle_admin2"
+        android:textColor="#135040"
+        android:textStyle="bold"
+        android:layout_marginLeft="10sp"
         android:layout_height="wrap_content"
         android:text="Update" />
+
+    <ImageView
+        android:id="@+id/sampahMasyarakat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10sp"
+        android:src="@drawable/tongsampah" />
 </LinearLayout>

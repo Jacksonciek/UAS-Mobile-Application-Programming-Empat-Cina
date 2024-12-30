@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_adminProfileFragment_to_adminStatsFragment"
             app:destination="@id/adminStatsFragment" />
+        <action
+            android:id="@+id/action_adminProfileFragment_to_adminReviewFragment"
+            app:destination="@id/adminReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminAddItemFragment"
@@ -95,4 +98,8 @@
             android:id="@+id/action_adminAddItemFragment_to_adminStatsFragment"
             app:destination="@id/adminStatsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/adminReviewFragment"
+        android:name="com.example.uts_empat_cina_map.AdminFragment.AdminReviewFragment"
+        android:label="AdminReviewFragment" />
 </navigation>
