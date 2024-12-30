@@ -43,7 +43,7 @@ class SettingFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_setting, container, false)
 
         nameField = view.findViewById(R.id.nameField)
-        emailField = view.findViewById(R.id.emailField)
+//        emailField = view.findViewById(R.id.emailField)
         phoneField = view.findViewById(R.id.phoneField)
         passwordField = view.findViewById(R.id.passwordField)
         avatarImageView = view.findViewById(R.id.avatarImageView)

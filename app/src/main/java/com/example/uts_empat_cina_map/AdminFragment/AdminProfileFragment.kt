@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.uts_empat_cina_map.AdminFragment.AdminReviewFragment
 import com.example.uts_empat_cina_map.AdminFragment.AdminSettingFragment
 import com.example.uts_empat_cina_map.Order.OrderFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -175,7 +176,7 @@ class AdminProfileFragment : Fragment() {
 
         val reviewButton: TextView = view.findViewById(R.id.myReviews)
         reviewButton.setOnClickListener {
-            val reviewFragment = ReviewFragment()
+            val reviewFragment = AdminReviewFragment()
             fragmentManager?.beginTransaction()?.apply {
                 replace(R.id.nav_host_fragment, reviewFragment)
                 addToBackStack(null)

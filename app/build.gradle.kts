@@ -18,7 +18,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -71,6 +71,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("com.google.firebase:firebase-firestore-ktx:24.8.0")
 
+    implementation("androidx.multidex:multidex:2.0.1")
+    implementation("com.github.AnyChart:AnyChart-Android:1.1.5")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation("com.google.firebase:firebase-firestore")
 

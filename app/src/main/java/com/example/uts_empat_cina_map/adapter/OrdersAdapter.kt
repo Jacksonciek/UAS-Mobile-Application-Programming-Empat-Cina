@@ -18,6 +18,7 @@ class OrdersAdapter(
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemsTextView: TextView = itemView.findViewById(R.id.itemsTextView)
         val orderIdTextView: TextView = itemView.findViewById(R.id.orderIdTextView)
+        val quantityTextView: TextView = itemView.findViewById(R.id.quantityAdmin)
         val totalPriceTextView: TextView = itemView.findViewById(R.id.totalPriceTextView)
         val acceptButton: Button = itemView.findViewById(R.id.acceptButton)
     }
@@ -32,7 +33,7 @@ class OrdersAdapter(
         val order = orders[position]
         holder.orderIdTextView.text = "Order ID: ${order.id}"
         holder.totalPriceTextView.text = "Total: Rp.${order.totalPrice}"
-
+        holder.quantityTextView.text = "Quantity: ${order.totalQuantity}"
         // Prepare a string to display all item names and quantities
         val itemsList = StringBuilder()
         for (item in order.items) {

@@ -1,4 +1,3 @@
-// Update HomeFragment.kt
 package com.example.uts_empat_cina_map
 
 import android.content.Intent
@@ -23,11 +22,11 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-        private lateinit var recyclerView: RecyclerView
-        private lateinit var adapter: HomeAdapter
-        private val firestore = FirebaseFirestore.getInstance()
-        private val itemsList = mutableListOf<HomeItem>()
-        private lateinit var greetings: TextView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: HomeAdapter
+    private val firestore = FirebaseFirestore.getInstance()
+    private val itemsList = mutableListOf<HomeItem>()
+    private lateinit var greetings: TextView
 
     private var isValueHidden = true
     private val actualValue = "Rp 500.367,34"
@@ -38,131 +37,44 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        // Views initialization
         val cartButton: Button = view.findViewById(R.id.cart_button)
         val notificationButton: Button = view.findViewById(R.id.mail_button)
         val seeAll: TextView = view.findViewById(R.id.seeAll)
         val imageView6: ImageView = view.findViewById(R.id.imageView6)
+        greetings = view.findViewById(R.id.textView9)
 
         // Set up RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-            val cartButton: Button = view.findViewById(R.id.cart_button)
-            val notificationButton: Button = view.findViewById(R.id.mail_button)
-            val seeAll: TextView = view.findViewById(R.id.seeAll)
-            greetings = view.findViewById(R.id.textView)
+        // Initialize adapter with empty list
+        adapter = HomeAdapter()
+        recyclerView.adapter = adapter
 
         // Fetch data from Firestore
         fetchDataFromFirestore()
 
-            // Initialize adapter with empty list
-            adapter = HomeAdapter()
-            recyclerView.adapter = adapter
-
-
-
-            // Fetch data from Firestore
-            fetchDataFromFirestore()
-
-            // Handle button clicks for navigation
-            cartButton.setOnClickListener {
-                navigateToFragment(CheckoutFragment())
-            }
-
-            notificationButton.setOnClickListener {
-                navigateToFragment(notification())  // Make sure this fragment is defined
-            }
-
-            seeAll.setOnClickListener {
-                val intent = Intent(activity, SeeAllActivity::class.java)
-                startActivity(intent)
-            }
-
-            return view
+        // Handle button clicks for navigation
+        cartButton.setOnClickListener {
+            navigateToFragment(CheckoutFragment())
         }
 
         notificationButton.setOnClickListener {
-            navigateToFragment(notification())  // Make sure this fragment is defined
+            navigateToFragment(OrderFragment())  // Make sure this fragment is defined
         }
 
-        private fun fetchDataFromFirestore() {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-            println("Fetching data for userId: $userId")  // Log user ID to check if it is being retrieved correctly
-
-            firestore.collection("users").document(userId).get()
-                .addOnSuccessListener { document ->
-                    val name = document.getString("name") ?: "No name available"
-                    greetings.text = "Hello, $name"  // Set greeting with user's name
-                }
-
-            firestore.collection("user_items")
-                .document(userId)
-                .collection("items")
-                .get()
-                .addOnSuccessListener { documents ->
-                    itemsList.clear()
-
-                    if (documents.isEmpty) {
-                        println("No documents found.")
-                    }
-
-                    for (document in documents) {
-                        val name = document.getString("name") ?: "No Name"
-                        val imageUrl = document.getString("imageUrl") ?: ""
-                        val expiredDateStr = document.getString("expireDate")
-                        val daysLeft = calculateDaysLeft(expiredDateStr)
-
-                        // Only add items that have not expired
-                        if (daysLeft >= 0) {
-                            val homeItem = HomeItem(name, imageUrl, daysLeft)
-                            itemsList.add(homeItem)
-                            println("Fetched item: $homeItem")  // Log each item as it is fetched
-                        } else {
-                            println("Item expired: $name")
-                        }
-                    }
-
-                    // Log the size of itemsList to check if data is being fetched
-                    println("Fetched items count: ${itemsList.size}")
-
-                    // Sort items by days left in descending order
-                    itemsList.sortByDescending { it.daysLeft }
-
-                    // Update the adapter with new data
-                    adapter.updateItems(itemsList)
-
-                    // Log the updated list
-                    println("Updated items: $itemsList")
-                }
-                .addOnFailureListener { e ->
-                    println("Failed to fetch data: ${e.message}")  // Log failure message
-                    Toast.makeText(requireContext(), "Failed to fetch data: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+        seeAll.setOnClickListener {
+            val intent = Intent(activity, SeeAllActivity::class.java)
+            startActivity(intent)
         }
 
+        // Image click listener for navigating to OrderFragment
         imageView6.setOnClickListener {
             navigateToFragment(OrderFragment())
         }
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val incomeValueTextView: TextView = view.findViewById(R.id.incomeValue)
-        val toggleButton: Button = view.findViewById(R.id.toggleButton)
-
-        toggleButton.setOnClickListener {
-            if (isValueHidden) {
-                incomeValueTextView.text = actualValue
-                toggleButton.setBackgroundResource(R.drawable.eye_open)
-            } else {
-                incomeValueTextView.text = "*************"
-                toggleButton.setBackgroundResource(R.drawable.eye_closed)
-            }
-            isValueHidden = !isValueHidden
-        }
     }
 
     private fun navigateToFragment(fragment: Fragment) {
@@ -175,8 +87,16 @@ class HomeFragment : Fragment() {
 
     private fun fetchDataFromFirestore() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-        println("Fetching data for userId: $userId")  // Log user ID to check if it is being retrieved correctly
+        Log.d("HomeFragment", "Fetching data for userId: $userId")
 
+        // Fetch user name for greeting
+        firestore.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                val name = document.getString("name") ?: "No name available"
+                greetings.text = "Hello, $name"  // Set greeting with user's name
+            }
+
+        // Fetch items data for user
         firestore.collection("user_items")
             .document(userId)
             .collection("items")
@@ -185,7 +105,7 @@ class HomeFragment : Fragment() {
                 itemsList.clear()
 
                 if (documents.isEmpty) {
-                    println("No documents found.")
+                    Log.d("HomeFragment", "No documents found.")
                 }
 
                 for (document in documents) {
@@ -198,14 +118,14 @@ class HomeFragment : Fragment() {
                     if (daysLeft >= 0) {
                         val homeItem = HomeItem(name, imageUrl, daysLeft)
                         itemsList.add(homeItem)
-                        println("Fetched item: $homeItem")  // Log each item as it is fetched
+                        Log.d("HomeFragment", "Fetched item: $homeItem")  // Log each item as it is fetched
                     } else {
-                        println("Item expired: $name")
+                        Log.d("HomeFragment", "Item expired: $name")
                     }
                 }
 
                 // Log the size of itemsList to check if data is being fetched
-                println("Fetched items count: ${itemsList.size}")
+                Log.d("HomeFragment", "Fetched items count: ${itemsList.size}")
 
                 // Sort items by days left in descending order
                 itemsList.sortByDescending { it.daysLeft }
@@ -214,10 +134,10 @@ class HomeFragment : Fragment() {
                 adapter.updateItems(itemsList)
 
                 // Log the updated list
-                println("Updated items: $itemsList")
+                Log.d("HomeFragment", "Updated items: $itemsList")
             }
             .addOnFailureListener { e ->
-                println("Failed to fetch data: ${e.message}")  // Log failure message
+                Log.e("HomeFragment", "Failed to fetch data: ${e.message}")
                 Toast.makeText(requireContext(), "Failed to fetch data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
@@ -235,6 +155,24 @@ class HomeFragment : Fragment() {
             // Log the error if parsing fails
             Log.e("HomeFragment", "Error calculating days left: ${e.message}")
             -1
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val incomeValueTextView: TextView = view.findViewById(R.id.incomeValue)
+        val toggleButton: Button = view.findViewById(R.id.toggleButton)
+
+        toggleButton.setOnClickListener {
+            if (isValueHidden) {
+                incomeValueTextView.text = actualValue
+                toggleButton.setBackgroundResource(R.drawable.eye_open)
+            } else {
+                incomeValueTextView.text = "*************"
+                toggleButton.setBackgroundResource(R.drawable.eye_closed)
+            }
+            isValueHidden = !isValueHidden
         }
     }
 }

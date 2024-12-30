@@ -17,24 +17,26 @@
             android:gravity="center"
             android:padding="16dp"
             android:layout_marginTop="20dp"
-            android:text="Statistics"
+            android:text="Income"
             android:background="@drawable/currency_square"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <!-- Total Profit -->
+
+        <!-- RecyclerView for Orders -->
         <TextView
             android:id="@+id/totalProfitTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:padding="16dp"
+            android:textColor="#EBFADC"
             android:text="Total Profit: Rp.0"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:textStyle="bold" />
 
-        <!-- RecyclerView for Orders -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ordersRecyclerView"
             android:layout_width="match_parent"

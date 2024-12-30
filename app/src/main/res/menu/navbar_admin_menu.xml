@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/nav_order"
-        android:title="Stats"
+        android:title="Income"
         android:color="@color/black"
         android:icon="@drawable/stats"
         />

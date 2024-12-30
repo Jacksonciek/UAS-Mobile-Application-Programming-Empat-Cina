@@ -129,17 +129,17 @@
                     android:inputType="phone"
                     android:maxLength="12" />
 
-                <EditText
-                    android:id="@+id/emailField"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:textColor="#EBFADC"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/currency_square"
-                    android:drawableEnd="@drawable/edit"
-                    android:padding="12dp"
-                    android:textColorHint="#80EBFADC"
-                    android:hint="example@gmail.com" />
+<!--                <EditText-->
+<!--                    android:id="@+id/emailField"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="65dp"-->
+<!--                    android:textColor="#EBFADC"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:background="@drawable/currency_square"-->
+<!--                    android:drawableEnd="@drawable/edit"-->
+<!--                    android:padding="12dp"-->
+<!--                    android:textColorHint="#80EBFADC"-->
+<!--                    android:hint="example@gmail.com" />-->
 
                 <TextView
                     android:id="@+id/passwordLabel"

@@ -24,7 +24,7 @@
             android:layout_height="32dp"
             android:layout_marginEnd="30dp"
             android:contentDescription="Left Icon"
-            android:src="@drawable/search" /> <!-- Margin between icon and text -->
+            android:src="@drawable/searchhidden" /> <!-- Margin between icon and text -->
 
         <!-- Profile Text -->
         <TextView

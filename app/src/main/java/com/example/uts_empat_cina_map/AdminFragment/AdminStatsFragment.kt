@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uts_empat_cina_map.adapter.OrdersAdapter
@@ -24,6 +25,7 @@ class AdminStatsFragment : Fragment() {
     private lateinit var ordersRecyclerView: RecyclerView
     private lateinit var ordersAdapter: OrdersAdapter
     private val ordersList = mutableListOf<Order>()
+    private val adminViewModel: AdminViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +78,8 @@ class AdminStatsFragment : Fragment() {
                     val totalPrice = document.getDouble("totalPrice") ?: 0.0
                     totalProfit += totalPrice
                 }
-                totalProfitTextView.text = "Total Profit: Rp.$totalProfit"
+                totalProfitTextView.text = "Total Profit: Rp. $totalProfit"
+                adminViewModel.setTotalProfit(totalProfit)
             }
             .addOnFailureListener { exception ->
                 Log.e("AdminStatsFragment", "Error fetching profit", exception)
@@ -160,10 +163,4 @@ class AdminStatsFragment : Fragment() {
             Toast.makeText(context, "Error accepting order: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
-
-
 }
-
