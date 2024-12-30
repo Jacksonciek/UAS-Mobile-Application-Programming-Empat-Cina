@@ -107,7 +107,7 @@ class CheckoutFragment : Fragment() {
 
             // Handle increase quantity button click
             increaseQuantityButton.setOnClickListener {
-                fetchStock(cartItem.foodItem.id) { availableStock ->
+                fetchStock(cartItem.foodItem.name) { availableStock ->
                     if (cartItem.quantity < availableStock) {
                         cartItem.quantity += 1
                         updateCheckoutDetails()
@@ -123,17 +123,19 @@ class CheckoutFragment : Fragment() {
         totalQuantityTextView.text = "Total Quantity: $totalQuantity"
     }
 
-    private fun fetchStock(itemId: String, callback: (Int) -> Unit) {
-        if (itemId.isEmpty()) {
-            Toast.makeText(context, "Invalid item ID", Toast.LENGTH_SHORT).show()
+    private fun fetchStock(itemName: String, callback: (Int) -> Unit) {
+        if (itemName.isEmpty()) {
+            Toast.makeText(context, "Invalid item name", Toast.LENGTH_SHORT).show()
             callback(0)
             return
         }
 
-        firestore.collection("items").document(itemId)
+        firestore.collection("items")
+            .whereEqualTo("name", itemName)
             .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val document = querySnapshot.documents[0]
                     val stock = document.getLong("stock")?.toInt() ?: 0
                     callback(stock)
                 } else {
