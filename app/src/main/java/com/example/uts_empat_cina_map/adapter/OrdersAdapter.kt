@@ -11,7 +11,7 @@ import com.example.uts_empat_cina_map.model.Order
 
 class OrdersAdapter(
     private val orders: List<Order>, // List of orders to display
-    private val onAcceptOrder: (Order) -> Unit // Lambda for handling button clicks
+    private val onOrderAction: (Order, String) -> Unit // Lambda for handling both actions
 ) : RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>() {
 
     // ViewHolder class to hold references to the views for each order item
@@ -21,6 +21,7 @@ class OrdersAdapter(
         val quantityTextView: TextView = itemView.findViewById(R.id.quantityAdmin)
         val totalPriceTextView: TextView = itemView.findViewById(R.id.totalPriceTextView)
         val acceptButton: Button = itemView.findViewById(R.id.acceptButton)
+        val declineButton: Button = itemView.findViewById(R.id.declineButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -44,7 +45,14 @@ class OrdersAdapter(
         holder.itemsTextView.text = itemsList.toString()
 
         // Set click listener for the accept button
-        holder.acceptButton.setOnClickListener { onAcceptOrder(order) }
+        holder.acceptButton.setOnClickListener {
+            onOrderAction(order, "accept") // Pass action "accept"
+        }
+
+        // Set click listener for the decline button
+        holder.declineButton.setOnClickListener {
+            onOrderAction(order, "decline") // Pass action "decline"
+        }
     }
 
 

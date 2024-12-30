@@ -6,22 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.Spinner
-import android.widget.TextView
-import com.bumptech.glide.Glide
+import android.widget.*
 import com.example.uts_empat_cina_map.OrderData.CartManager
 import com.example.uts_empat_cina_map.model.Order
 import com.example.uts_empat_cina_map.model.OrderItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-// ConfirmPaymentFragment.kt
 class ConfirmPaymentFragment : Fragment() {
     private lateinit var paymentMethodSpinner: Spinner
     private lateinit var confirmButton: Button
@@ -29,7 +20,8 @@ class ConfirmPaymentFragment : Fragment() {
     private lateinit var totalQuantityTextView: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var progressBarContainer: FrameLayout
-
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,78 +38,96 @@ class ConfirmPaymentFragment : Fragment() {
         totalPriceTextView = view.findViewById(R.id.totalPriceTextView)
         totalQuantityTextView = view.findViewById(R.id.totalQuantityTextView)
         progressBar = view.findViewById(R.id.progressBar)
+        progressBarContainer = view.findViewById(R.id.progressBarContainer)
         val backButton: Button = view.findViewById(R.id.backButton)
-        val auth = FirebaseAuth.getInstance()
 
-        // Set up spinner with dummy payment options
-        val paymentMethods = arrayOf("Credit Card", "PayPal", "Cash on Delivery")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, paymentMethods)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        paymentMethodSpinner.adapter = adapter
+        // Fetch payment methods from Firebase and set up the spinner
+        fetchPaymentMethods()
 
         // Calculate total price and quantity from cart items
         updateCheckoutDetails()
-        progressBarContainer = view.findViewById(R.id.progressBarContainer)
 
         confirmButton.setOnClickListener {
             progressBarContainer.visibility = View.VISIBLE
             confirmButton.isEnabled = false
 
-            // Get the current authenticated user
             val user = auth.currentUser
             val userId = user?.uid
 
-            // Calculate total price and quantity
             val cartItems = CartManager.getCartItems()
             val totalPrice = cartItems.sumOf { it.foodItem.price * it.quantity }
             val totalQuantity = cartItems.sumOf { it.quantity }
 
-            // Get the payment method from the spinner
             val paymentMethod = paymentMethodSpinner.selectedItem.toString()
 
-            for(cartItem in cartItems) {
-                // Create the Order object
+            for (cartItem in cartItems) {
                 val order = Order(
                     userId = userId.toString(),
                     items = cartItems.map {
-                        // Create an item for each cart item with necessary properties
                         OrderItem(it.foodItem.name, it.foodItem.price, it.quantity)
                     },
                     totalPrice = totalPrice,
                     totalQuantity = totalQuantity,
                     paymentMethod = paymentMethod,
-                    timestamp = System.currentTimeMillis() // Current timestamp
+                    timestamp = System.currentTimeMillis()
                 )
 
-                // Save the order to Firebase Firestore
                 saveOrderToFirebase(order)
             }
         }
 
         backButton.setOnClickListener {
-            // Navigate to HomeFragment
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, CheckoutFragment())
                 .commit()
         }
     }
 
+    private fun fetchPaymentMethods() {
+        val user = auth.currentUser
+        val userId = user?.uid ?: return
+
+        // Show loading spinner
+        progressBarContainer.visibility = View.VISIBLE
+
+        firestore.collection("user_payments")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val paymentMethods = querySnapshot.documents.map { document ->
+                    document.getString("paymentType") ?: "Unknown"
+                }
+
+                // Update spinner with fetched payment methods
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    paymentMethods
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                paymentMethodSpinner.adapter = adapter
+
+                // Hide loading spinner
+                progressBarContainer.visibility = View.GONE
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to fetch payment methods", Toast.LENGTH_SHORT).show()
+                progressBarContainer.visibility = View.GONE
+            }
+    }
+
     private fun saveOrderToFirebase(order: Order) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("orders")
+        firestore.collection("orders")
             .add(order)
             .addOnSuccessListener {
                 progressBar.visibility = View.GONE
                 confirmButton.isEnabled = true
-                // Navigate to a new activity for Google Maps (for later implementation)
                 val intent = Intent(requireContext(), payment_successful::class.java)
                 startActivity(intent)
             }
             .addOnFailureListener { e ->
                 progressBar.visibility = View.GONE
                 confirmButton.isEnabled = true
-                // Handle failure
                 e.printStackTrace()
             }
     }
@@ -125,7 +135,6 @@ class ConfirmPaymentFragment : Fragment() {
     private fun updateCheckoutDetails() {
         val cartItems = CartManager.getCartItems()
 
-        // Calculate total price and quantity
         var totalPrice = 0.0
         var totalQuantity = 0
 
@@ -134,7 +143,6 @@ class ConfirmPaymentFragment : Fragment() {
             totalQuantity += cartItem.quantity
         }
 
-        // Update the UI with total price and quantity
         totalPriceTextView.text = "$${String.format("%.2f", totalPrice)}"
         totalQuantityTextView.text = "Total Quantity : $totalQuantity"
     }

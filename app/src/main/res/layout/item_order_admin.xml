@@ -92,6 +92,17 @@
                 android:layout_marginTop="15px"
                 android:layout_marginBottom="5px"
                 android:text="Accept Order" />
+
+            <Button
+                android:id="@+id/declineButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:textColor="#EBFADC"
+                android:textStyle="bold"
+                android:layout_marginTop="10px"
+                android:layout_marginBottom="5px"
+                android:text="Decline Order" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

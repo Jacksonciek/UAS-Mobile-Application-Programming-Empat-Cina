@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"> <!-- Adds padding to avoid collision with the status bar -->
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,49 +23,8 @@
 
     </LinearLayout>
 
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:padding="16dp"-->
-    <!--        android:text="Order Menu"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        android:gravity="center"-->
-    <!--        android:textColor="#005700"/>-->
-
-    <!--    <com.google.android.material.tabs.TabLayout-->
-    <!--        android:id="@+id/tabLayout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="#005700"-->
-    <!--        app:tabTextColor="@android:color/white"-->
-    <!--        app:tabSelectedTextColor="@android:color/white"-->
-    <!--        app:tabIndicatorColor="@android:color/transparent"-->
-    <!--        app:tabIndicatorHeight="0dp"/> -->
-
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
-        app:tabPaddingStart="8dp"
-        app:tabPaddingEnd="8dp"
-        app:tabTextColor="#135040"
-        app:tabIndicatorColor="#135040"
-        app:tabIndicatorHeight="0dp" />
-
-
-    <View
-        android:id="@+id/tabIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="2dp" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="666dp"
-
-        android:layout_weight="1" />
+        android:layout_height="match_parent" />
 </LinearLayout>

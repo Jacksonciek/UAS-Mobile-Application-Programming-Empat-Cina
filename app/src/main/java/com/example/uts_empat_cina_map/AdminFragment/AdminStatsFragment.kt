@@ -44,7 +44,12 @@ class AdminStatsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        ordersAdapter = OrdersAdapter(ordersList) { order -> acceptOrder(order) }
+        ordersAdapter = OrdersAdapter(ordersList) { order, action ->
+            when (action) {
+                "accept" -> acceptOrder(order)
+                "decline" -> declineOrder(order)
+            }
+        }
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         ordersRecyclerView.adapter = ordersAdapter
     }
@@ -162,5 +167,18 @@ class AdminStatsFragment : Fragment() {
             Log.e("OrdersAdapter", "Error accepting order", e)
             Toast.makeText(context, "Error accepting order: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun declineOrder(order: Order) {
+        val orderRef = firestore.collection("orders").document(order.id!!)
+        orderRef.delete()
+            .addOnSuccessListener {
+                Toast.makeText(context, "Order declined successfully!", Toast.LENGTH_SHORT).show()
+                fetchOrders() // Refresh the list after deletion
+            }
+            .addOnFailureListener { e ->
+                Log.e("AdminStatsFragment", "Error declining order", e)
+                Toast.makeText(context, "Error declining order: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }
