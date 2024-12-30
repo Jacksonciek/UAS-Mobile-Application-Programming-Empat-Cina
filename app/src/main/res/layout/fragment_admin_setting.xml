@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Update fragment_admin_setting.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -95,7 +95,7 @@
                     android:src="@drawable/baseline_rounded_corner_24" />
 
                 <TextView
-                    android:id="@+id/personalInfoLabel"
+                    android:id="@+id/personalInfoLabel3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -103,111 +103,123 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <EditText
+                <TextView
+                    android:id="@+id/personalInfoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Name"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/nameField"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:layout_marginTop="8dp"
+                    android:gravity="start"
                     android:background="@drawable/currency_square"
-                    android:drawableEnd="@drawable/edit"
                     android:textColor="#EBFADC"
-                    android:padding="12dp"
+                    android:textStyle="bold"
+                    android:padding="20dp"
+                    android:textSize="16sp"
                     android:textColorHint="#80EBFADC"
-                    android:hint="Name" />
+                    android:text="Admin" />
 
-                <EditText
+                <TextView
+                    android:id="@+id/personalInfoLabel2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Phone Number"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/phoneField"
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:layout_marginTop="8dp"
+                    android:gravity="start"
                     android:background="@drawable/currency_square"
-                    android:drawableEnd="@drawable/edit"
-                    android:padding="12dp"
                     android:textColor="#EBFADC"
+                    android:textStyle="bold"
+                    android:padding="20dp"
+                    android:textSize="16sp"
                     android:textColorHint="#80EBFADC"
-                    android:hint="Phone Number"
-                    android:inputType="phone"
-                    android:maxLength="12" />
+                    android:text="081234567890" />
 
-<!--                <EditText-->
-<!--                    android:id="@+id/emailField"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="65dp"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:background="@drawable/currency_square"-->
-<!--                    android:drawableEnd="@drawable/edit"-->
-<!--                    android:padding="12dp"-->
-<!--                    android:textColor="#EBFADC"-->
-<!--                    android:textColorHint="#80EBFADC"-->
-<!--                    android:hint="example@gmail.com" />-->
+                <TextView
+                    android:id="@+id/personalInfoLabel23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Email"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/phoneField3"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:background="@drawable/currency_square"
+                    android:textColor="#EBFADC"
+                    android:textStyle="bold"
+                    android:padding="20dp"
+                    android:textSize="16sp"
+                    android:textColorHint="#80EBFADC"
+                    android:text="admin@gmail.com" />
 
                 <TextView
                     android:id="@+id/passwordLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Change Password"
+                    android:text="Password"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/passwordField"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/currency_square"
-                    android:drawableEnd="@drawable/edit"
-                    android:padding="12dp"
-                    android:textColorHint="#80EBFADC"
-                    android:textColor="#EBFADC"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/confirmPasswordField"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/currency_square"
-                    android:drawableEnd="@drawable/edit"
-                    android:hint="Confirm Password"
-                    android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:textColor="#EBFADC"
-                    android:textColorHint="#80EBFADC" />
+                    <TextView
+                        android:id="@+id/passwordField"
+                        android:layout_width="323dp"
+                        android:layout_height="65dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/currency_square"
+                        android:gravity="start"
+                        android:padding="20dp"
+                        android:text="*************"
+                        android:textColor="#EBFADC"
+                        android:textColorHint="#80EBFADC"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/saveButton"
-                    android:layout_width="300dp"
-                    android:layout_height="65dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/currency_square"
-                    android:gravity="center"
-                    android:text="Save Changes"
-                    android:textColor="#EBFADC"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/togglePasswordVisibility"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        android:contentDescription="Toggle Password Visibility"
+                        android:src="@drawable/eye_closed2" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/uploadAvatarButton"
-                    android:layout_width="300dp"
-                    android:layout_height="65dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/currency_square"
-                    android:gravity="center"
-                    android:text="Select Avatar"
-                    android:textColor="#EBFADC"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/logoutButton"
                     android:layout_width="300dp"
                     android:layout_height="65dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/currency_square"
                     android:gravity="center"
                     android:text="Logout"
@@ -216,62 +228,5 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/settingsTitle"-->
-    <!--        android:layout_width="140dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:background="@drawable/currency_square"-->
-    <!--        android:gravity="center"-->
-    <!--        android:padding="12dp"-->
-    <!--        android:text="Settings"-->
-    <!--        android:textColor="@android:color/white"-->
-    <!--        android:textSize="18sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/iconRightLogOut"-->
-    <!--        app:layout_constraintStart_toEndOf="@+id/backButton"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/backButton"-->
-    <!--        android:layout_width="32dp"-->
-    <!--        android:layout_height="32dp"-->
-    <!--        android:contentDescription="Left Icon"-->
-    <!--        android:src="@drawable/baseline_arrow_back_ios_24"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/iconRightLogOut"-->
-    <!--        android:layout_width="32dp"-->
-    <!--        android:layout_height="32dp"-->
-    <!--        android:contentDescription="Right Icon"-->
-    <!--        android:src="@drawable/exit"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!-- Avatar ImageView -->
-
-    <!-- Name Field -->
-
-    <!-- Phone Field -->
-
-    <!-- Email Field -->
-
-    <!-- Password Section -->
-
-    <!-- Password Field -->
-
-    <!-- Confirm Password Field -->
-
-    <!-- Save Button -->
-
-    <!-- Upload Avatar Button -->
-
-    <!-- Logout Button -->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

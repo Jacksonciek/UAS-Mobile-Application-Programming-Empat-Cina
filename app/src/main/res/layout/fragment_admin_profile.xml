@@ -84,6 +84,7 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="center"
         android:textColor="#2A2A2A"
+        android:text="Admin"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -94,6 +95,7 @@
         android:layout_marginTop="4dp"
         android:layout_gravity="center"
         android:textColor="#707070"
+        android:text="admin@gmail.com"
         android:textSize="14sp" />
 
     <!-- Profile Phone Number -->
@@ -104,6 +106,7 @@
         android:layout_marginTop="4dp"
         android:layout_gravity="center"
         android:textColor="#707070"
+        android:text="081234567890"
         android:textSize="14sp" />
 
     <!-- Menu Options (Flexible Widths) -->
