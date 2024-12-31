@@ -28,46 +28,46 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <!-- Left Icon (Email) -->
+            <!-- Left Icon (Back) -->
             <ImageView
                 android:id="@+id/backButton"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Left Icon"
+                android:contentDescription="Back Button"
                 android:src="@drawable/baseline_arrow_back_ios_242"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Spacer between Left Icon and Profile Text -->
+            <!-- Spacer between Left Icon and Title -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <!-- Profile Text in the Center -->
+            <!-- Title in the Center -->
             <TextView
                 android:id="@+id/settingsTitle"
                 android:layout_width="230dp"
                 android:layout_height="40dp"
                 android:background="@drawable/currency_square"
                 android:gravity="center"
-                android:text="Add Payment Method"
+                android:text="Payment Methods"
                 android:textColor="#EBFADC"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!-- Spacer between Profile Text and Right Icon -->
+            <!-- Spacer between Title and Right Icon -->
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <!-- Right Icon (Exit) -->
+            <!-- Right Icon (Placeholder for future use) -->
             <ImageView
                 android:id="@+id/iconRightLogOut"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Right Icon"
+                android:contentDescription="Placeholder"
                 android:src="@drawable/exit2" />
 
             <!-- Spacer for Right Edge -->
@@ -77,9 +77,11 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <!-- Scrollable Section -->
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="501dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,11 +89,17 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <!--                Isi disini-->
-
-
+                <!-- RecyclerView to display payment methods -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/paymentRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:scrollbars="vertical" />
             </LinearLayout>
         </ScrollView>
+
+        <!-- Button to Add New Payment Method -->
         <Button
             android:id="@+id/buttonAddNewPayment"
             android:layout_width="230sp"
@@ -101,8 +109,7 @@
             android:text="Add New Payment Method"
             android:layout_marginTop="20sp"
             android:textColor="@color/white"
-            android:background="@drawable/currency_square"
-            />
+            android:background="@drawable/currency_square" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
