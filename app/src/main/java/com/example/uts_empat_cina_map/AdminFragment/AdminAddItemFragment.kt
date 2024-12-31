@@ -1,11 +1,13 @@
 package com.example.uts_empat_cina_map
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 import java.util.*
 
 class AdminAddItemFragment : Fragment() {
@@ -84,11 +87,29 @@ class AdminAddItemFragment : Fragment() {
 
     private fun setupImageUpload() {
         uploadImageButton.setOnClickListener {
-            // Open file picker to choose an image
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 1000)
+            // Show dialog to choose between Camera and Gallery
+            val options = arrayOf("Take Photo", "Choose from Gallery")
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Select Image Source")
+            builder.setItems(options) { _, which ->
+                when (which) {
+                    0 -> openCamera() // Take photo
+                    1 -> openGallery() // Choose from gallery
+                }
+            }
+            builder.show()
         }
+    }
+
+    private fun openCamera() {
+        val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+    }
+
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+        galleryIntent.type = "image/*"
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
     }
 
     private fun decodeSampledBitmapFromUri(uri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
@@ -122,19 +143,40 @@ class AdminAddItemFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
-            data?.data?.let {
-                imageUri = it
-                // Resize the image before displaying
-                val bitmap = decodeSampledBitmapFromUri(imageUri, 300, 300) // Resize to 300x300
-                uploadedImageView.setImageBitmap(bitmap) // Show the resized image
-                uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
-                Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
-
-                // Hide the button
-                uploadImageButton.visibility = View.GONE
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CAMERA_REQUEST_CODE -> {
+                    val bitmap = data?.extras?.get("data") as? Bitmap
+                    bitmap?.let {
+                        // Save the bitmap to a file and set `imageUri`
+                        val tempUri = saveBitmapToFile(it)
+                        imageUri = tempUri // Set imageUri for further use
+                        uploadedImageView.setImageBitmap(it)
+                        uploadedImageView.visibility = View.VISIBLE
+                        Toast.makeText(context, "Image Captured", Toast.LENGTH_SHORT).show()
+                        uploadImageButton.visibility = View.GONE
+                    }
+                }
+                GALLERY_REQUEST_CODE -> {
+                    data?.data?.let {
+                        imageUri = it
+                        val bitmap = decodeSampledBitmapFromUri(imageUri, 300, 300)
+                        uploadedImageView.setImageBitmap(bitmap)
+                        uploadedImageView.visibility = View.VISIBLE
+                        Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
+                        uploadImageButton.visibility = View.GONE
+                    }
+                }
             }
         }
+    }
+
+    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
+        val file = File(requireContext().cacheDir, "temp_image.jpg")
+        file.outputStream().use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        return Uri.fromFile(file)
     }
 
     private fun setupSaveButton() {
@@ -160,12 +202,17 @@ class AdminAddItemFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if (this::imageUri.isInitialized) {
+            if (this::imageUri.isInitialized && imageUri.toString().isNotEmpty()) {
                 uploadImageToStorage(name, location, price, description, category)
             } else {
                 Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    companion object {
+        private const val CAMERA_REQUEST_CODE = 2000
+        private const val GALLERY_REQUEST_CODE = 1000
     }
 
     private fun uploadImageToStorage(name: String, location: String, price: Double, description: String, category: String) {
@@ -209,7 +256,11 @@ class AdminAddItemFragment : Fragment() {
         itemDescription.text.clear()
         stockCount = 0
         stockQuantity.text = stockCount.toString()
-        itemCategorySpinner.setSelection(0) // Reset to the first item (assumed to be "Choose Category")
-        uploadedImageView.visibility = View.GONE // Hide the image view
+        itemCategorySpinner.setSelection(0)
+        uploadedImageView.visibility = View.GONE
+        uploadImageButton.visibility = View.VISIBLE
+        if (this::imageUri.isInitialized) {
+            imageUri = Uri.EMPTY // Reset imageUri
+        }
     }
 }
