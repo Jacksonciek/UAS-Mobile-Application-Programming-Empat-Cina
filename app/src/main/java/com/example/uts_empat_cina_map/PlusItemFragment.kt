@@ -1,6 +1,7 @@
 package com.example.uts_empat_cina_map
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 class PlusItemFragment : Fragment() {
@@ -81,10 +84,7 @@ class PlusItemFragment : Fragment() {
             }
         }
 
-        // Select image
-        buttonImage.setOnClickListener {
-            selectImageFromGallery()
-        }
+        setupImageUpload()
 
         // Date picker to select expiration date
         expiredDateInput.setOnClickListener {
@@ -97,10 +97,31 @@ class PlusItemFragment : Fragment() {
         }
     }
 
-    private fun selectImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 100)
+    private fun setupImageUpload() {
+        buttonImage.setOnClickListener {
+            // Show dialog to choose between Camera and Gallery
+            val options = arrayOf("Take Photo", "Choose from Gallery")
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Select Image Source")
+            builder.setItems(options) { _, which ->
+                when (which) {
+                    0 -> openCamera() // Take photo
+                    1 -> openGallery() // Choose from gallery
+                }
+            }
+            builder.show()
+        }
+    }
+
+    private fun openCamera() {
+        val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
+    }
+
+    private fun openGallery() {
+        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+        galleryIntent.type = "image/*"
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
     }
 
     private fun showDatePickerDialog() {
@@ -122,29 +143,59 @@ class PlusItemFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            imageUri = data?.data
-
-            // Ensure imageUri is not null before using it
-            imageUri?.let { uri ->
-                // Resize the image before displaying
-                val bitmap = decodeSampledBitmapFromUri(uri, 200, 200) // Resize to 200x200
-                uploadedImageView.setImageBitmap(bitmap) // Show the resized image
-                uploadedImageView.visibility = View.VISIBLE // Make the ImageView visible
-                Toast.makeText(requireContext(), "Image selected successfully", Toast.LENGTH_SHORT).show()
-
-                // Hide the button
-                buttonImage.visibility = View.GONE
-
-                // Optional: Provide feedback to the user in the UI
-                buttonImage.text = "Image Selected"
-            } ?: run {
-                // Handle case where imageUri is null
-                Toast.makeText(requireContext(), "Failed to select image", Toast.LENGTH_SHORT).show()
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CAMERA_REQUEST_CODE -> {
+                    val bitmap = data?.extras?.get("data") as? Bitmap
+                    bitmap?.let {
+                        // Save the bitmap to a file and set `imageUri`
+                        val tempUri = saveBitmapToFile(it)
+                        imageUri = tempUri // Set imageUri for further use
+                        uploadedImageView.setImageBitmap(it)
+                        uploadedImageView.visibility = View.VISIBLE
+                        Toast.makeText(context, "Image Captured", Toast.LENGTH_SHORT).show()
+                        buttonImage.visibility = View.GONE
+                    }
+                }
+                GALLERY_REQUEST_CODE -> {
+                    data?.data?.let { uri ->
+                        imageUri = uri
+                        // Ensure imageUri is non-null before using it
+                        imageUri?.let { nonNullImageUri ->
+                            val bitmap = decodeSampledBitmapFromUri(nonNullImageUri, 300, 300)
+                            uploadedImageView.setImageBitmap(bitmap)
+                            uploadedImageView.visibility = View.VISIBLE
+                            Toast.makeText(context, "Image Selected", Toast.LENGTH_SHORT).show()
+                            buttonImage.visibility = View.GONE
+                        }
+                    }
+                }
             }
         }
     }
 
+    private fun saveBitmapToFile(bitmap: Bitmap): Uri {
+        val file = File(requireContext().cacheDir, "temp_image.jpg")
+        file.outputStream().use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        return Uri.fromFile(file)
+    }
+
+    companion object {
+        private const val CAMERA_REQUEST_CODE = 2000
+        private const val GALLERY_REQUEST_CODE = 1000
+    }
+
+    private fun getImageUriFromBitmap(bitmap: Bitmap): Uri {
+        val path = android.os.Environment.getExternalStorageDirectory().toString() + "/image.jpg"
+        val file = File(path)
+        val fileOutputStream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
+        fileOutputStream.flush()
+        fileOutputStream.close()
+        return Uri.fromFile(file)
+    }
 
     private fun decodeSampledBitmapFromUri(uri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
         val options = BitmapFactory.Options().apply {
