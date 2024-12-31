@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uts_empat_cina_map.R
@@ -22,6 +23,7 @@ class AdminItemAdapter(private var itemList: List<FoodItem>) :
         val itemName: TextView = view.findViewById(R.id.itemName)
         val stockEditText: EditText = view.findViewById(R.id.stockEditText)
         val updateButton: Button = view.findViewById(R.id.updateButton)
+        val deleteButton: ImageView = view.findViewById(R.id.sampahMasyarakat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminItemViewHolder {
@@ -45,6 +47,18 @@ class AdminItemAdapter(private var itemList: List<FoodItem>) :
 
                 // Update the stock in Firestore
                 updateStockInFirestore(item.name, newStock)
+            }
+        }
+
+        // Delete item on button click
+        holder.deleteButton.setOnClickListener {
+            deleteItemFromFirestore(item.name) { success ->
+                if (success) {
+                    // Remove the item from the filtered list and notify adapter
+                    filteredList.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, filteredList.size)
+                }
             }
         }
     }
@@ -89,6 +103,33 @@ class AdminItemAdapter(private var itemList: List<FoodItem>) :
             .addOnFailureListener { exception ->
                 // Handle query failure
                 exception.printStackTrace()
+            }
+    }
+
+    // Delete the item from Firestore
+    private fun deleteItemFromFirestore(itemName: String, callback: (Boolean) -> Unit) {
+        val query = firestore.collection("items").whereEqualTo("name", itemName)
+
+        query.get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    val itemDocument = querySnapshot.documents[0]
+
+                    itemDocument.reference.delete()
+                        .addOnSuccessListener {
+                            callback(true) // Item deleted successfully
+                        }
+                        .addOnFailureListener { exception ->
+                            exception.printStackTrace()
+                            callback(false) // Deletion failed
+                        }
+                } else {
+                    callback(false) // No item found
+                }
+            }
+            .addOnFailureListener { exception ->
+                exception.printStackTrace()
+                callback(false) // Query failed
             }
     }
 }
