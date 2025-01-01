@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminHomeFragment : Fragment() {
 
@@ -31,12 +32,10 @@ class AdminHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up TextView and ToggleButton for income visibility
         val incomeValueTextView: TextView = view.findViewById(R.id.incomeValue)
         val toggleButton: Button = view.findViewById(R.id.toggleButton)
-        val pieChart: PieChart = view.findViewById(R.id.pieChart) // Ensure correct ID
+        val pieChart: PieChart = view.findViewById(R.id.pieChart)
 
-        // Observe total profit from ViewModel
         adminViewModel.totalProfit.observe(viewLifecycleOwner) { totalProfit ->
             if (!isValueHidden) {
                 incomeValueTextView.text = "Rp. $totalProfit"
@@ -56,16 +55,40 @@ class AdminHomeFragment : Fragment() {
             isValueHidden = !isValueHidden
         }
 
-        // Add dummy data for PieChart
-        val entries = ArrayList<PieEntry>()
-        entries.add(PieEntry(45f, "Marketing"))
-        entries.add(PieEntry(25f, "Development"))
-        entries.add(PieEntry(15f, "Sales"))
-        entries.add(PieEntry(10f, "Operations"))
-        entries.add(PieEntry(5f, "Support"))
+        // Fetch category data from Firebase and update PieChart
+        fetchCategoryData { categoryCounts ->
+            updatePieChart(pieChart, categoryCounts)
+        }
+    }
 
-        // Configure dataset
-        val dataSet = PieDataSet(entries, "Income Distribution")
+    private fun fetchCategoryData(onResult: (Map<String, Int>) -> Unit) {
+        val firestore = FirebaseFirestore.getInstance()
+        val categories = listOf("Appetizers", "Main Course", "Drinks", "Desserts", "Snacks")
+        val categoryCounts = mutableMapOf<String, Int>()
+
+        categories.forEach { category ->
+            firestore.collection("items")
+                .whereEqualTo("category", category)
+                .get()
+                .addOnSuccessListener { documents ->
+                    categoryCounts[category] = documents.size()
+                    if (categoryCounts.size == categories.size) {
+                        onResult(categoryCounts) // Callback with final data
+                    }
+                }
+                .addOnFailureListener {
+                    categoryCounts[category] = 0 // Handle failure
+                    if (categoryCounts.size == categories.size) {
+                        onResult(categoryCounts) // Callback even on failure
+                    }
+                }
+        }
+    }
+
+    private fun updatePieChart(pieChart: PieChart, categoryCounts: Map<String, Int>) {
+        val pieEntries = categoryCounts.map { PieEntry(it.value.toFloat(), it.key) }
+
+        val dataSet = PieDataSet(pieEntries, null)
         dataSet.colors = listOf(
             Color.rgb(244, 67, 54),  // Red
             Color.rgb(33, 150, 243), // Blue
@@ -73,32 +96,36 @@ class AdminHomeFragment : Fragment() {
             Color.rgb(255, 235, 59), // Yellow
             Color.rgb(156, 39, 176)  // Purple
         )
-        dataSet.sliceSpace = 3f // Space between slices
-        dataSet.selectionShift = 10f // Animation when slice is selected
-        dataSet.valueTextSize = 12f // Text size for values
-        dataSet.valueTextColor = Color.BLACK // Color for value text
+        dataSet.sliceSpace = 2f
+        dataSet.selectionShift = 8f
+        dataSet.valueTextSize = 14f
+        dataSet.valueTextColor = Color.BLACK
+        dataSet.valueTypeface = android.graphics.Typeface.DEFAULT_BOLD // Make text bold
 
-        // Create PieData and set it to the PieChart
         val data = PieData(dataSet)
         data.setValueTextSize(14f)
         data.setValueTextColor(Color.BLACK)
 
-        // Configure PieChart
         pieChart.data = data
-        pieChart.setUsePercentValues(true) // Show percentages
-        pieChart.description.isEnabled = false // Disable description text
-        pieChart.isDrawHoleEnabled = true // Enable hole in the center
-        pieChart.holeRadius = 35f // Radius of the center hole
-        pieChart.transparentCircleRadius = 40f // Radius of transparent circle
-        pieChart.setDrawEntryLabels(true) // Show labels for slices
-        pieChart.setEntryLabelTextSize(12f) // Text size for entry labels
-        pieChart.setEntryLabelColor(Color.BLACK) // Color for entry labels
-        pieChart.centerText = "Stocks" // Center text
-        pieChart.setCenterTextSize(16f) // Text size for center text
+        pieChart.setUsePercentValues(true)
+        pieChart.description.isEnabled = false
+        pieChart.isDrawHoleEnabled = true
+        pieChart.holeRadius = 40f
+        pieChart.transparentCircleRadius = 45f
+        pieChart.setDrawEntryLabels(true)
+        pieChart.setEntryLabelTextSize(14f)
+        pieChart.setEntryLabelColor(Color.BLACK)
+        pieChart.setEntryLabelTypeface(android.graphics.Typeface.DEFAULT_BOLD) // Make label text bold
+        pieChart.centerText = "Food Distribution"
+        pieChart.setCenterTextSize(18f)
+        pieChart.setCenterTextColor(Color.BLACK)
+        pieChart.setCenterTextTypeface(android.graphics.Typeface.DEFAULT_BOLD)
 
-        // Hide the legend
+        // Disable spinning for PieChart
+        pieChart.isRotationEnabled = false
+
         val legend = pieChart.legend
-        legend.isEnabled = false
+        legend.isEnabled = false // Disable the legend to remove the color box
 
         pieChart.invalidate() // Refresh the chart
     }
