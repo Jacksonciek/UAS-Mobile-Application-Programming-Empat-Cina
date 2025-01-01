@@ -46,7 +46,7 @@ class SettingFragment : Fragment() {
         phoneField = view.findViewById(R.id.phoneField)
         passwordField = view.findViewById(R.id.passwordField)
         avatarImageView = view.findViewById(R.id.avatarImageView)
-        uploadAvatarButton = view.findViewById(R.id.uploadAvatarButton)
+//        uploadAvatarButton = view.findViewById(R.id.uploadAvatarButton)
         logoutButton = view.findViewById(R.id.logoutButton)
         saveButton = view.findViewById(R.id.saveButton)
         backButton = view.findViewById(R.id.backButton)
@@ -57,7 +57,7 @@ class SettingFragment : Fragment() {
 
         // Set up buttons
         setupSaveButton()
-        uploadAvatarButton.setOnClickListener { chooseImage() }
+//        uploadAvatarButton.setOnClickListener { chooseImage() }
         logoutButton.setOnClickListener { logoutUser() }
         backButton.setOnClickListener { navigateToProfileFragment() }
         iconRightLogOut.setOnClickListener { logoutUser() }

@@ -35,11 +35,14 @@ class OrderAdapter(private val orders: List<Order>) : RecyclerView.Adapter<Order
             totalAmountTextView.text = "Total Amount: Rp. ${order.totalPrice}"
 
             // Set the order status in textView7
-            statusTextView.text = order.orderStatus  // "Accepted", "On Process", or any other status
+            statusTextView.text =
+                order.orderStatus  // "Accepted", "On Process", or any other status
             if (order.orderStatus == "Accepted") {
-                statusTextView.setTextColor(itemView.context.getColor(R.color.darkgreen)) // Change color to green
-            } else {
-                statusTextView.setTextColor(itemView.context.getColor(R.color.lavender_dark)) // Default color or orange
+                statusTextView.setTextColor(itemView.context.getColor(R.color.green)) // Change color to green
+            }else if(order.orderStatus == "Declined") {
+                statusTextView.setTextColor(itemView.context.getColor(R.color.red)) // Change color to red
+            }else {
+                statusTextView.setTextColor(itemView.context.getColor(R.color.gray)) // Default color or orange
             }
 
             // Create a string with item names and their respective quantities

@@ -106,7 +106,7 @@
                     android:id="@+id/confirmButton"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/category_order"
+                    android:background="@drawable/currency_square"
                     android:gravity="center"
                     android:text="Checkout"
                     android:textColor="@color/white" />

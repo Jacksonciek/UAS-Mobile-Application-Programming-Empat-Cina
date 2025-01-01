@@ -143,7 +143,7 @@
         android:id="@+id/addToCartButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/category_order"
+        android:background="@drawable/currency_square"
         android:text="Add to Cart"
         android:textColor="@color/white" />
 

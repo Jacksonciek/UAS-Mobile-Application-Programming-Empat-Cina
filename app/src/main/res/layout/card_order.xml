@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="2sp"
     android:layout_marginBottom="10dp"
-    android:background="#F8FCF4"
+    android:backgroundTint="#EBFADC"
     app:cardCornerRadius="20dp"
     app:cardElevation="20dp">
 
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Ordered"
+                    android:text="on process"
                     android:textColor="#27AE60"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
