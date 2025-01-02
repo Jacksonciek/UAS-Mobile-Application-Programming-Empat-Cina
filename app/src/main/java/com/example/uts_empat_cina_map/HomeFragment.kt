@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
         }
 
         notificationButton.setOnClickListener {
-            navigateToFragment(OrderFragment())  // Make sure this fragment is defined
+            navigateToFragment(notification())  // Make sure this fragment is defined
         }
 
         seeAll.setOnClickListener {
